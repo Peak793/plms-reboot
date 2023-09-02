@@ -6,12 +6,18 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import RootLayout from '@/layouts/RootLayout';
+import MyGroups from './pages/Mygroups';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
-
+    children: [
+      {
+        path: "mygroups",
+        element: <MyGroups />
+      },
+    ]
   },
 ]);
 
