@@ -24,8 +24,65 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 body {
   font-family: 'Kanit';
   color: white;
   background-color: var(--ebony);
+}
+
+.default-content-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0px auto;
+  height: 100%;
+}
+
+.bread-crumbs {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumb-item {
+  transition: all ease-in-out 0.2s;
+  text-decoration: none;
+  color: inherit;
+  font-size: 16px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--frenchGray);
+  cursor: pointer;
+}
+
+.breadcrumb-item:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-item .subject-icon {
+  margin-right: 10px;
+}
+
+.breadcrumb-item.active {
+  font-weight: 500;
+  font-size: 20px;
+  color: var(--azureRadiance);
+}
+
+.breadcrumb-item::after {
+  content: ">";
+  margin-left: 10px;
+}
+
+.breadcrumb-item:last-child::after {
+  content: "";
 }

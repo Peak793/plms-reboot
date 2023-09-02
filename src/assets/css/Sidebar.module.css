@@ -5,19 +5,13 @@
   left: 0;
   display: flex;
   flex-direction: column;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding: 50px 16px;
   align-items: flex-start;
   gap: 40px;
-  flex-shrink: 0;
-  border-top-right-radius: 24px;
-  border-bottom-right-radius: 24px;
+  border-radius: 0 24px 24px 0;
   background-color: #1D283A;
   height: 100vh;
-  overflow: hidden;
-  transition: all ease-in-out 0.2s;
+  transition: width 0.2s ease-in-out;
   width: 60px;
 }
 
@@ -26,7 +20,7 @@
 }
 
 .sidebar.collapsed {
-  width: 60px;
+  width: 80px;
 }
 
 .logo-container {
@@ -34,12 +28,16 @@
   user-select: none;
   display: flex;
   justify-content: space-between;
-  width: fit-content;
+  width: 100%;
   align-items: center;
 }
 
 .logo-container.expanded {
   gap: 15px;
+}
+
+.logo-container.collapsed {
+  justify-content: center;
 }
 
 .logo {
@@ -48,16 +46,94 @@
   justify-content: space-between;
   width: fit-content;
   align-items: center;
+  scale: 1.05;
 }
 
 .logo.collapsed {
-  width: 0px;
+  width: 0;
 }
 
 .close-button {
-  transition: all ease-in-out 0.2s;
+  transition: transform 0.2s ease-in-out;
 }
 
 .close-button.collapsed {
   transform: rotate(180deg);
+}
+
+.sidebar-item-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar-item {
+  user-select: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  padding: 10px;
+  height: 45px;
+  position: relative;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.sidebar-item:hover {
+  backdrop-filter: brightness(80%);
+}
+
+.sidebar-item.active {
+  background-color: var(--chathamBlue);
+}
+
+.sidebar.collapsed .sidebar-item {
+  padding: 10px auto;
+  gap: 0;
+}
+
+.sidebar-item span {
+  transition: width 0.2s ease-in-out;
+  width: fit-content;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.sidebar.collapsed .sidebar-item span {
+  width: 0;
+}
+
+.sidebar-item img {
+  width: 30px;
+  height: 30px;
+}
+
+.category-text {
+  color: var(--cerulean);
+  font-size: 16px;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  user-select: none;
+}
+
+.floating-text {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 100px;
+  transform: translate(-20px, -50%);
+  white-space: nowrap;
+}
+
+.sidebar.collapsed .sidebar-item:hover .floating-text {
+  display: inline-block;
+  background-color: var(--mirage);
+  color: #fff;
+  padding: 5px;
+  border-radius: 8px;
+  z-index: 100;
 }
