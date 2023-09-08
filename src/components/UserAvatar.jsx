@@ -1,16 +1,19 @@
 import avatar from "@/assets/images/Avatar.png"
 import classes from "@/assets/css/UserAvatar.module.css"
 import { getClassNames } from "../utils"
+import { Avatar, Stack } from "@mui/material"
 
 const UserAvatar = () => {
   return (
-    <div className={getClassNames(classes, "user-avatar-container")}>
-      <div className={getClassNames(classes, "text-container")}>
-        <span className={getClassNames(classes, "role")} >Supervisor</span> <br />
+    <Stack direction={"row"} className={getClassNames(classes, "user-avatar-container")} sx={{
+      marginY: "30px",
+    }}>
+      <Stack spacing={"5px"} className={getClassNames(classes, "text-container")}>
+        <span className={getClassNames(classes, "role")} >Supervisor</span>
         <span className={getClassNames(classes, "username")}>ชรินดา สนธิดี</span>
-      </div>
-      <img className={getClassNames(classes, "avatar-image")} src={avatar} alt="avatar" />
-    </div>
+      </Stack>
+      <Avatar className={getClassNames(classes, "avatar-image")} src={avatar} alt="ชรินดา สนธิดี" sx={{ width: 60, height: 60 }} />
+    </Stack>
   )
 }
 

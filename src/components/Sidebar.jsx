@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import logo from "@/assets/images/Logo.png";
 import close from "@/assets/images/Close.png";
 import chartIcon from "@/assets/images/Chart-Icon.png";
@@ -10,24 +10,28 @@ import slideShow from "@/assets/images/SlideShow-Icon.png";
 import classes from "@/assets/css/Sidebar.module.css";
 import { getClassNames } from "../utils";
 import { NavLink } from "react-router-dom";
+import { Stack } from "@mui/system";
+import { Link } from "@mui/material";
 
 const categories = [
   {
+    id: 1,
     label: "Group Management",
     shortLabel: "Group",
     icon: chartIcon,
     children: [
-      { label: "My Groups", icon: slideShow },
-      { label: "Available Groups", icon: peopleIcon }
+      { id: 1.1, label: "My Groups", icon: slideShow },
+      { id: 1.2, label: "Available Groups", icon: peopleIcon }
     ],
   },
   {
+    id: 2,
     label: "Instructions",
     icon: chartIcon,
     children: [
-      { label: "Instructions", icon: newspaperIcon, },
-      { label: "Examination", icon: bookIcon, },
-      { label: "FAQ", icon: dialogBubble, },
+      { id: 2.1, label: "Instructions", icon: newspaperIcon, },
+      { id: 2.2, label: "Examination", icon: bookIcon, },
+      { id: 2.3, label: "FAQ", icon: dialogBubble, },
     ],
   }
 ]
@@ -38,24 +42,24 @@ const Sidebar = () => {
 
   return (
     <nav className={getClassNames(classes, 'sidebar', isExpanded ? 'expanded' : 'collapsed')}>
-      <div className={getClassNames(classes, 'logo-container', isExpanded ? 'expanded' : 'collapsed')}>
-        <NavLink to="/" >
+      <Stack direction={'row'} className={getClassNames(classes, 'logo-container', isExpanded ? 'expanded' : 'collapsed')}>
+        <Link component={NavLink} color={'inherit'} underline="none" to="/" >
           <img
             src={logo}
             alt="logo"
             className={getClassNames(classes, 'logo', isExpanded ? 'expanded' : 'collapsed')}
           />
-        </NavLink>
+        </Link>
         <img
           onClick={() => setIsExpanded((cur) => !cur)}
           className={getClassNames(classes, 'close-button', isExpanded ? 'expanded' : 'collapsed')}
           src={close}
           alt="close"
         />
-      </div>
+      </Stack>
 
-      <div className={getClassNames(classes, "sidebar-item-container")}>
-        <NavLink to="#" onClick={() => { setSelected("Dashboard") }} className={getClassNames(classes, "sidebar-item", selected === "Dashboard" && "active")}>
+      <Stack spacing={1} className={getClassNames(classes, "sidebar-item-container")}>
+        <Link color={'inherit'} underline="none" component={NavLink} to="#" onClick={() => { setSelected("Dashboard") }} className={getClassNames(classes, "sidebar-item", selected === "Dashboard" && "active")}>
           <img src={chartIcon} alt="dashboard-icon" />
           <span>
             Dashboard
@@ -63,13 +67,20 @@ const Sidebar = () => {
               Dashboard
             </div>
           </span>
-        </NavLink>
-        {categories.map((category, index) => (
-          <div key={index}>
-            <div className={getClassNames(classes, "category-text")} >{category.label}</div>
-            {category.children.map((child, index) => (
-              <>
-                <NavLink to="#" key={index} onClick={() => { setSelected(child.label) }} className={getClassNames(classes, "sidebar-item", selected === child.label && "active")}>
+        </Link>
+        {categories.map((category) => (
+          <div key={category.id}>  {/* Here, added 'key' attribute */}
+            <div className={getClassNames(classes, "category-text")}>{category.label}</div>
+            {category.children.map((child) => (
+              <React.Fragment key={child.id}>  {/* Here, added 'key' attribute to the fragment */}
+                <Link
+                  color={'inherit'}
+                  underline="none"
+                  component={NavLink}
+                  to="#"
+                  onClick={() => { setSelected(child.label) }}
+                  className={getClassNames(classes, "sidebar-item", selected === child.label && "active")}
+                >
                   <img src={child.icon} alt={`${child.label}-icon`} />
                   <span>
                     {child.label}
@@ -77,12 +88,12 @@ const Sidebar = () => {
                       {child.label}
                     </div>
                   </span>
-                </NavLink>
-              </>
+                </Link>
+              </React.Fragment>
             ))}
           </div>
         ))}
-      </div>
+      </Stack>
     </nav>
   );
 };
