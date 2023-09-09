@@ -1,9 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+import 'remixicon/fonts/remixicon.css'
+import 'react-quill/dist/quill.snow.css';
 import './index.css'
 
 import {
@@ -12,16 +10,10 @@ import {
 } from "react-router-dom";
 import RootLayout from '@/layouts/RootLayout';
 import AddExercise from '@/pages/AddExercise';
-import { ThemeProvider } from '@emotion/react';
-import { createTheme } from '@mui/material';
+import { themeOptions } from './mui-theme-option';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-const theme = createTheme({
-  typography: {
-    fontFamily: [
-      'Kanit',
-    ].join(','),
-  },
-});
+const theme = createTheme(themeOptions);
 
 const router = createBrowserRouter([
   {

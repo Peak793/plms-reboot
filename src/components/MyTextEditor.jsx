@@ -13,7 +13,7 @@ const MyTextEditor = ({ value, onChange, placeholder }) => {
     [{ 'list': 'ordered' }, { 'list': 'bullet' }],
     [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
     [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
-    ['blockquote', 'code-block'],                       // text direction
+    ['blockquote', 'code-block', 'image'],                       // text direction
 
     [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
 
@@ -33,7 +33,7 @@ const MyTextEditor = ({ value, onChange, placeholder }) => {
       buttons.forEach((button, index) => {
         button.setAttribute('title', tooltips[index] || '');
       });
-    }, 0);
+    }, 1);
   }, []);
 
   return (
