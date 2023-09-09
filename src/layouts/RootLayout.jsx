@@ -7,7 +7,7 @@ const RootLayout = () => {
   return (
     <>
       <Sidebar />
-      <Box marginX={10}>
+      <Box marginX={10} marginBottom={10} >
         <UserAvatar />
         <Container maxWidth="xl" >
           <Outlet />

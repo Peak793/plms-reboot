@@ -91,19 +91,19 @@ export const themeOptions = {
         }
       }
     },
-    MuiInputBase: {
+    MuiOutlinedInput: {
       styleOverrides: {
-        root: {
-          '& input:-webkit-autofill, & input:-webkit-autofill:hover, & input:-webkit-autofill:focus, & input:-webkit-autofill:active': {
-            '-webkit-box-shadow': '0 0 0 1000px var(--mirage) inset',
-            '-webkit-text-fill-color': 'white'
-          },
-          '& input:-internal-autofill-selected': {
-            'background-color': 'var(--mirage) !important',
-            'color': 'white !important'
-          }
-        }
-      }
-    }
+        notchedOutline: {
+          borderColor: 'white',
+        },
+      },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        icon: {
+          color: 'white',
+        },
+      },
+    },
   }
 };

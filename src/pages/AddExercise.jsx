@@ -48,6 +48,22 @@ const AddExercise = () => {
             <KeywordCon />
           </Stack>
 
+          <Stack spacing={"20px"} sx={{
+            padding: "20px",
+            border: "1px solid #202739",
+            borderRadius: "8px",
+          }} >
+            <Stack direction={"row"} justifyContent={"space-between"} >
+              <Typography variant='h6' >Test case</Typography>
+              <Button variant='contained' size='medium' sx={{
+                paddingX: "25px",
+                borderRadius: "8px",
+                bgcolor: "var(--cerulean )",
+                textTransform: "none",
+              }} >Run all testcases</Button>
+            </Stack>
+          </Stack>
+
         </Stack>
       </Container>
     </Box>
