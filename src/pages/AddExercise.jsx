@@ -14,7 +14,7 @@ const AddExercise = () => {
   return (
     <Box>
       <Container>
-        <Stack spacing={"20px "}>
+        <Stack spacing={"20px"}>
           <MyBreadCrumbs items={[
             { label: 'My Groups', href: '#' },
             { label: 'Group 401', href: '#' },
