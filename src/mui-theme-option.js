@@ -105,5 +105,23 @@ export const themeOptions = {
         },
       },
     },
+    MuiSwitch: {
+      styleOverrides: {
+        track: {
+          background: "var(--raven)",
+          transform: "scaleY(2) scaleX(1.55)"
+        },
+        thumb: {
+          background: "white",
+          transform: "scale(1.1)"
+        },
+        switchBase: {
+          '&.Mui-checked + .MuiSwitch-track': {
+            backgroundColor: 'success.main',
+            opacity: 1.0,
+          },
+        },
+      }
+    }
   }
 };

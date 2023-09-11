@@ -7,6 +7,15 @@
   --frenchGray: #C9CACF;
   --cerulean : #0CA6E9;
   --azureRadiance: #007AFF;
+  --biscay: rgba(25,44,91,0.5);
+  --monday: #F4C152;
+  --tuesday: #F471B5;
+  --wednesday: #2BD4BD;
+  --thursday: #FB916F;
+  --friday: #3ABFF8;
+  --saturday: #828DF8;
+  --sunday: #FB6F84;
+  --hover: #0E5076;
 }
 
 @font-face {

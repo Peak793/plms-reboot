@@ -12,6 +12,8 @@ import RootLayout from '@/layouts/RootLayout';
 import AddExercise from '@/pages/AddExercise';
 import { themeOptions } from './mui-theme-option';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Home from '@/pages/Home';
+import MyGroups from './pages/MyGroups';
 
 const theme = createTheme(themeOptions);
 
@@ -21,8 +23,16 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       {
+        index: true,
+        element: <Home />
+      },
+      {
         path: "add-exercise",
         element: <AddExercise />
+      },
+      {
+        path: "mygroups",
+        element: <MyGroups />
       }
     ],
   },

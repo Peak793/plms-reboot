@@ -5,6 +5,7 @@ import { useState } from 'react';
 import MyCodeEditor from '@/components/MyCodeEditor';
 import MyTextEditor from '@/components/MyTextEditor';
 import KeywordCon from '../components/KeywordCon';
+import Testcases from '../components/Testcases';
 
 const AddExercise = () => {
   const [contentValue, setContentValue] = useState('')
@@ -48,21 +49,7 @@ const AddExercise = () => {
             <KeywordCon />
           </Stack>
 
-          <Stack spacing={"20px"} sx={{
-            padding: "20px",
-            border: "1px solid #202739",
-            borderRadius: "8px",
-          }} >
-            <Stack direction={"row"} justifyContent={"space-between"} >
-              <Typography variant='h6' >Test case</Typography>
-              <Button variant='contained' size='medium' sx={{
-                paddingX: "25px",
-                borderRadius: "8px",
-                bgcolor: "var(--cerulean )",
-                textTransform: "none",
-              }} >Run all testcases</Button>
-            </Stack>
-          </Stack>
+          <Testcases />
 
         </Stack>
       </Container>

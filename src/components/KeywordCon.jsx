@@ -1,11 +1,10 @@
-import { Stack, Typography } from "@mui/material"
-import Grid from '@mui/material/Unstable_Grid2';
+import { Stack, Typography, Grid } from "@mui/material"
 import ConstraintRule from "./ConstraintRule";
 
 const KeywordCon = () => {
   return (
-    <Grid container spacing={2}>
-      <Grid xs={12} md={6} >
+    <Grid container spacing={1}>
+      <Grid item xs={12} md={6} >
         <Stack spacing={3} >
           <Typography
             sx={{
@@ -15,7 +14,7 @@ const KeywordCon = () => {
           <ConstraintRule />
         </Stack>
       </Grid>
-      <Grid xs={12} md={6} >
+      <Grid item xs={12} md={6} >
         <Stack spacing={3} >
           <Typography
             sx={{
