@@ -1,16 +1,8 @@
 import { Stack, Typography, Box, Button, Grid } from "@mui/material"
 import PropTypes from 'prop-types';
+import { dayColor } from "../utils";
 
 const GroupCard = ({ groupNo, schedule, year, semester, department }) => {
-  const dayColor = {
-    "จันทร์": "var(--monday)",
-    "อังคาร": "var(--tuesday)",
-    "พุธ": "var(--wednesday)",
-    "พฤหัสบดี": "var(--thursday)",
-    "ศุกร์": "var(--friday)",
-    "เสาร์": "var(--saturday)",
-    "อาทิตย์": "var(--sunday)",
-  }
 
   return (
     <Grid item xs={12} md={4} >

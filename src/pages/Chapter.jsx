@@ -18,7 +18,7 @@ const Chapter = () => {
 
           <Stack spacing={1} direction={"row"} >
             <img src={folderIcon} alt="page name icon" />
-            <Typography variant='h6' component={"h1"} gutterBottom>Variables Expression Statement</Typography>
+            <Typography className='page-name' variant='h6' component={"h1"} gutterBottom>Variables Expression Statement</Typography>
           </Stack>
 
           <Grid container spacing={"10px"} >

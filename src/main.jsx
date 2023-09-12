@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Home from '@/pages/Home';
 import MyGroups from './pages/MyGroups';
 import Chapter from './pages/Chapter';
+import AvailableGroups from './pages/AvailableGroups';
 
 const theme = createTheme(themeOptions);
 
@@ -25,9 +26,10 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: "mygroups", element: <MyGroups /> },
-      { path: "mygroups/:groupId", element: <div>Group Page</div>, },
-      { path: "mygroups/:groupId/chapter/:chapterName", element: <Chapter /> },
-      { path: "mygroups/:groupId/chapter/:chapterName/add-exercise/:level", element: <AddExercise /> }
+      { path: "group/:groupId", element: <div>Group Page</div>, },
+      { path: "group/:groupId/chapter/:chapterName", element: <Chapter /> },
+      { path: "group/:groupId/chapter/:chapterName/add-exercise/:level", element: <AddExercise /> },
+      { path: "available-groups", element: <AvailableGroups /> }
     ],
   },
 ]);

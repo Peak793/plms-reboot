@@ -37,7 +37,7 @@ const MyGroups = () => {
           ]} />
           <Stack direction="row" spacing={"10px"} >
             <img src={slideShow} alt="slide show icon" />
-            <Typography variant='h6' component={"h1"} gutterBottom>My Groups</Typography>
+            <Typography className='page-name' variant='h6' component={"h1"} gutterBottom>My Groups</Typography>
           </Stack>
 
           <Grid container spacing={"10px"} sx={{

@@ -19,6 +19,7 @@
     "@mui/x-data-grid": "^6.13.0",
     "@uiw/codemirror-theme-github": "^4.21.13",
     "@uiw/react-codemirror": "^4.21.13",
+    "material-ui-popup-state": "^5.0.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-quill": "^2.0.0",
