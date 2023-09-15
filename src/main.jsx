@@ -16,6 +16,7 @@ import Home from '@/pages/Home';
 import MyGroups from './pages/MyGroups';
 import Chapter from './pages/Chapter';
 import AvailableGroups from './pages/AvailableGroups';
+import StudentList from './pages/StudentList';
 
 const theme = createTheme(themeOptions);
 
@@ -29,7 +30,8 @@ const router = createBrowserRouter([
       { path: "group/:groupId", element: <div>Group Page</div>, },
       { path: "group/:groupId/chapter/:chapterName", element: <Chapter /> },
       { path: "group/:groupId/chapter/:chapterName/add-exercise/:level", element: <AddExercise /> },
-      { path: "available-groups", element: <AvailableGroups /> }
+      { path: "group/:groupId/student-list", element: <StudentList /> },
+      { path: "available-groups", element: <AvailableGroups /> },
     ],
   },
 ]);
