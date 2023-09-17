@@ -14,9 +14,11 @@ const StudentList = () => {
           { label: 'My Groups', href: '#' },
           { label: 'Group 401', href: '#' },
         ]} />
-        <Stack direction="row" spacing={"10px"} alignItems={"center"} >
-          <img style={{ width: "24px", height: "18px" }} src={blueFolder} alt="slide show icon" />
-          <Typography className='page-name' variant='h6' component={"h1"} gutterBottom>Group 401 (Student)</Typography>
+        <Stack spacing={1} direction={"row"} >
+          <div className="page-icon" >
+            <img src={blueFolder} alt="page name icon" />
+          </div>
+          <Typography variant='h6' component={"h1"} gutterBottom>Variables Expression Statement</Typography>
         </Stack>
 
         <Stack spacing={"10px"}>

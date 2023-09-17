@@ -61,7 +61,9 @@ const AvailableGroups = () => {
           ]} />
 
           <Stack spacing={1} direction={"row"} >
-            <img src={peopleIcon} alt="page name icon" />
+            <div className="page-icon" >
+              <img src={peopleIcon} alt="page name icon" />
+            </div>
             <Typography variant='h6' component={"h1"} gutterBottom>Variables Expression Statement</Typography>
           </Stack>
 

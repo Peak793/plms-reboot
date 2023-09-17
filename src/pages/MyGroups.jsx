@@ -35,9 +35,11 @@ const MyGroups = () => {
           <MyBreadCrumbs items={[
             { label: 'My Groups', href: '#' },
           ]} />
-          <Stack direction="row" spacing={"10px"} >
-            <img src={slideShow} alt="slide show icon" />
-            <Typography className='page-name' variant='h6' component={"h1"} gutterBottom>My Groups</Typography>
+          <Stack spacing={1} direction={"row"} >
+            <div className="page-icon" >
+              <img src={slideShow} alt="page name icon" />
+            </div>
+            <Typography variant='h6' component={"h1"} gutterBottom>Variables Expression Statement</Typography>
           </Stack>
 
           <Grid container spacing={"10px"} sx={{
