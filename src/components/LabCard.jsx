@@ -2,9 +2,10 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Grid, Select, Stack, Typography, FormControl, MenuItem, InputLabel, Box,
-  TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Checkbox, Button, TablePagination, Link
+  TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Checkbox, Button, TablePagination, Link as MuiLink
 } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { Link } from 'react-router-dom';
 
 // Sub-components
 const TableHeader = () => (
@@ -46,13 +47,13 @@ const TableContent = ({ exerciseList, page, rowsPerPage }) => (
           />
         </TableCell>
         <TableCell align="left">
-          <Link sx={{
+          <MuiLink sx={{
             color: "white",
             ":hover": {
               color: "var(--blueRibbon)"
             },
             textOverflow: "ellipsis"
-          }}>{ex.name}</Link>
+          }}>{ex.name}</MuiLink>
         </TableCell>
       </TableRow>
     ))}
@@ -68,9 +69,11 @@ const Actions = () => (
       textTransform: "none",
       flexShrink: "0",
     }}>Update</Button>
-    <Button variant='outlined' size='medium' sx={{
-      textTransform: "none"
-    }} startIcon={<AddCircleIcon size="small" color="primary" />}>Add Lab</Button>
+    <Link to={"/instructor/group/:groupId/chapter/:chapterName/add-exercise/:level"} >
+      <Button variant='outlined' size='medium' sx={{
+        textTransform: "none"
+      }} startIcon={<AddCircleIcon size="small" color="primary" />}>Add Lab</Button>
+    </Link>
   </Stack>
 );
 

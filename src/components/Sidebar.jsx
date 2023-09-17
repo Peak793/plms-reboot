@@ -59,7 +59,7 @@ const Sidebar = () => {
       </Stack>
 
       <Stack spacing={1} className={getClassNames(classes, "sidebar-item-container")}>
-        <Link color={'inherit'} underline="none" component={NavLink} to="#" onClick={() => { setSelected("Dashboard") }} className={getClassNames(classes, "sidebar-item", selected === "Dashboard" && "active")}>
+        {/* <Link color={'inherit'} underline="none" component={NavLink} to="#" onClick={() => { setSelected("Dashboard") }} className={getClassNames(classes, "sidebar-item", selected === "Dashboard" && "active")}>
           <img src={chartIcon} alt="dashboard-icon" />
           <span>
             Dashboard
@@ -67,7 +67,7 @@ const Sidebar = () => {
               Dashboard
             </div>
           </span>
-        </Link>
+        </Link> */}
         {categories.map((category) => (
           <div key={category.id}>  {/* Here, added 'key' attribute */}
             <div className={getClassNames(classes, "category-text")}>{category.label}</div>

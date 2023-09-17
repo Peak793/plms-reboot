@@ -1,6 +1,7 @@
 import { Stack, Typography, Box, Button, Grid } from "@mui/material"
 import PropTypes from 'prop-types';
 import { dayColor } from "../utils";
+import { Link } from "react-router-dom";
 
 const GroupCard = ({ groupNo, schedule, year, semester, department }) => {
 
@@ -11,9 +12,6 @@ const GroupCard = ({ groupNo, schedule, year, semester, department }) => {
         height: "270px",
         borderRadius: "8px",
         padding: "30px 20px",
-        ":hover": {
-          bgcolor: "var(--hover)"
-        },
         transition: "all ease-in-out 0.2s"
       }} >
         <Typography variant="h5" >Group {groupNo}</Typography>
@@ -50,10 +48,12 @@ const GroupCard = ({ groupNo, schedule, year, semester, department }) => {
         <Stack direction={"row"} spacing={"10px"} sx={{
           width: "100%"
         }}>
-          <Button variant="contained" sx={{
-            borderRadius: "30px",
-            padding: "7px 25px",
-          }} >Exercise</Button>
+          <Link to={"/instructor/group/:groupId"} >
+            <Button variant="contained" sx={{
+              borderRadius: "30px",
+              padding: "7px 25px",
+            }} >Exercise</Button>
+          </Link>
           <Button variant="contained" sx={{
             borderRadius: "30px",
             padding: "7px 25px",

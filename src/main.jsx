@@ -12,12 +12,13 @@ import RootLayout from '@/layouts/RootLayout';
 import AddExercise from '@/pages/AddExercise';
 import { themeOptions } from './mui-theme-option';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Home from '@/pages/Home';
+/* import Home from '@/pages/Home'; */
 import MyGroups from './pages/MyGroups';
 import Chapter from './pages/Chapter';
 import AvailableGroups from './pages/AvailableGroups';
 import StudentList from './pages/StudentList';
 import StudentScore from './pages/StudentScore';
+import InsGroup from './pages/InsGroup';
 
 const theme = createTheme(themeOptions);
 
@@ -26,9 +27,9 @@ const router = createBrowserRouter([
     path: "/instructor",
     element: <RootLayout />,
     children: [
-      { index: true, element: <Home /> },
-      { path: "mygroups", element: <MyGroups /> },
-      { path: "group/:groupId", element: <div>Group Page</div>, },
+      /*       { index: true, element: <Home /> }, */
+      { index: true, element: <MyGroups /> },
+      { path: "group/:groupId", element: <InsGroup />, },
       { path: "group/:groupId/chapter/:chapterName", element: <Chapter /> },
       { path: "group/:groupId/chapter/:chapterName/add-exercise/:level", element: <AddExercise /> },
       { path: "group/:groupId/student-list", element: <StudentList /> },

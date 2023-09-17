@@ -33,7 +33,7 @@ const MyGroups = () => {
       <Container>
         <Stack spacing={"20px"} >
           <MyBreadCrumbs items={[
-            { label: 'My Groups', href: '#' },
+            { label: 'My Groups', href: '/instructor' },
           ]} />
           <Stack spacing={1} direction={"row"} >
             <div className="page-icon" >

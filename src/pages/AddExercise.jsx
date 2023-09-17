@@ -16,8 +16,8 @@ const AddExercise = () => {
       <Container>
         <Stack spacing={"20px"}>
           <MyBreadCrumbs items={[
-            { label: 'My Groups', href: '#' },
-            { label: 'Group 401', href: '#' },
+            { label: 'My Groups', href: '/instructor' },
+            { label: 'Group 401', href: '/instructor/group/:groupId' },
           ]} />
           <Stack spacing={1} direction={"row"} >
             <div className="page-icon" >

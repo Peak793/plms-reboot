@@ -11,8 +11,8 @@ const Chapter = () => {
         <Stack spacing={"20px"}>
 
           <MyBreadCrumbs items={[
-            { label: 'My Groups', href: '#' },
-            { label: 'Group 401', href: '#' },
+            { label: 'My Groups', href: '/instructor' },
+            { label: 'Group 401', href: '/instructor/group/1' },
             { label: 'Variables Expression Statement', href: '#' },
           ]} />
 

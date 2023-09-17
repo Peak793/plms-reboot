@@ -12,6 +12,7 @@ import {
 } from 'material-ui-popup-state/hooks'
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import { dayColor } from "../utils"
+import TimeSchedule from "../components/TimeSchedule";
 
 
 const AvailableGroups = () => {
@@ -174,9 +175,7 @@ const TableRow = ({ groupId, groupNo, year, semester, classDate, students, instr
         <Typography>{semester}</Typography>
       </Grid>
       <Grid item md={3} className="flex-center" sx={{ padding: "0px 2.5px" }} >
-        <Typography sx={{ borderRadius: "30px", bgcolor: dayColor[classDate.split(",")[0]] || "var(--raven)", color: "black", width: "fit-content", paddingX: "25px" }} >
-          {classDate}
-        </Typography>
+        <TimeSchedule classDate={classDate} />
       </Grid>
       <Grid item md={1} className="flex-center" sx={{ padding: "0px 2.5px" }} >
         <Typography>
