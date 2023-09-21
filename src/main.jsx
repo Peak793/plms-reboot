@@ -1,48 +1,52 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import 'remixicon/fonts/remixicon.css'
+/* eslint-disable react-refresh/only-export-components */
+import React, { lazy, Suspense } from 'react';
+import ReactDOM from 'react-dom/client';
 import 'react-quill/dist/quill.snow.css';
-import './index.css'
-
+import './index.css';
 import {
-  createBrowserRouter,
+  createHashRouter,
   RouterProvider,
+  Navigate,
 } from "react-router-dom";
-import RootLayout from '@/layouts/RootLayout';
-import AddExercise from '@/pages/AddExercise';
-import { themeOptions } from './mui-theme-option';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-/* import Home from '@/pages/Home'; */
-import MyGroups from './pages/MyGroups';
-import Chapter from './pages/Chapter';
-import AvailableGroups from './pages/AvailableGroups';
-import StudentList from './pages/StudentList';
-import StudentScore from './pages/StudentScore';
-import InsGroup from './pages/InsGroup';
+import { themeOptions } from './mui-theme-option';
+import RootLayout from '@/layouts/RootLayout';
+
+// Lazy-load page components
+const MyGroups = lazy(() => import('@/pages/MyGroups'));
+const AddExercise = lazy(() => import('@/pages/AddExercise'));
+const Chapter = lazy(() => import('@/pages/Chapter'));
+const AvailableGroups = lazy(() => import('@/pages/AvailableGroups'));
+const StudentList = lazy(() => import('@/pages/StudentList'));
+const StudentScore = lazy(() => import('@/pages/StudentScore'));
+const InsGroup = lazy(() => import('@/pages/InsGroup'));
 
 const theme = createTheme(themeOptions);
 
-const router = createBrowserRouter([
+const router = createHashRouter([
+  {
+    path: "/",
+    element: <Navigate to="/#" />,
+  },
   {
     path: "/instructor",
     element: <RootLayout />,
     children: [
-      /*       { index: true, element: <Home /> }, */
-      { index: true, element: <MyGroups /> },
-      { path: "group/:groupId", element: <InsGroup />, },
-      { path: "group/:groupId/chapter/:chapterName", element: <Chapter /> },
-      { path: "group/:groupId/chapter/:chapterName/add-exercise/:level", element: <AddExercise /> },
-      { path: "group/:groupId/student-list", element: <StudentList /> },
-      { path: "group/:groupId/score/:studentId", element: <StudentScore /> },
-      { path: "available-groups", element: <AvailableGroups /> },
+      { index: true, element: <Suspense fallback={<div>Loading...</div>}><MyGroups /></Suspense> },
+      { path: "group/:groupId", element: <Suspense fallback={<div>Loading...</div>}><InsGroup /></Suspense>, },
+      { path: "group/:groupId/chapter/:chapterName", element: <Suspense fallback={<div>Loading...</div>}><Chapter /></Suspense> },
+      { path: "group/:groupId/chapter/:chapterName/add-exercise/:level", element: <Suspense fallback={<div>Loading...</div>}><AddExercise /></Suspense> },
+      { path: "group/:groupId/student-list", element: <Suspense fallback={<div>Loading...</div>}><StudentList /></Suspense> },
+      { path: "group/:groupId/score/:studentId", element: <Suspense fallback={<div>Loading...</div>}><StudentScore /></Suspense> },
+      { path: "available-groups", element: <Suspense fallback={<div>Loading...</div>}><AvailableGroups /></Suspense> },
     ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ThemeProvider theme={theme} >
+    <ThemeProvider theme={theme}>
       <RouterProvider router={router} />
     </ThemeProvider>
-  </React.StrictMode>,
-)
+  </React.StrictMode >,
+);

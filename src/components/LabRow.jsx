@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Stack, Switch, Typography, Modal, Link as MuiLink } from "@mui/material"
+import { Stack, Switch, Typography, Modal, Link as MuiLink, Box } from "@mui/material"
 import { Link } from 'react-router-dom';
 import AllowTypeForm from './AllowTypeForm';
 
@@ -40,7 +40,9 @@ const LabRow = () => {
           open={isAccessModalOpen}
           onClose={() => setIsAccessModalOpen(false)}
         >
-          <AllowTypeForm title="Allow access exercise" open={setIsAccessModalOpen} />
+          <Box>
+            <AllowTypeForm title="Allow access exercise" open={setIsAccessModalOpen} />
+          </Box>
         </Modal>
         <Stack >
           <Typography fontSize={"12px"} sx={{ color: "var(--raven)" }} >Past due</Typography>
@@ -57,7 +59,9 @@ const LabRow = () => {
           open={isSubmitModalOpen}
           onClose={() => setIsSubmitModalOpen(false)}
         >
-          <AllowTypeForm title="Allow submit exercise" open={setIsSubmitModalOpen} />
+          <Box>
+            <AllowTypeForm title="Allow submit exercise" open={setIsSubmitModalOpen} />
+          </Box>
         </Modal>
         <Stack >
           <Typography fontSize={"12px"} sx={{ color: "var(--raven)" }} >Past due</Typography>

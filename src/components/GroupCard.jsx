@@ -54,10 +54,12 @@ const GroupCard = ({ groupNo, schedule, year, semester, department }) => {
               padding: "7px 25px",
             }} >Exercise</Button>
           </Link>
-          <Button variant="contained" sx={{
-            borderRadius: "30px",
-            padding: "7px 25px",
-          }} >Student</Button>
+          <Link to={"/instructor/group/:groupId/student-list"} >
+            <Button variant="contained" sx={{
+              borderRadius: "30px",
+              padding: "7px 25px",
+            }} >Student</Button>
+          </Link>
         </Stack>
 
       </Stack>

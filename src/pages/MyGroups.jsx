@@ -27,7 +27,7 @@ const groups = [
   },
 ]
 
-const MyGroups = () => {
+export default function MyGroups() {
   return (
     <Box>
       <Container>
@@ -59,5 +59,3 @@ const MyGroups = () => {
     </Box >
   )
 }
-
-export default MyGroups
