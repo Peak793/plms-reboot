@@ -13,7 +13,7 @@ export const themeOptions = {
     },
     secondary: {
       main: '#f50057',
-      light: '#f73378',
+      light: '#ffffff',
       dark: '#ab003c',
     },
     text: {

@@ -11,6 +11,8 @@ import {
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from './mui-theme-option';
 import RootLayout from '@/layouts/RootLayout';
+import SignIn from './pages/SignIn';
+import { CssBaseline } from '@mui/material';
 
 // Lazy-load page components
 const MyGroups = lazy(() => import('@/pages/MyGroups'));
@@ -21,12 +23,16 @@ const StudentList = lazy(() => import('@/pages/StudentList'));
 const StudentScore = lazy(() => import('@/pages/StudentScore'));
 const InsGroup = lazy(() => import('@/pages/InsGroup'));
 
-const theme = createTheme(themeOptions);
+const customTheme = createTheme(themeOptions);
 
 const router = createHashRouter([
   {
     path: "/",
     element: <Navigate to="/#" />,
+  },
+  {
+    path: "signin",
+    element: <SignIn />
   },
   {
     path: "/instructor",
@@ -45,7 +51,8 @@ const router = createHashRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={customTheme}>
+      <CssBaseline />
       <RouterProvider router={router} />
     </ThemeProvider>
   </React.StrictMode >,
