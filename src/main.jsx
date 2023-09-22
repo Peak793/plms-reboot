@@ -22,6 +22,9 @@ const AvailableGroups = lazy(() => import('@/pages/AvailableGroups'));
 const StudentList = lazy(() => import('@/pages/StudentList'));
 const StudentScore = lazy(() => import('@/pages/StudentScore'));
 const InsGroup = lazy(() => import('@/pages/InsGroup'));
+import Instruction from './pages/Instructions';
+import Examination from './pages/Examination'
+import Faq from './pages/Faq'
 
 const customTheme = createTheme(themeOptions);
 
@@ -45,6 +48,9 @@ const router = createHashRouter([
       { path: "group/:groupId/student-list", element: <Suspense fallback={<div>Loading...</div>}><StudentList /></Suspense> },
       { path: "group/:groupId/score/:studentId", element: <Suspense fallback={<div>Loading...</div>}><StudentScore /></Suspense> },
       { path: "available-groups", element: <Suspense fallback={<div>Loading...</div>}><AvailableGroups /></Suspense> },
+      { path: "in", element: <Instruction /> },
+      { path: "ex", element: <Examination /> },
+      { path: "Faq", element: <Faq /> },
     ],
   },
 ]);
