@@ -43,7 +43,7 @@ const Testcase = () => {
         }} >Run</Button>
       </Stack>
       <Grid container >
-        <Grid xs={12} md={6} padding={"0px 2.5px 0px 0px"} >
+        <Grid item xs={12} md={6} padding={"0px 2.5px 0px 0px"} >
           <CodeMirror
             basicSetup={{
               lineNumbers: false,
@@ -54,7 +54,7 @@ const Testcase = () => {
             height='150px'
           />
         </Grid>
-        <Grid className="hide-cursor" xs={12} md={6} padding={"0px 0px 0px 2.5px"}>
+        <Grid item className="hide-cursor" xs={12} md={6} padding={"0px 0px 0px 2.5px"}>
           <CodeMirror
             basicSetup={{
               lineNumbers: false,
