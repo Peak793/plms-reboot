@@ -43,8 +43,7 @@ self.onmessage = (event) => {
       output
     `);
 
-    response = { success: true, result: output.trim() };  // trim() to remove any trailing newlines
-    console.log(response)
+    response = { success: true, result: output.trim() };
   } catch (error) {
     response = { success: false, error: error.message };
   }

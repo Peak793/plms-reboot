@@ -1,8 +1,6 @@
 import PropTypes from "prop-types";
 import { useState } from 'react';
 import { Stack, Box, Typography, FormControl, RadioGroup, FormControlLabel, Radio, Paper, Button, TextField } from "@mui/material";
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { DateTimeField } from '@mui/x-date-pickers/DateTimeField';
 import checked from '@/assets/images/Checked.png';
 import { modalStyle } from '../utils';
@@ -135,24 +133,23 @@ const AllowTypeForm = ({ title, open }) => {
             marginTop: "10px",
           }} >
             <Stack direction={"row"} spacing={"10px"} alignItems="center">
-              <LocalizationProvider dateAdapter={AdapterMoment}>
-                <DateTimeField
-                  label="Start date"
-                  size='small'
-                  format="DD/MM/YYYY hh:mm A"
-                  value={dateTime.startDateTime}
-                  onChange={handleDateTimeChange('startDateTime')}
-                />
-              </LocalizationProvider>
-              <LocalizationProvider dateAdapter={AdapterMoment}>
-                <DateTimeField
-                  label="End date"
-                  size='small'
-                  format="DD/MM/YYYY hh:mm A"
-                  value={dateTime.endDateTime}
-                  onChange={handleDateTimeChange('endDateTime')}
-                />
-              </LocalizationProvider>
+
+              <DateTimeField
+                label="Start date"
+                size='small'
+                format="DD/MM/YYYY hh:mm A"
+                value={dateTime.startDateTime}
+                onChange={handleDateTimeChange('startDateTime')}
+              />
+
+              <DateTimeField
+                label="End date"
+                size='small'
+                format="DD/MM/YYYY hh:mm A"
+                value={dateTime.endDateTime}
+                onChange={handleDateTimeChange('endDateTime')}
+              />
+
             </Stack>
           </Paper>
         )}

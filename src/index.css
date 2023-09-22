@@ -133,3 +133,8 @@ body {
 .passwordField .MuiInputAdornment-root .MuiIconButton-root svg {
   fill: white !important;
 }
+
+.MuiPickersLayout-root svg,.MuiPickersLayout-root path {
+  color: white !important;
+  fill: white !important;
+}
