@@ -124,7 +124,7 @@ const EditProfile = () => {
             </Grid>
           </Grid>
           <Stack direction={"row"} justifyContent={"flex-end"} >
-            <Button variant="contained" color="primary" sx={{ paddingX: "25px" }} >Save</Button>
+            <Button variant="contained" color="primary" sx={{ paddingX: "25px " }} >Save</Button>
           </Stack>
         </Stack>
       </Container>

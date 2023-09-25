@@ -138,3 +138,11 @@ body {
   color: white !important;
   fill: white !important;
 }
+
+.Mui-disabled {
+  -webkit-text-fill-color: white !important ;
+}
+
+.Mui-disabled .MuiOutlinedInput-notchedOutline {
+  border-color: var(--raven) !important;
+}

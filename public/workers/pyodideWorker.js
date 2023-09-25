@@ -4,12 +4,12 @@ async function initializePyodide() {
   try {
     if (typeof self.loadPyodide === 'function') {
       self.pyodide = await self.loadPyodide();
-      self.postMessage({ status: 'initialized' });
+      self.postMessage({ status: 'initialized', message: "Pyodide is initialized", result: null });
     } else {
       throw new Error('loadPyodide function is not available.');
     }
   } catch (error) {
-    self.postMessage({ status: 'error', message: 'Failed to initialize Pyodide.' });
+    self.postMessage({ status: 'error', message: 'Failed to initialize Pyodide.', result: null });
   }
 }
 
@@ -17,7 +17,7 @@ initializePyodide();
 
 self.onmessage = (event) => {
   if (!self.pyodide) {
-    self.postMessage({ success: false, error: 'Pyodide is not initialized.' });
+    self.postMessage({ status: 'error', message: 'Pyodide is not initialized.', result: null });
     return;
   }
 
@@ -43,9 +43,9 @@ self.onmessage = (event) => {
       output
     `);
 
-    response = { success: true, result: output.trim() };
+    response = { ...JSON.parse(output) };
   } catch (error) {
-    response = { success: false, error: error.message };
+    response = { status: 'error', message: error.message, result: null };
   }
 
   self.postMessage(response);

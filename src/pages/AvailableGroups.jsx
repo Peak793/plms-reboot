@@ -52,7 +52,6 @@ const AvailableGroups = () => {
   const classDatePopupState = usePopupState({ variant: 'popover', popupId: 'classDateMenu' })
   const instructorPopupState = usePopupState({ variant: 'popover', popupId: 'instructorMenu' })
 
-  console.log(selectedClassDate)
   return (
     <Box>
       <Container>

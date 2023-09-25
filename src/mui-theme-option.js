@@ -94,7 +94,7 @@ export const themeOptions = {
     MuiOutlinedInput: {
       styleOverrides: {
         notchedOutline: {
-          borderColor: 'white',
+          borderColor: "var(--raven)",
         },
       },
     },
