@@ -1,8 +1,11 @@
 import { Box, Container, Stack, Typography, Button } from "@mui/material"
-import MyBreadCrumbs from '@/components/MyBreadCrumbs'
 import blueFolderIcon from '@/assets/images/BlueFolder-Icon.png'
 import avatarPlaceholder from '@/assets/images/AvatarPlaceholder.png'
 import classes from '@/assets/css/StudentScore.module.css'
+
+// components
+import MyBreadCrumbs from '@/components/MyBreadCrumbs'
+import Header from '@/components/Header'
 
 const StudentScore = () => {
   return (
@@ -13,12 +16,7 @@ const StudentScore = () => {
             { label: 'Available Groups', href: '#' },
           ]} />
 
-          <Stack spacing={1} direction={"row"} >
-            <div className="page-icon" >
-              <img src={blueFolderIcon} alt="page name icon" />
-            </div>
-            <Typography variant='h6' component={"h1"} gutterBottom>Group 401 (Student)</Typography>
-          </Stack>
+          <Header logoSrc={blueFolderIcon} title="Group 401 (Student)" />
 
           <Stack spacing={"10px"} direction={"row"} >
             <Box width={80} height={80} borderRadius={"8px"} overflow={"hidden"} >

@@ -5,20 +5,17 @@ export const themeOptions = {
     ].join(',')
   },
   palette: {
-    type: 'dark',
+    mode: "dark",
     primary: {
       main: '#0Ca6e9',
       dark: '#0e5076',
       light: '#00c1ff',
+      contrastText: '#ffffff',
     },
     secondary: {
       main: '#f50057',
-      light: '#ffffff',
+      light: '#f73378',
       dark: '#ab003c',
-    },
-    text: {
-      secondary: '#737984',
-      primary: '#ffffff',
     },
     error: {
       main: '#f44336',
@@ -26,18 +23,18 @@ export const themeOptions = {
       dark: '#d32f2f',
     },
     success: {
-      main: '#4caf50',
+      main: '#4EC753',
       light: '#81c784',
-      dark: '#388e3c',
+      dark: '#4EC753',
     },
     divider: 'rgba(255,255,255,0.2)',
     background: {
-      paper: '#1D283A',
       default: '#0f1729',
+      paper: '#1d283a',
     },
-  },
-  shape: {
-    borderRadius: 8,
+    text: {
+      primary: '#ffffff',
+    },
   },
   props: {
     MuiButton: {
@@ -67,7 +64,6 @@ export const themeOptions = {
     },
     MuiInputLabel: {
       margin: 'dense',
-      color: "white",
     },
     MuiRadio: {
       size: 'small',
@@ -80,48 +76,7 @@ export const themeOptions = {
       size: 'small',
     },
   },
-  components: {
-    MuiButton: {
-      defaultProps: {
-        color: 'primary',  // this will be the default color
-      },
-      styleOverrides: {
-        root: {
-          color: "white",
-        }
-      }
-    },
-    MuiOutlinedInput: {
-      styleOverrides: {
-        notchedOutline: {
-          borderColor: "var(--raven)",
-        },
-      },
-    },
-    MuiSelect: {
-      styleOverrides: {
-        icon: {
-          color: 'white',
-        },
-      },
-    },
-    MuiSwitch: {
-      styleOverrides: {
-        track: {
-          background: "var(--raven)",
-          transform: "scaleY(2) scaleX(1.55)"
-        },
-        thumb: {
-          background: "white",
-          transform: "scale(1.1)"
-        },
-        switchBase: {
-          '&.Mui-checked + .MuiSwitch-track': {
-            backgroundColor: 'success.main',
-            opacity: 1.0,
-          },
-        },
-      }
-    }
-  }
+  shape: {
+    borderRadius: 8,
+  },
 };

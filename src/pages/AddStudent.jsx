@@ -1,6 +1,9 @@
-import { Box, Stack, Typography } from "@mui/material"
-import MyBreadCrumbs from '@/components/MyBreadCrumbs'
+import { Box, Stack } from "@mui/material"
 import blueFolder from "@/assets/images/BlueFolder-Icon.png"
+
+// components
+import MyBreadCrumbs from '@/components/MyBreadCrumbs'
+import Header from "@/components/Header"
 
 const AddStudent = () => {
   return (
@@ -10,12 +13,9 @@ const AddStudent = () => {
           { label: 'My Groups', href: '#' },
           { label: 'Group 401', href: '#' },
         ]} />
-        <Stack spacing={1} direction={"row"} >
-          <div className="page-icon" >
-            <img src={blueFolder} alt="page name icon" />
-          </div>
-          <Typography variant='h6' component={"h1"} gutterBottom>Group 401</Typography>
-        </Stack>
+
+        <Header logoSrc={blueFolder} title="Group 401" />
+
       </Stack>
     </Box>
   )

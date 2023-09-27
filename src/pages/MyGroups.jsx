@@ -1,7 +1,10 @@
 import { Box, Container, Typography, Stack, Grid } from "@mui/material"
-import MyBreadCrumbs from '@/components/MyBreadCrumbs'
 import slideShow from '@/assets/images/SlideShow-Icon.png'
-import GroupCard from "../components/GroupCard"
+
+// components
+import MyBreadCrumbs from '@/components/MyBreadCrumbs'
+import GroupCard from "@/components/GroupCard"
+import Header from '@/components/Header'
 
 const groups = [
   {
@@ -35,12 +38,8 @@ export default function MyGroups() {
           <MyBreadCrumbs items={[
             { label: 'My Groups', href: '/instructor' },
           ]} />
-          <Stack spacing={1} direction={"row"} >
-            <div className="page-icon" >
-              <img src={slideShow} alt="page name icon" />
-            </div>
-            <Typography variant='h6' component={"h1"} gutterBottom>Variables Expression Statement</Typography>
-          </Stack>
+
+          <Header logoSrc={slideShow} title="Variables Expression Statement" />
 
           <Grid container spacing={"10px"} sx={{
             width: "100%"

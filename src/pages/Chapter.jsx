@@ -1,7 +1,8 @@
-import { Box, Stack, Container, Typography, Grid } from '@mui/material'
+import { Box, Stack, Container, Grid } from '@mui/material'
 import folderIcon from '@/assets/images/Folder-Icon.png'
 import MyBreadCrumbs from '@/components/MyBreadCrumbs'
-import LabCard from '../components/LabCard'
+import LabCard from '@/components/LabCard'
+import Header from '@/components/Header'
 import { leveledExerciseList } from '../placeholder-data/placeholder-data'
 
 const Chapter = () => {
@@ -16,12 +17,7 @@ const Chapter = () => {
             { label: 'Variables Expression Statement', href: '#' },
           ]} />
 
-          <Stack spacing={1} direction={"row"} >
-            <div className="page-icon" >
-              <img src={folderIcon} alt="page name icon" />
-            </div>
-            <Typography variant='h6' component={"h1"} gutterBottom>Variables Expression Statement</Typography>
-          </Stack>
+          <Header logoSrc={folderIcon} title="Variables Expression Statement" />
 
           <Grid container spacing={"10px"} >
             {leveledExerciseList.map((lv) => <LabCard key={lv.level} lv={lv} />)}

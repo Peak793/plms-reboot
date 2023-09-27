@@ -1,10 +1,15 @@
-import { Box, Button, Stack, Typography } from "@mui/material"
+import { Box, Button, Stack } from "@mui/material"
 import { Link } from "react-router-dom";
-import MyBreadCrumbs from '@/components/MyBreadCrumbs'
 import blueFolder from "@/assets/images/BlueFolder-Icon.png"
-import { mockStudentsLabScores } from "../utils";
+import { mockStudentsLabScores } from "@/utils";
 import { useState } from "react";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+
+// components
+import MyBreadCrumbs from '@/components/MyBreadCrumbs'
+import Header from '@/components/Header'
+
+const buttonStyle = { height: "100%", color: "white" }
 
 const StudentList = () => {
   const [students, setStudents] = useState(mockStudentsLabScores);
@@ -16,12 +21,8 @@ const StudentList = () => {
           { label: 'My Groups', href: '#' },
           { label: 'Group 401', href: '#' },
         ]} />
-        <Stack spacing={1} direction={"row"} >
-          <div className="page-icon" >
-            <img src={blueFolder} alt="page name icon" />
-          </div>
-          <Typography variant='h6' component={"h1"} gutterBottom>Group 401</Typography>
-        </Stack>
+
+        <Header logoSrc={blueFolder} title="Group 401" />
 
         <Stack spacing={"10px"}>
           <Box>
@@ -32,22 +33,22 @@ const StudentList = () => {
           <Stack direction={"row"} spacing={"5px"} width={"fit-content"} sx={{ position: "sticky", top: "0", bgcolor: "var(--ebony)", zIndex: "10", paddingY: "10px" }} >
             <Stack direction="row" spacing={"5px"} sx={{ position: "sticky", left: "80px", zIndex: "10", bgcolor: "var(--ebony)" }} >
               <Box width={120} className="table-head-column">
-                <Button fullWidth sx={{ height: "100%" }} >Avatar</Button>
+                <Button fullWidth sx={buttonStyle}  >Avatar</Button>
               </Box>
               <Box width={150} className="table-head-column">
-                <Button fullWidth sx={{ height: "100%" }} >Student ID</Button>
+                <Button fullWidth sx={buttonStyle} >Student ID</Button>
               </Box>
               <Box width={180} className="table-head-column">
-                <Button fullWidth sx={{ height: "100%" }} >Name</Button>
+                <Button fullWidth sx={buttonStyle} >Name</Button>
               </Box>
             </Stack>
             {[...Array(20)].map((_, index) => (
               <Box width={85} key={index} className="table-head-column">
-                <Button fullWidth sx={{ height: "100%" }} >Lab {index + 1} <br /> (10)</Button>
+                <Button fullWidth sx={buttonStyle} >Lab {index + 1} <br /> (10)</Button>
               </Box>
             ))}
             <Box width={85} className="table-head-column">
-              <Button fullWidth sx={{ height: "100%" }} >Total</Button>
+              <Button fullWidth sx={buttonStyle} >Total</Button>
             </Box>
           </Stack>
           {students.map((student, index) => (

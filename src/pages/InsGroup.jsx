@@ -4,7 +4,8 @@ import blueFolderIcon from '@/assets/images/BlueFolder-Icon.png'
 import classes from '@/assets/css/InsGroup.module.css'
 import TimeSchedule from "../components/TimeSchedule"
 import LoginIcon from '@mui/icons-material/Login';
-import LabRow from "../components/LabRow"
+import LabRow from "@/components/LabRow"
+import Header from "@/components/Header"
 
 const InsGroup = () => {
   return (
@@ -16,12 +17,7 @@ const InsGroup = () => {
             { label: 'Group 401', href: '#' },
           ]} />
 
-          <Stack spacing={1} direction={"row"} >
-            <div className="page-icon" >
-              <img src={blueFolderIcon} alt="page name icon" />
-            </div>
-            <Typography variant='h6' component={"h1"} gutterBottom>Group 401 (Student)</Typography>
-          </Stack>
+          <Header logoSrc={blueFolderIcon} title="Group 401" />
 
           <Grid container spacing={"10px"} >
             <Grid item xs={4} >
@@ -120,16 +116,16 @@ const InsGroup = () => {
             {/* Table Head */}
             <Stack direction={"row"} spacing={"5px"} sx={{ position: "sticky", top: "0", bgcolor: "var(--ebony)", zIndex: "10", paddingY: "10px" }} >
               <Box flex={1} className="table-head-column">
-                <Button fullWidth sx={{ height: "100%" }} >Chapter</Button>
+                <Button fullWidth sx={{ height: "100%", color: "white" }} >Chapter</Button>
               </Box>
               <Box width={100} className="table-head-column">
-                <Button fullWidth sx={{ height: "100%" }} >Score</Button>
+                <Button fullWidth sx={{ height: "100%", color: "white" }} >Score</Button>
               </Box>
               <Box width={300} className="table-head-column">
-                <Button fullWidth sx={{ height: "100%" }} >Access exercise</Button>
+                <Button fullWidth sx={{ height: "100%", color: "white" }} >Access exercise</Button>
               </Box>
               <Box width={300} className="table-head-column">
-                <Button fullWidth sx={{ height: "100%" }} >Allow submit</Button>
+                <Button fullWidth sx={{ height: "100%", color: "white" }} >Allow submit</Button>
               </Box>
             </Stack>
 

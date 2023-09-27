@@ -1,32 +1,22 @@
+/* eslint-disable react/prop-types */
 import {
-  Box,
-  Container,
-  Grid,
-  Stack,
-  Typography,
-  Avatar,
-  TextField,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  InputLabel,
-  Select,
-  MenuItem,
-  Button
-} from "@mui/material"
+  Box, Container, Grid, Stack, Typography, Avatar, TextField,
+  FormControl, FormLabel, RadioGroup, FormControlLabel, Radio,
+  InputLabel, Select, MenuItem, Button
+} from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import ForumIcon from '@mui/icons-material/Forum';
-import MyBreadCrumbs from "@/components/MyBreadCrumbs"
 import { styled } from "@mui/system";
+import MyBreadCrumbs from "@/components/MyBreadCrumbs";
+import Header from '@/components/Header';
 
 const boxStyle = {
   padding: "20px",
   border: "1px solid var(--raven)",
   borderRadius: "8px",
-  height: "100% "
-}
+  height: "100% ",
+  flex: "1"
+};
 
 const StyledDatePicker = styled(DatePicker)({
   '& svg, & path': {
@@ -35,101 +25,92 @@ const StyledDatePicker = styled(DatePicker)({
   }
 });
 
+// Reusable Text Field Component
+const MyTextField = ({ label, type = "text", ...props }) => (
+  <TextField fullWidth size="small" label={label} type={type} {...props} />
+);
+
+// Reusable Section Component
+const Section = ({ title, children }) => (
+  <Stack spacing={"30px"} sx={boxStyle}>
+    <Typography variant="h6">{title}</Typography>
+    {children}
+  </Stack>
+);
+
+// Form Fields Configuration
+const personalInfoFields = [
+  { label: "ID" },
+  { label: "First Name", flex: 1 },
+  { label: "Last Name", flex: 1 },
+  { label: "Nickname", flex: 1 },
+];
+
 const EditProfile = () => {
   return (
     <Box>
       <Container>
-        <Stack spacing={"20px"} >
-          <MyBreadCrumbs items={[
-            { label: 'Available Groups', href: '#' },
-          ]} />
-          <Stack spacing={1} direction={"row"} >
-            <div className="page-icon" >
-              <ForumIcon />
-            </div>
-            <Typography variant='h6' component={"h1"} gutterBottom>Variables Expression Statement</Typography>
-          </Stack>
+        <Stack spacing={"20px"}>
+          {/* Breadcrumbs and Header components */}
+          <MyBreadCrumbs items={[{ label: 'Edit Profile', href: '#' }]} />
+          <Header logoIcon={<ForumIcon />} title="Variables Expression Statement" />
 
-          <Grid container spacing={"10px"} >
-            <Grid item xs={12} md={6} >
-              <Stack spacing={"30px"} sx={boxStyle} >
-                <Box className="flex-center"  >
+          <Grid container spacing={"10px"}>
+            <Grid item xs={12} md={6}>
+              {/* Personal Information Section */}
+              <Section title="Personal Information">
+                <Box className="flex-center">
                   <Avatar alt="ชรินดา สนธิดี" src={""} sx={{ width: "120px", height: "120px" }} />
                 </Box>
-                <Typography variant="h6">
-                  Personal Information
-                </Typography>
-                <TextField size="small" type="text" label="ID" />
-                <Stack direction={"row"} spacing={"10px"} >
-                  <Box flex={1} item xs="6" sx={{ marginLeft: 0 }} >
-                    <TextField fullWidth type="text" size="small" label="First Name" />
-                  </Box>
-                  <Box flex={1} item xs="6" sx={{ marginLeft: 0 }} >
-                    <TextField fullWidth type="text" size="small" label="Last Name" />
-                  </Box>
-                </Stack>
-                <Stack direction={"row"} spacing={"10px"} >
-                  <Box flex={1} item xs="6" sx={{ marginLeft: 0 }} >
-                    <TextField fullWidth type="text" size="small" label="Nickname" />
-                  </Box>
-                  <Box flex={1} item xs="6" sx={{ marginLeft: 0 }} >
-                    <StyledDatePicker label="Date of Birth" slotProps={{ textField: { size: 'small' } }} />
-                  </Box>
-                </Stack>
+                {personalInfoFields.map(field => (
+                  <MyTextField key={field.label} label={field.label} style={{ flex: field.flex }} />
+                ))}
+                <StyledDatePicker label="Date of Birth" slotProps={{ textField: { size: 'small' } }} />
                 <FormControl>
-                  <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="row-radio-buttons-group"
-                    value="female"
-                  >
+                  <FormLabel id="gender-label">Gender</FormLabel>
+                  <RadioGroup row aria-labelledby="gender-label" name="gender" defaultValue="female">
                     <FormControlLabel value="male" control={<Radio />} label="Male" />
                     <FormControlLabel value="female" control={<Radio />} label="Female" />
                     <FormControlLabel value="other" control={<Radio />} label="Other" />
                   </RadioGroup>
                 </FormControl>
-              </Stack>
+              </Section>
             </Grid>
-            <Grid item xs={12} md={6} >
-              <Stack spacing={"10px"} sx={{ ...boxStyle, border: "0px", padding: "0px" }} >
-                <Stack spacing={"30px"} sx={{ ...boxStyle, flex: "1" }} >
-                  <Typography variant="h6">
-                    Contact
-                  </Typography>
+            <Grid item xs={12} md={6}>
+              {/* Contact Section */}
+              <Stack spacing="10px" height={"100%"} >
+                <Section title="Contact">
                   <FormControl fullWidth>
-                    <InputLabel size="small" id="demo-simple-select-label">Department</InputLabel>
+                    <InputLabel size="small" id="department-label">Department</InputLabel>
                     <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      /* value={age} */
+                      labelId="department-label"
+                      id="department"
                       label="Department"
                       size="small"
-                    /* onChange={handleChange} */
                     >
                       <MenuItem value={"วิศวกรรมศาสตร์"}>วิศวกรรมศาสตร์</MenuItem>
                     </Select>
                   </FormControl>
-                  <TextField fullWidth type="text" size="small" label="Email" />
-                  <TextField fullWidth type="text" size="small" label="Phone Number" />
-                </Stack>
-                <Stack spacing={"30px"} sx={{ ...boxStyle, flex: "1" }} >
-                  <Typography variant="h6">
-                    Password & Security
-                  </Typography>
-                  <TextField fullWidth type="password" size="small" label="New Password" />
-                  <TextField fullWidth type="password" size="small" label="Password re-enter" />
-                </Stack>
+                  <MyTextField label="Email" />
+                  <MyTextField label="Phone Number" />
+                </Section>
+                {/* Password & Security Section */}
+                <Section title="Password & Security">
+                  <MyTextField label="New Password" type="password" />
+                  <MyTextField label="Password re-enter" type="password" />
+                </Section>
               </Stack>
             </Grid>
           </Grid>
-          <Stack direction={"row"} justifyContent={"flex-end"} >
-            <Button variant="contained" color="primary" sx={{ paddingX: "25px " }} >Save</Button>
+
+          {/* Save Button */}
+          <Stack direction={"row"} justifyContent={"flex-end"}>
+            <Button variant="contained" color="primary" sx={{ paddingX: "25px " }}>Save</Button>
           </Stack>
         </Stack>
       </Container>
-    </Box >
-  )
-}
+    </Box>
+  );
+};
 
-export default EditProfile
+export default EditProfile;
