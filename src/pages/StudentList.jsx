@@ -1,8 +1,10 @@
 import { Box, Button, Stack, Typography } from "@mui/material"
+import { Link } from "react-router-dom";
 import MyBreadCrumbs from '@/components/MyBreadCrumbs'
 import blueFolder from "@/assets/images/BlueFolder-Icon.png"
 import { mockStudentsLabScores } from "../utils";
 import { useState } from "react";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const StudentList = () => {
   const [students, setStudents] = useState(mockStudentsLabScores);
@@ -18,10 +20,14 @@ const StudentList = () => {
           <div className="page-icon" >
             <img src={blueFolder} alt="page name icon" />
           </div>
-          <Typography variant='h6' component={"h1"} gutterBottom>Variables Expression Statement</Typography>
+          <Typography variant='h6' component={"h1"} gutterBottom>Group 401</Typography>
         </Stack>
 
         <Stack spacing={"10px"}>
+          <Box>
+            <Link to={"/instructor/group/:groupId/add-student"} ><Button variant="outlined" color="primary" startIcon={<AddCircleIcon color="primary" />} >Add Student</Button></Link>
+          </Box>
+
           {/* Table Head */}
           <Stack direction={"row"} spacing={"5px"} width={"fit-content"} sx={{ position: "sticky", top: "0", bgcolor: "var(--ebony)", zIndex: "10", paddingY: "10px" }} >
             <Stack direction="row" spacing={"5px"} sx={{ position: "sticky", left: "80px", zIndex: "10", bgcolor: "var(--ebony)" }} >

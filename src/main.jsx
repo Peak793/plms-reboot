@@ -29,6 +29,7 @@ import Instruction from './pages/Instructions';
 import Examination from './pages/Examination'
 import Faq from './pages/Faq'
 import EditProfile from './pages/EditProfile';
+import AddStudent from './pages/AddStudent';
 
 const customTheme = createTheme(themeOptions);
 
@@ -46,13 +47,14 @@ const router = createHashRouter([
           { path: "group/:groupId/chapter/:chapterName", element: <Suspense fallback={<div>Loading...</div>}><Chapter /></Suspense> },
           { path: "group/:groupId/chapter/:chapterName/add-exercise/:level", element: <Suspense fallback={<div>Loading...</div>}><AddExercise /></Suspense> },
           { path: "group/:groupId/student-list", element: <Suspense fallback={<div>Loading...</div>}><StudentList /></Suspense> },
+          { path: "group/:groupId/add-student", element: <AddStudent /> },
           { path: "group/:groupId/score/:studentId", element: <Suspense fallback={<div>Loading...</div>}><StudentScore /></Suspense> },
           { path: "available-groups", element: <Suspense fallback={<div>Loading...</div>}><AvailableGroups /></Suspense> },
-          { path: "in", element: <Instruction /> },
-          { path: "ex", element: <Examination /> },
-          { path: "Faq", element: <Faq /> },
         ],
       },
+      { path: "in", element: <Instruction /> },
+      { path: "ex", element: <Examination /> },
+      { path: "Faq", element: <Faq /> },
       { path: "edit-profile/:userId", element: <EditProfile /> }
     ]
   },
