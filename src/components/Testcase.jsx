@@ -1,7 +1,7 @@
 import { Stack, Typography, TextField, FormControlLabel, Switch, Button, Grid } from "@mui/material"
-import CodeMirror from '@uiw/react-codemirror';
-import { githubDark } from "@uiw/codemirror-theme-github"
 import { useState } from "react";
+import MyCodeEditor from "./MyCodeEditor";
+import TerminalBlock from "./TerminalBlock";
 
 const Testcase = () => {
   const [showToStudent, setShowToStudent] = useState(true);
@@ -42,38 +42,18 @@ const Testcase = () => {
           flexShrink: "0",
         }} >Run</Button>
       </Stack>
-      <Grid container >
-        <Grid item xs={12} md={6} padding={"0px 2.5px 0px 0px"} >
-          <CodeMirror
+      <Grid container spacing={"5px"} >
+        <Grid item xs={12} md={6} >
+          <MyCodeEditor
             basicSetup={{
               lineNumbers: false,
               foldGutter: false,
             }}
-            theme={githubDark}
-            mode={"python"}
             height='150px'
           />
         </Grid>
-        <Grid item className="hide-cursor" xs={12} md={6} padding={"0px 0px 0px 2.5px"}>
-          <CodeMirror
-            basicSetup={{
-              lineNumbers: false,
-              foldGutter: false,
-              highlightActiveLine: false,
-              highlightActiveLineGutter: false,
-              highlightSpecialChars: false,
-              history: false,
-              drawSelection: false,
-              dropCursor: false,
-              rectangularSelection: false,
-              crosshairCursor: true,
-              highlightSelectionMatches: false,
-            }}
-            readOnly
-            theme={githubDark}
-            mode={"python"}
-            height='150px'
-          />
+        <Grid item className="hide-cursor" xs={12} md={6}>
+          <TerminalBlock text={""} />
         </Grid>
       </Grid>
     </Stack >

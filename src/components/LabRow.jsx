@@ -23,7 +23,7 @@ const LabRow = () => {
   return (
     <Stack direction={"row"} padding="10px" bgcolor="var(--biscay)" borderRadius="8px" >
       <Stack flex={1} justifyContent="center" >
-        <MuiLink to={"/instructor/group/:groupId/chapter/:chapterName"} component={Link} color={'inherit'} underline='none' sx={{ ":hover": { color: "var(--blueRibbon)" } }} >
+        <MuiLink to={"/ins/g/:groupId/c/:chapterId"} component={Link} color={'inherit'} underline='none' sx={{ ":hover": { color: "var(--blueRibbon)" } }} >
           <Typography>1. Introduction (5)</Typography>
         </MuiLink>
       </Stack>

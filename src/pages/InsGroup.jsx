@@ -13,7 +13,7 @@ const InsGroup = () => {
       <Container>
         <Stack spacing={"20px"} >
           <MyBreadCrumbs items={[
-            { label: 'My Groups', href: '/instructor' },
+            { label: 'My Groups', href: '/ins' },
             { label: 'Group 401', href: '#' },
           ]} />
 

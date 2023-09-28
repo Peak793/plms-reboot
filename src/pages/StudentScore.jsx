@@ -2,10 +2,12 @@ import { Box, Container, Stack, Typography, Button } from "@mui/material"
 import blueFolderIcon from '@/assets/images/BlueFolder-Icon.png'
 import avatarPlaceholder from '@/assets/images/AvatarPlaceholder.png'
 import classes from '@/assets/css/StudentScore.module.css'
+import { Link } from "react-router-dom"
 
 // components
 import MyBreadCrumbs from '@/components/MyBreadCrumbs'
 import Header from '@/components/Header'
+import StudentBriefInfo from "../components/StudentBriefInfo"
 
 const StudentScore = () => {
   return (
@@ -18,33 +20,14 @@ const StudentScore = () => {
 
           <Header logoSrc={blueFolderIcon} title="Group 401 (Student)" />
 
-          <Stack spacing={"10px"} direction={"row"} >
-            <Box width={80} height={80} borderRadius={"8px"} overflow={"hidden"} >
-              <img className="image-contain" src={avatarPlaceholder} alt="" />
-            </Box>
-
-            <Stack className="outlined" spacing={"10px"} bgcolor={"var(--mirage)"} padding={"10px 20px"} borderRadius={"8px"} >
-              <Stack direction={"row"} spacing={"5px"}>
-                <Typography variant="subitem2" color="primary" >Student ID</Typography>
-                <Typography>63010202</Typography>
-              </Stack>
-              <Stack direction={"row"} spacing={"5px"}>
-                <Typography variant="subitem2" color="primary" >Name</Typography>
-                <Typography>ชรินดา สนธิดี (แบม)</Typography>
-              </Stack>
-            </Stack>
-
-            <Stack className="outlined" spacing={"10px"} bgcolor={"var(--mirage)"} padding={"10px 20px"} borderRadius={"8px"} >
-              <Stack direction={"row"} spacing={"5px"}>
-                <Typography variant="subitem2" color="primary" >Group ID</Typography>
-                <Typography>22020402</Typography>
-              </Stack>
-              <Stack direction={"row"} spacing={"5px"}>
-                <Typography variant="subitem2" color="primary" >Group</Typography>
-                <Typography>401</Typography>
-              </Stack>
-            </Stack>
-          </Stack>
+          <StudentBriefInfo
+            imgSrc={avatarPlaceholder}
+            studentId="63010202"
+            studentName="ชรินดา สนธิดี"
+            studentNickName="แบม"
+            groupId="22020402"
+            groupNo={401}
+          />
 
           <Stack spacing={"10px"} >
             {/* Table Head */}
@@ -75,10 +58,12 @@ const StudentScore = () => {
                 <Box width={395} className={classes['row-info-box']}>
                   <Stack direction={"row"} flexWrap={"wrap"} >
                     {[...Array(Math.floor(Math.random() * 10) + 1)].map((_, index) => (
-                      <Box key={index} className={classes['item-score-box']}>
-                        <Typography>ข้อ {index + 1}</Typography>
-                        <Typography>2/2</Typography>
-                      </Box>
+                      <Link key={index} to="/ins/g/:groupId/sub-his/stu/:studentId/c/:chapterId/ex/:exerciseId" >
+                        <Box className={classes['item-score-box']}>
+                          <Typography>ข้อ {index + 1}</Typography>
+                          <Typography>2/2</Typography>
+                        </Box>
+                      </Link>
                     ))}
                   </Stack>
                 </Box>

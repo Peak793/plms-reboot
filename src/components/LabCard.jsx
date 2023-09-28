@@ -69,7 +69,7 @@ const Actions = () => (
       textTransform: "none",
       flexShrink: "0",
     }}>Update</Button>
-    <Link to={"/instructor/group/:groupId/chapter/:chapterName/add-exercise/:level"} >
+    <Link to={"/ins/g/:groupId/c/:chapterId/add-ex/:level"} >
       <Button variant='outlined' size='medium' sx={{
         textTransform: "none"
       }} startIcon={<AddCircleIcon size="small" color="primary" />}>Add Lab</Button>

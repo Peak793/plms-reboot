@@ -146,3 +146,7 @@ body {
 .Mui-disabled .MuiOutlinedInput-notchedOutline {
   border-color: var(--raven) !important;
 }
+
+.nocursor {
+  pointer-events: none !important;
+}

@@ -1,4 +1,4 @@
-import { Box, Container, Typography, Stack, Grid } from "@mui/material"
+import { Box, Container, Stack, Grid } from "@mui/material"
 import slideShow from '@/assets/images/SlideShow-Icon.png'
 
 // components
@@ -36,7 +36,7 @@ export default function MyGroups() {
       <Container>
         <Stack spacing={"20px"} >
           <MyBreadCrumbs items={[
-            { label: 'My Groups', href: '/instructor' },
+            { label: 'My Groups', href: '/ins' },
           ]} />
 
           <Header logoSrc={slideShow} title="Variables Expression Statement" />

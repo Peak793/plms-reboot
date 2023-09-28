@@ -26,7 +26,7 @@ const StudentList = () => {
 
         <Stack spacing={"10px"}>
           <Box>
-            <Link to={"/instructor/group/:groupId/add-student"} ><Button variant="outlined" color="primary" startIcon={<AddCircleIcon color="primary" />} >Add Student</Button></Link>
+            <Link to={"/ins/g/:groupId/add-stu"} ><Button variant="outlined" color="primary" startIcon={<AddCircleIcon color="primary" />} >Add Student</Button></Link>
           </Box>
 
           {/* Table Head */}
@@ -57,11 +57,11 @@ const StudentList = () => {
               direction={"row"}
               spacing={"5px"}
               paddingY={"10px"}
-              bgcolor={"var(--biscay)"}
+              bgcolor={"#142142"}
               width={"fit-content"}
-              sx={{ borderRadius: "8px", position: "sticky", left: 0 }}
+              sx={{ borderRadius: "8px", position: "sticky", left: 0, ":hover": { bgcolor: "var(--hover)" } }} /* this one */
             >
-              <Stack direction="row" spacing={"5px"} sx={{ position: "sticky", left: "80px", zIndex: "10", bgcolor: "#142142" }}>
+              <Stack direction="row" spacing={"5px"} sx={{ position: "sticky", left: "80px", zIndex: "10", bgcolor: "inherit" }}> {/* and this one */}
                 <Box width={120} className="table-body-column" paddingX={"10px"}>
                   <img src={student.avatar} alt="user avatar" className="image" />
                 </Box>
@@ -73,11 +73,15 @@ const StudentList = () => {
                   {student.name}
                 </Box>
               </Stack>
-              {student.scores.map((score, i) => (
-                <Box key={i} width={85} className="table-body-column">
-                  {score}
-                </Box>
-              ))}
+              <Link to="/ins/g/:groupId/score/stu/:studentId" >
+                <Stack direction={"row"} spacing={"5px"} height={"100%"} >
+                  {student.scores.map((score, i) => (
+                    <Box key={i} width={85} className="table-body-column">
+                      {score}
+                    </Box>
+                  ))}
+                </Stack>
+              </Link>
               <Box width={85} className="table-body-column">
                 {student.scores.reduce((acc, curr) => acc + curr, 0)}
               </Box>

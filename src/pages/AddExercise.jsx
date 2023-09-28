@@ -14,7 +14,8 @@ import Header from '@/components/Header';
 
 const initialState = {
   contentValue: '',
-  codeValue: '# Source code',
+  codeValue: `# Source code
+`,
   isPyodideReady: false,
   kwConList: {}
 };
@@ -58,8 +59,8 @@ const AddExercise = () => {
       <Container>
         <Stack spacing={"20px"}>
           <MyBreadCrumbs items={[
-            { label: 'My Groups', href: '/instructor' },
-            { label: 'Group 401', href: '/instructor/group/:groupId' },
+            { label: 'My Groups', href: '/ins' },
+            { label: 'Group 401', href: '/ins/g/:groupId' },
           ]} />
 
           <Header logoSrc={folderIcon} title="Variables Expression Statement" />
@@ -71,7 +72,7 @@ const AddExercise = () => {
             </Stack>
             <TextField label={"Lab name"} />
             <MyTextEditor value={contentValue} onChange={(content) => dispatch({ type: "SET_CONTENT_VALUE", payload: content })} placeholder={'Write your content'} />
-            <MyCodeEditor value={codeValue} onChange={() => { }} />
+            <MyCodeEditor value={codeValue} highlight onChange={() => { }} />
             <KeywordCon />
           </Stack>
           <Testcases />

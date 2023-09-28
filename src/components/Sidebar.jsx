@@ -43,7 +43,7 @@ const Sidebar = () => {
   return (
     <nav className={getClassNames(classes, 'sidebar', isExpanded ? 'expanded' : 'collapsed')}>
       <Stack direction={'row'} className={getClassNames(classes, 'logo-container', isExpanded ? 'expanded' : 'collapsed')}>
-        <Link component={NavLink} color={'inherit'} underline="none" to="/" >
+        <Link component={NavLink} color={'inherit'} underline="none" to="/#" >
           <img
             src={logo}
             alt="logo"
