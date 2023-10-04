@@ -1,49 +1,42 @@
 import { Container, Box, Typography, Stack, Button, TextField } from '@mui/material';
-import { useEffect, useReducer, useRef } from 'react';
-import { getKwConSourceCode } from '../utils/pythonCode';
-import folderIcon from '@/assets/images/Folder-Icon.png';
-import { initSuggestWorker } from '../utils/workerUtils';
-
-//components
+import { useState, useRef } from 'react';
+import { useAtom } from 'jotai';
+import { keywordConstraintsList } from '../store/store';
 import MyBreadCrumbs from '@/components/MyBreadCrumbs';
 import MyCodeEditor from '@/components/MyCodeEditor';
 import MyTextEditor from '@/components/MyTextEditor';
-import KeywordCon from '@/components/KeywordCon';
-import Testcases from '@/components/Testcases';
+import KeywordCon from '../components/KeywordCon';
+import Testcases from '../components/Testcases';
+import { getKwConSourceCode } from '../utils/pythonCode';
+import folderIcon from '@/assets/images/Folder-Icon.png';
 import Header from '@/components/Header';
 
-const initialState = {
-  contentValue: '',
-  codeValue: `# Source code
-`,
-  isPyodideReady: false,
-  kwConList: {}
-};
+const initializeWorker = (ref, setIsPyodideReady, setKwConList) => {
+  if (ref.current) return;
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'SET_CONTENT_VALUE':
-      return { ...state, contentValue: action.payload };
-    case 'SET_CODE_VALUE':
-      return { ...state, codeValue: action.payload };
-    case 'SET_PYODIDE_READY':
-      return { ...state, isPyodideReady: action.payload };
-    case 'UPDATE_KW_CON_LIST':
-      return { ...state, kwConList: { ...state.kwConList, ...action.payload } };
-    default:
-      return state;
-  }
+  ref.current = new Worker('/workers/pyodideWorker.js');
+  ref.current.onmessage = ({ data }) => {
+    if (data.status === 'initialized') {
+      setIsPyodideReady(true);
+      console.log(data.message);
+    } else if (data.status === "success") {
+      setKwConList(prev => ({ ...prev, ...data.data }))
+    } else {
+      alert(data.message)
+    }
+  };
 };
 
 const AddExercise = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
   const pyodideWorkerRef = useRef(null);
+  const [contentValue, setContentValue] = useState('');
+  const [codeValue, setCodeValue] = useState(`# Source code
+`);
+  const [isPyodideReady, setIsPyodideReady] = useState(false);
+  const [, setKwConList] = useAtom(keywordConstraintsList)
 
-  useEffect(() => {
-    initSuggestWorker(pyodideWorkerRef, dispatch);
-  }, []);
+  initializeWorker(pyodideWorkerRef, setIsPyodideReady, setKwConList);
 
-  const { contentValue, codeValue, isPyodideReady } = state;
 
   const handleSubmit = () => {
     if (!isPyodideReady) {
@@ -71,8 +64,8 @@ const AddExercise = () => {
               <Button variant='contained' size='medium' sx={{ paddingX: "25px", borderRadius: "8px", bgcolor: "var(--cerulean )", textTransform: "none" }} onClick={handleSubmit}>Submit</Button>
             </Stack>
             <TextField label={"Lab name"} />
-            <MyTextEditor value={contentValue} onChange={(content) => dispatch({ type: "SET_CONTENT_VALUE", payload: content })} placeholder={'Write your content'} />
-            <MyCodeEditor value={codeValue} highlight onChange={() => { }} />
+            <MyTextEditor value={contentValue} onChange={setContentValue} placeholder={'Write your content'} />
+            <MyCodeEditor value={codeValue} highlight={true} onChange={setCodeValue} />
             <KeywordCon />
           </Stack>
           <Testcases />

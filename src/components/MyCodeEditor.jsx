@@ -1,17 +1,18 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import CodeMirror from '@uiw/react-codemirror';
 import { githubDark } from "@uiw/codemirror-theme-github"
 import { python } from '@codemirror/lang-python';
 
-const MyCodeEditor = (props) => {
+const MyCodeEditor = ({ highlight, basicSetup, height, ...props }) => {
   return (
     <CodeMirror
       {...props}
       theme={githubDark}
-      extensions={props.highlight ? [python()] : []}
-      basicSetup={{ tabSize: 4, ...props.basicSetup }}
+      extensions={highlight ? ([python()]) : ([])}
+      basicSetup={{ tabSize: 4, ...basicSetup }}
       mode={"python"}
-      minHeight={props.height ? props.height : '400px'}
+      minHeight={height ? height : '400px'}
     />
   );
 };
