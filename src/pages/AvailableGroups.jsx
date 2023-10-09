@@ -3,6 +3,8 @@ import { Box, Container, Stack } from "@mui/material"
 import peopleIcon from "@/assets/images/People-Icon.png"
 import { useState, useEffect } from "react"
 import { groups } from "@/utils";
+import { useSetAtom } from "jotai";
+import { sidebarSelectedAtom } from "../store/store";
 
 // components
 import Header from "@/components/Header";
@@ -15,6 +17,11 @@ const AvailableGroups = () => {
   const [selectedSemester, setSelectedSemester] = useState(new Set());
   const [selectedClassDate, setSelectedClassDate] = useState(new Set());
   const [selectedInstructor, setSelectedInstructor] = useState(new Set());
+  const setSelected = useSetAtom(sidebarSelectedAtom);
+
+  useEffect(() => {
+    setSelected(1.2);
+  }, [])
 
   useEffect(() => {
     let newFilteredGroups = groups.filter((group) => {

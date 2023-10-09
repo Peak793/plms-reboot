@@ -1,12 +1,22 @@
+import { useEffect } from 'react';
 import { Box, Stack, Container } from '@mui/material'
 import Newspaper from '@/assets/images/Newspaper-Icon.png'
 import classes from '@/assets/css/Instruction.module.css'
+import { useSetAtom } from "jotai";
+import { sidebarSelectedAtom } from "../store/store";
 
 // components
 import MyBreadCrumbs from '@/components/MyBreadCrumbs'
 import Header from '@/components/Header'
 
 const Instruction = () => {
+
+  const setSelected = useSetAtom(sidebarSelectedAtom);
+
+  useEffect(() => {
+    setSelected(2.1);
+  }, [])
+
   return (
     <Box>
       <Container>

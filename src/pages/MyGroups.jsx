@@ -2,6 +2,8 @@ import { Box, Container, Stack, Grid } from "@mui/material";
 import slideShow from '@/assets/images/SlideShow-Icon.png';
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useSetAtom } from "jotai";
+import { sidebarSelectedAtom } from "@/store/store";
 
 // components
 import MyBreadCrumbs from '@/components/MyBreadCrumbs';
@@ -10,10 +12,13 @@ import Header from '@/components/Header';
 
 function MyGroups() {
   const [groupList, setGroupList] = useState([]);
+  const setSelected = useSetAtom(sidebarSelectedAtom);
 
   useEffect(() => {
+    setSelected(1.1);
+
     const fetchGroupList = async () => {
-      const res = await axios.get(`${import.meta.env.VITE_BASE_API_URL}/supervisor_rest/getGroupListById`, { withCredentials: true });
+      const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/getGroupListById`, { withCredentials: true });
       setGroupList(res.data.payload.group_list ?? []);
     };
 

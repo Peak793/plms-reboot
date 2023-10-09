@@ -1,4 +1,4 @@
-import avatar from "@/assets/images/Avatar.png";
+import avatarPlaceholder from "@/assets/images/avatarPlaceholder.png";
 import classes from "@/assets/css/UserAvatar.module.css";
 import { getClassNames } from "../utils";
 import { Avatar, Stack, Typography } from "@mui/material";
@@ -22,7 +22,7 @@ const UserAvatar = () => {
           Guest User
         </Typography>
       )}
-      <Avatar className={getClassNames(classes, "avatar-image")} src={user ? avatar : ""} alt={user ? user.name : "Guest User"} sx={{ width: 60, height: 60 }} />
+      <Avatar className={getClassNames(classes, "avatar-image")} src={user ? `${import.meta.env.VITE_BASE_URL}/${user.avatar}` : avatarPlaceholder} alt={user ? user.name : "Guest User"} sx={{ width: 60, height: 60 }} />
     </Stack>
   );
 };

@@ -12,33 +12,42 @@ import { getClassNames } from "../utils";
 import { NavLink } from "react-router-dom";
 import { Stack } from "@mui/system";
 import { Link } from "@mui/material";
-
-const categories = [
-  {
-    id: 1,
-    label: "Group Management",
-    shortLabel: "Group",
-    icon: chartIcon,
-    children: [
-      { id: 1.1, label: "My Groups", icon: slideShow },
-      { id: 1.2, label: "Available Groups", icon: peopleIcon }
-    ],
-  },
-  {
-    id: 2,
-    label: "Instructions",
-    icon: chartIcon,
-    children: [
-      { id: 2.1, label: "Instructions", icon: newspaperIcon, },
-      { id: 2.2, label: "Examination", icon: bookIcon, },
-      { id: 2.3, label: "FAQ", icon: dialogBubble, },
-    ],
-  }
-]
+import { useAtomValue } from "jotai";
+import { userAtom, sidebarSelectedAtom } from "@/store/store";
 
 const Sidebar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [selected, setSelected] = useState("My Groups");
+  const selected = useAtomValue(sidebarSelectedAtom);
+  const user = useAtomValue(userAtom);
+
+  const homepage = {
+    'supervisor': '/ins',
+    'ta': '/ta',
+    'student': '/stu',
+  }
+
+  const categories = [
+    {
+      id: 1,
+      label: "Group Management",
+      shortLabel: "Group",
+      icon: chartIcon,
+      children: [
+        { id: 1.1, label: "My Groups", icon: slideShow, href: homepage[user.role] },
+        user.role === 'supervisor' && { id: 1.2, label: "Available Groups", icon: peopleIcon, href: '/ins/available-groups' },
+      ],
+    },
+    {
+      id: 2,
+      label: "Instructions",
+      icon: chartIcon,
+      children: [
+        { id: 2.1, label: "Instructions", icon: newspaperIcon, href: "/instruction" },
+        { id: 2.2, label: "Examination", icon: bookIcon, href: "/examination" },
+        { id: 2.3, label: "FAQ", icon: dialogBubble, href: "/faq" },
+      ],
+    }
+  ]
 
   return (
     <nav className={getClassNames(classes, 'sidebar', isExpanded ? 'expanded' : 'collapsed')}>
@@ -59,27 +68,17 @@ const Sidebar = () => {
       </Stack>
 
       <Stack spacing={1} className={getClassNames(classes, "sidebar-item-container")}>
-        {/* <Link color={'inherit'} underline="none" component={NavLink} to="#" onClick={() => { setSelected("Dashboard") }} className={getClassNames(classes, "sidebar-item", selected === "Dashboard" && "active")}>
-          <img src={chartIcon} alt="dashboard-icon" />
-          <span>
-            Dashboard
-            <div className={getClassNames(classes, "floating-text")}>
-              Dashboard
-            </div>
-          </span>
-        </Link> */}
         {categories.map((category) => (
-          <div key={category.id}>  {/* Here, added 'key' attribute */}
+          <div key={category.id}>
             <div className={getClassNames(classes, "category-text")}>{category.label}</div>
             {category.children.map((child) => (
-              <React.Fragment key={child.id}>  {/* Here, added 'key' attribute to the fragment */}
+              <React.Fragment key={child.id}>
                 <Link
                   color={'inherit'}
                   underline="none"
                   component={NavLink}
-                  to="#"
-                  onClick={() => { setSelected(child.label) }}
-                  className={getClassNames(classes, "sidebar-item", selected === child.label && "active")}
+                  to={child.href}
+                  className={getClassNames(classes, "sidebar-item", selected === child.id && "active")}
                 >
                   <img src={child.icon} alt={`${child.label}-icon`} />
                   <span>

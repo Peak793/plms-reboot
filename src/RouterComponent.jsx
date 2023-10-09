@@ -36,8 +36,8 @@ const RouterComponent = () => {
             <Route path="g/:groupId/sub-his/stu/:studentId/c/:chapterId/ex/:exerciseId" element={<Suspense fallback={<div>Loading...</div>}><SubmissionHistory /></Suspense>} />
             <Route path="available-groups" element={<Suspense fallback={<div>Loading...</div>}><AvailableGroups /></Suspense>} />
           </Route>
-          <Route path="in" element={<Instruction />} />
-          <Route path="ex" element={<Examination />} />
+          <Route path="instruction" element={<Instruction />} />
+          <Route path="examination" element={<Examination />} />
           <Route path="faq" element={<Faq />} />
           <Route path="edit-profile/:userId" element={<EditProfile />} />
         </Route>

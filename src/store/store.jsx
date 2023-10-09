@@ -9,3 +9,5 @@ export const keywordConstraintsList = atom({
 });
 
 export const userAtom = atomWithStorage('user', null);
+
+export const sidebarSelectedAtom = atom(0);

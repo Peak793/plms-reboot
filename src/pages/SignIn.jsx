@@ -41,7 +41,7 @@ const SignIn = () => {
     }))
 
     try {
-      const response = await axios.post(import.meta.env.VITE_BASE_API_URL + "/auth_rest/login", {
+      const response = await axios.post(import.meta.env.VITE_BASE_URL + "/index.php/auth_rest/login", {
         ...form
       }, { withCredentials: true });
 
