@@ -35,36 +35,26 @@ const SignIn = () => {
   }
 
   const handleSubmit = async () => {
-
     setForm(prev => ({
       ...prev,
       'password': ''
     }))
 
     try {
-      await axios.post(import.meta.env.VITE_BASE_API_URL + "/auth_rest/login", {
+      const response = await axios.post(import.meta.env.VITE_BASE_API_URL + "/auth_rest/login", {
         ...form
-      }, { withCredentials: true }).then(res => {
-        if (res.data.status) {
-          setUser(res.data.payload);
-          localStorage.setItem('user', JSON.stringify(res.data.payload));
-        }
-      })
+      }, { withCredentials: true });
+
+      // Set userAtom with the user data returned from the server
+      if (response.data.status) {
+        setUser(response.data.payload);
+      }
     } catch (error) {
-      localStorage.removeItem('user')
+      // Clear userAtom and localStorage if login fails
+      setUser(null);
       alert(error.response.data.message)
     }
   }
-
-  // const checkIsLoggedIn = async () => {
-  //   try {
-  //     const response = await axios.get(import.meta.env.VITE_BASE_API_URL + "/auth_rest/logged_in_check", { withCredentials: true });
-  //     console.log(response.data)
-
-  //   } catch (error) {
-  //     console.error(error.response ? error.response.data.message : error.message);
-  //   }
-  // }
 
   return (
     <Box sx={{ display: "grid", placeItems: "center", height: "100vh" }}>
@@ -107,9 +97,6 @@ const SignIn = () => {
         <Box className="flex-center" >
           <Button variant="contained" color="primary" onClick={handleSubmit} >Sign In</Button>
         </Box>
-        {/* <Box className="flex-center" >
-          <Button variant="contained" color="primary" onClick={checkIsLoggedIn} >fetch</Button>
-        </Box> */}
       </Stack>
     </Box>
   )

@@ -3,9 +3,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from 'jotai';
 import { userAtom } from '@/store/store';
+import PropTypes from 'prop-types';
 
 const ONE_MINUTE = 60000; // 1 minute in milliseconds
 
+// This component is used to check if the user is logged in or not
 const ProtectedRoute = ({ children }) => {
   const [user, setUser] = useAtom(userAtom);
   const navigate = useNavigate();
@@ -15,7 +17,6 @@ const ProtectedRoute = ({ children }) => {
       try {
         const response = await axios.get(import.meta.env.VITE_BASE_API_URL + "/auth_rest/logged_in_check", { withCredentials: true });
         if (response.data.status) {
-          console.log(response.data.payload)
           setUser(response.data.payload);
           localStorage.setItem('user', JSON.stringify(response.data.payload));
         } else {
@@ -42,8 +43,13 @@ const ProtectedRoute = ({ children }) => {
   }, []);
 
   return <>
-    {children}
+    {user && children}
   </>;
+};
+
+// PropTypes validation
+ProtectedRoute.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default ProtectedRoute;

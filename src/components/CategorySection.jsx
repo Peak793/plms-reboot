@@ -1,12 +1,12 @@
 import UserDefinedRule from "./UserDefinedRule";
 import PropTypes from 'prop-types';
 import { Link, Stack, Typography } from "@mui/material";
-import { useAtom } from "jotai";
+import { useSetAtom } from "jotai";
 import { keywordConstraintsList } from "../store/store";
 import SuggestedRule from "./SuggestedRule";
 
 const CategorySection = ({ title, category, rules }) => {
-  const [, setKwConList] = useAtom(keywordConstraintsList);
+  const setKwConList = useSetAtom(keywordConstraintsList);
 
   const defaultRule = {
     active: false,

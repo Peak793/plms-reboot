@@ -1,9 +1,9 @@
 import { Box, Stack, Container, Grid } from '@mui/material'
 import folderIcon from '@/assets/images/Folder-Icon.png'
-import MyBreadCrumbs from '@/components/MyBreadCrumbs'
-import LabCard from '@/components/LabCard'
-import Header from '@/components/Header'
 import { leveledExerciseList } from '../placeholder-data/placeholder-data'
+import MyBreadCrumbs from '@/components/MyBreadCrumbs'
+import Header from '@/components/Header'
+import LabLevel from '@/components/LabLevel'
 
 const Chapter = () => {
   return (
@@ -20,7 +20,7 @@ const Chapter = () => {
           <Header logoSrc={folderIcon} title="Variables Expression Statement" />
 
           <Grid container spacing={"10px"} >
-            {leveledExerciseList.map((lv) => <LabCard key={lv.level} lv={lv} />)}
+            {leveledExerciseList.map((lv) => <LabLevel key={lv.level} lv={lv} />)}
           </Grid>
 
         </Stack>

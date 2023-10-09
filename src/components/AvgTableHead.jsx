@@ -7,7 +7,7 @@ import {
   bindMenu,
 } from 'material-ui-popup-state/hooks'
 import { SemesterOptions, ClassDateOptions, InstructorOptions, dayColor } from '@/utils'
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import PropTypes from 'prop-types'
 
 const menuStyle = {
@@ -16,7 +16,14 @@ const menuStyle = {
   backdropFilter: "blur(35px)",
 }
 
-const AvgTableHead = ({ selectedSemester, selectedClassDate, selectedInstructor, setSelectedSemester, setSelectedClassDate, setSelectedInstructor }) => {
+const AvgTableHead = ({
+  selectedSemester,
+  selectedClassDate,
+  selectedInstructor,
+  setSelectedSemester,
+  setSelectedClassDate,
+  setSelectedInstructor
+}) => {
   const [semesterOptions, setSemesterOptions] = useState(SemesterOptions);
   const [classDateOptions, setClassDateOptions] = useState(ClassDateOptions);
   const [instructorOptions, setInstuctorOptions] = useState(InstructorOptions);
@@ -24,7 +31,7 @@ const AvgTableHead = ({ selectedSemester, selectedClassDate, selectedInstructor,
   const classDatePopupState = usePopupState({ variant: 'popover', popupId: 'classDateMenu' })
   const instructorPopupState = usePopupState({ variant: 'popover', popupId: 'instructorMenu' })
 
-  const toggleCheckbox = (setState, value) => {
+  const toggleCheckbox = useCallback((setState, value) => {
     setState((prevState) => {
       const newState = new Set(prevState);
       if (newState.has(value)) {
@@ -34,7 +41,7 @@ const AvgTableHead = ({ selectedSemester, selectedClassDate, selectedInstructor,
       }
       return newState;
     });
-  };
+  }, []);
 
   return (
     <Grid container sx={{
@@ -56,16 +63,20 @@ const AvgTableHead = ({ selectedSemester, selectedClassDate, selectedInstructor,
             <MenuItem>
               <Link variant="contained" color="primary" onClick={() => { setSelectedSemester(new Set()) }} >Uncheck All</Link>
             </MenuItem>
-            {[...semesterOptions].map(semester => <MenuItem key={semester}>
-              <FormControlLabel
-                sx={{ width: "100%" }}
-                control={<Checkbox
-                  checked={selectedSemester.has(semester)}
-                  onChange={() => toggleCheckbox(setSelectedSemester, semester)}
-                />}
-                label={semester}
-              />
-            </MenuItem>)}
+            {[...semesterOptions].map((semester) => (
+              <MenuItem key={semester}>
+                <FormControlLabel
+                  sx={{ width: "100%" }}
+                  control={
+                    <Checkbox
+                      checked={selectedSemester.has(semester)}
+                      onChange={() => toggleCheckbox(setSelectedSemester, semester)}
+                    />
+                  }
+                  label={semester}
+                />
+              </MenuItem>
+            ))}
           </FormGroup>
         </Menu>
       </Grid>

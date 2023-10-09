@@ -78,7 +78,7 @@ const Actions = () => (
 );
 
 // Main Component
-const LabCard = ({ lv }) => {
+const LabLevel = ({ lv }) => {
   const [filterRule, setFilterRule] = useState('all');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(6);
@@ -147,7 +147,7 @@ const LabCard = ({ lv }) => {
   );
 };
 
-LabCard.propTypes = {
+LabLevel.propTypes = {
   lv: PropTypes.shape({
     level: PropTypes.string.isRequired,
     exerciseList: PropTypes.arrayOf(
@@ -172,4 +172,4 @@ TableContent.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-export default LabCard 
+export default LabLevel 

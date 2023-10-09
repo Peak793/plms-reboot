@@ -1,7 +1,13 @@
 import { HashRouter as Router, Route, Routes, Outlet, Navigate } from "react-router-dom";
-import { Suspense } from 'react';
-import { lazy } from 'react';
+import { Suspense, lazy } from 'react';
 import RootLayout from '@/layouts/RootLayout';
+import SignIn from "@/pages/SignIn";
+import Instruction from '@/pages/Instructions';
+import Examination from '@/pages/Examination';
+import Faq from '@/pages/Faq';
+import EditProfile from '@/pages/EditProfile';
+import AddStudent from '@/pages/AddStudent';
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // Lazy-load page components
 const MyGroups = lazy(() => import('@/pages/MyGroups'));
@@ -11,22 +17,15 @@ const AvailableGroups = lazy(() => import('@/pages/AvailableGroups'));
 const StudentList = lazy(() => import('@/pages/StudentList'));
 const StudentScore = lazy(() => import('@/pages/StudentScore'));
 const InsGroup = lazy(() => import('@/pages/InsGroup'));
-import SignIn from "@/pages/SignIn"
-import Instruction from '@/pages/Instructions';
-import Examination from '@/pages/Examination'
-import Faq from '@/pages/Faq'
-import EditProfile from '@/pages/EditProfile';
-import AddStudent from '@/pages/AddStudent';
-import SubmissionHistory from '@/pages/SubmissionHistory';
-import ProtectedRoute from "./components/ProtectedRoute";
+const SubmissionHistory = lazy(() => import('@/pages/SubmissionHistory'));
 
 const RouterComponent = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<RootLayout />}>
-          <Route index element={<Navigate to="/signin" />} />
-          <Route path="ins" element={<ProtectedRoute><Outlet /></ProtectedRoute>}>
+        <Route index element={<Navigate to="/signin" />} />
+        <Route element={<ProtectedRoute><RootLayout /></ProtectedRoute>}>
+          <Route path="/ins" element={<Outlet />}  >
             <Route index element={<Suspense fallback={<div>Loading...</div>}><MyGroups /></Suspense>} />
             <Route path="g/:groupId" element={<Suspense fallback={<div>Loading...</div>}><InsGroup /></Suspense>} />
             <Route path="g/:groupId/c/:chapterId" element={<Suspense fallback={<div>Loading...</div>}><Chapter /></Suspense>} />
@@ -39,14 +38,13 @@ const RouterComponent = () => {
           </Route>
           <Route path="in" element={<Instruction />} />
           <Route path="ex" element={<Examination />} />
-          <Route path="Faq" element={<Faq />} />
+          <Route path="faq" element={<Faq />} />
           <Route path="edit-profile/:userId" element={<EditProfile />} />
-          <Route path="a" element={<Suspense fallback={<div>Loading...</div>}><MyGroups /></Suspense>} />
         </Route>
         <Route path="signin" element={<SignIn />} />
       </Routes>
-    </Router>
+    </Router >
   )
 }
 
-export default RouterComponent
+export default RouterComponent;

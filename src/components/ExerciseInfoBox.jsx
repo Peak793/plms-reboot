@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Box, Stack, Typography, Button, IconButton } from "@mui/material";
 import { useState } from "react";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
