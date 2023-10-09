@@ -9,12 +9,13 @@ const GroupCard = ({ groupNo, schedule, year, semester, department }) => {
     <Grid item xs={12} md={4} >
       <Stack spacing={"25px"} sx={{
         bgcolor: "var(--biscay)",
-        height: "270px",
+        height: "fit-content",
+        minHeight: "270px",
         borderRadius: "8px",
         padding: "30px 20px",
         transition: "all ease-in-out 0.2s"
       }} >
-        <Typography variant="h5" >Group {groupNo}</Typography>
+        <Typography variant="h4" color={'primary'} >Group {groupNo}</Typography>
         <Stack spacing={"10px"}>
           <Box sx={{
             padding: "2px 25px",

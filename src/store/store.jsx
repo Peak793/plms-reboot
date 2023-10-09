@@ -8,3 +8,5 @@ export const keywordConstraintsList = atom(
     "user_defined": []
   }
 )
+
+export const userAtom = atom(JSON.parse(localStorage.getItem('user')));

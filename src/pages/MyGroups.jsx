@@ -1,36 +1,27 @@
 import { Box, Container, Stack, Grid } from "@mui/material"
 import slideShow from '@/assets/images/SlideShow-Icon.png'
+import { useState } from "react"
 
 // components
 import MyBreadCrumbs from '@/components/MyBreadCrumbs'
 import GroupCard from "@/components/GroupCard"
 import Header from '@/components/Header'
-
-const groups = [
-  {
-    groupNo: "401",
-    schedule: "เสาร์, 09:00:00 - 12:00:00",
-    year: "2022",
-    semester: "1",
-    department: "Computer Engineering"
-  },
-  {
-    groupNo: "402",
-    schedule: "จันทร์, 09:00:00 - 12:00:00",
-    year: "2022",
-    semester: "1",
-    department: "Computer Engineering"
-  },
-  {
-    groupNo: "403 ",
-    schedule: "พุธ, 09:00:00 - 12:00:00",
-    year: "2022",
-    semester: "1",
-    department: "Computer Engineering"
-  },
-]
+import { useEffect } from "react"
+import axios from "axios"
 
 export default function MyGroups() {
+  const [groupList, setGroupList] = useState([])
+
+  useEffect(() => {
+    const fetchGroupList = async () => {
+      await axios.get(import.meta.env.VITE_BASE_API_URL + "/supervisor_rest/getGroupListById", { withCredentials: true }).then(res => {
+        setGroupList(res.data.payload.group_list)
+      })
+    }
+
+    fetchGroupList()
+  }, [])
+
   return (
     <Box>
       <Container>
@@ -39,15 +30,15 @@ export default function MyGroups() {
             { label: 'My Groups', href: '/ins' },
           ]} />
 
-          <Header logoSrc={slideShow} title="Variables Expression Statement" />
+          <Header logoSrc={slideShow} title="My Groups" />
 
           <Grid container spacing={"10px"} sx={{
             width: "100%"
           }} >
-            {groups.map(group => <GroupCard
-              key={group.groupNo}
-              groupNo={group.groupNo}
-              schedule={group.schedule}
+            {groupList.length !== 0 && groupList.map(group => <GroupCard
+              key={group.group_id}
+              groupNo={group.group_no}
+              schedule={`${group.day_of_week}, ${group.time_start} - ${group.time_end}`}
               year={group.year}
               semester={group.semester}
               department={group.department}

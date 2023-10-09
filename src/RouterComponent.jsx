@@ -1,4 +1,4 @@
-import { HashRouter as Router, Route, Routes, Outlet } from "react-router-dom";
+import { HashRouter as Router, Route, Routes, Outlet, Navigate } from "react-router-dom";
 import { Suspense } from 'react';
 import { lazy } from 'react';
 import RootLayout from '@/layouts/RootLayout';
@@ -18,13 +18,15 @@ import Faq from '@/pages/Faq'
 import EditProfile from '@/pages/EditProfile';
 import AddStudent from '@/pages/AddStudent';
 import SubmissionHistory from '@/pages/SubmissionHistory';
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const RouterComponent = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<RootLayout />}>
-          <Route path="ins" element={<Outlet />}>
+          <Route index element={<Navigate to="/signin" />} />
+          <Route path="ins" element={<ProtectedRoute><Outlet /></ProtectedRoute>}>
             <Route index element={<Suspense fallback={<div>Loading...</div>}><MyGroups /></Suspense>} />
             <Route path="g/:groupId" element={<Suspense fallback={<div>Loading...</div>}><InsGroup /></Suspense>} />
             <Route path="g/:groupId/c/:chapterId" element={<Suspense fallback={<div>Loading...</div>}><Chapter /></Suspense>} />
