@@ -2,9 +2,9 @@
 import { Box, Container, Stack } from "@mui/material"
 import peopleIcon from "@/assets/images/People-Icon.png"
 import { useState, useEffect } from "react"
-import { groups } from "@/utils";
 import { useSetAtom } from "jotai";
 import { sidebarSelectedAtom } from "../store/store";
+import axios from "axios";
 
 // components
 import Header from "@/components/Header";
@@ -13,27 +13,49 @@ import AvgTableRow from "@/components/AvgTableRow";
 import AvgTableHead from "@/components/AvgTableHead";
 
 const AvailableGroups = () => {
-  const [filteredGroups, setFilteredGroups] = useState(groups);
+  const [groups, setGroups] = useState([]);
+  const [filteredGroups, setFilteredGroups] = useState([]);
+  const [instructorOptions, setInstructorOptions] = useState(new Set());
   const [selectedSemester, setSelectedSemester] = useState(new Set());
   const [selectedClassDate, setSelectedClassDate] = useState(new Set());
   const [selectedInstructor, setSelectedInstructor] = useState(new Set());
   const setSelected = useSetAtom(sidebarSelectedAtom);
 
   useEffect(() => {
+    const fetchAllAvailableGroups = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/getAllAvailableGroups?year=${import.meta.env.VITE_YEAR}`, { withCredentials: true });
+
+        if (res.data.status) {
+          setGroups(res.data.payload);
+          //get all instructors name from res.data.payload
+          const instructors = res.data.payload.map((group) => group.lecturer_name);
+          setInstructorOptions(new Set(instructors));
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchAllAvailableGroups();
+
     setSelected(1.2);
   }, [])
 
   useEffect(() => {
     let newFilteredGroups = groups.filter((group) => {
+      const classDate = `${group.day_of_week + ", " + group.time_start + " - " + group.time_end}`;
+
       return (
         (selectedSemester.size === 0 || selectedSemester.has(group.semester)) &&
-        (selectedClassDate.size === 0 || selectedClassDate.has(group.classDate.split(',')[0])) &&
-        (selectedInstructor.size === 0 || selectedInstructor.has(group.instructor))
+        (selectedClassDate.size === 0 || selectedClassDate.has(classDate.split(',')[0])) &&
+        (selectedInstructor.size === 0 || selectedInstructor.has(group.lecturer_name))
       );
     });
 
     setFilteredGroups(newFilteredGroups);
-  }, [selectedSemester, selectedClassDate, selectedInstructor]);
+  }, [selectedSemester, selectedClassDate, selectedInstructor, groups]);
 
   return (
     <Box>
@@ -56,10 +78,11 @@ const AvailableGroups = () => {
               setSelectedSemester={setSelectedSemester}
               setSelectedClassDate={setSelectedClassDate}
               setSelectedInstructor={setSelectedInstructor}
+              instructorOptions={instructorOptions}
             />
 
             {/* Table body */}
-            {filteredGroups.map(g => <AvgTableRow key={g.groupId} groupId={g.groupId} groupNo={g.groupNo} year={g.year} semester={g.semester} classDate={g.classDate} students={g.students} instructor={g.instructor} />)}
+            {filteredGroups.map(g => <AvgTableRow key={g.group_id} groupId={g.group_id} groupNo={g.group_no} year={g.year} semester={g.semester} classDate={`${g.day_of_week + ", " + g.time_start + " - " + g.time_end}`} students={g.num_students} instructor={g.lecturer_name} />)}
 
           </Stack>
 

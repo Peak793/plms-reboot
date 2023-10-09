@@ -34,8 +34,8 @@ const AvgTableRow = ({
           {students}
         </Typography>
       </Grid>
-      <Grid item md={2} className="flex-center" sx={{ padding: "0px 2.5px" }} >
-        <Typography>{instructor}</Typography>
+      <Grid item md={2} className="flex-start" sx={{ padding: "0px 2.5px" }} >
+        <Typography sx={{ textAlign: 'center', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{instructor}</Typography>
       </Grid>
     </Grid>
   )

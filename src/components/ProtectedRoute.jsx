@@ -36,7 +36,7 @@ const ProtectedRoute = ({ children }) => {
     performLoginCheck();
 
     // Periodically check isLoggedIn every 1 minute
-    const intervalId = setInterval(performLoginCheck, ONE_MINUTE);
+    const intervalId = setInterval(performLoginCheck, 0.5 * ONE_MINUTE);
 
     // Clean up the interval when the component is unmounted
     return () => clearInterval(intervalId);

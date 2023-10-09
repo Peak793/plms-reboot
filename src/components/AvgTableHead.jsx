@@ -22,11 +22,11 @@ const AvgTableHead = ({
   selectedInstructor,
   setSelectedSemester,
   setSelectedClassDate,
-  setSelectedInstructor
+  setSelectedInstructor,
+  instructorOptions
 }) => {
-  const [semesterOptions, setSemesterOptions] = useState(SemesterOptions);
-  const [classDateOptions, setClassDateOptions] = useState(ClassDateOptions);
-  const [instructorOptions, setInstuctorOptions] = useState(InstructorOptions);
+  const [semesterOptions,] = useState(SemesterOptions);
+  const [classDateOptions,] = useState(ClassDateOptions);
   const semesterPopupState = usePopupState({ variant: 'popover', popupId: 'semesterMenu' })
   const classDatePopupState = usePopupState({ variant: 'popover', popupId: 'classDateMenu' })
   const instructorPopupState = usePopupState({ variant: 'popover', popupId: 'instructorMenu' })
@@ -144,9 +144,11 @@ AvgTableHead.propTypes = {
   selectedSemester: PropTypes.instanceOf(Set).isRequired,
   selectedClassDate: PropTypes.instanceOf(Set).isRequired,
   selectedInstructor: PropTypes.instanceOf(Set).isRequired,
+  instructorOptions: PropTypes.instanceOf(Set).isRequired,
   setSelectedSemester: PropTypes.func.isRequired,
   setSelectedClassDate: PropTypes.func.isRequired,
   setSelectedInstructor: PropTypes.func.isRequired,
+
 }
 
 export default AvgTableHead

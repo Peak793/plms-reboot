@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { dayColor } from "../utils";
 import { Link } from "react-router-dom";
 
-const GroupCard = ({ groupNo, schedule, year, semester, department }) => {
+const GroupCard = ({ id, groupNo, schedule, year, semester, department }) => {
   const day = schedule.split(",")[0];
 
   return (
@@ -34,11 +34,11 @@ const GroupCard = ({ groupNo, schedule, year, semester, department }) => {
         </Stack>
 
         <Stack direction="row" spacing={2} sx={{ width: "100%" }}>
-          <Link to={`/ins/g/${groupNo}`}>
+          <Link to={`/ins/g/${id}`}>
             <Button variant="contained" sx={{ borderRadius: "30px", padding: "7px 25px" }}>Exercise</Button>
           </Link>
 
-          <Link to={`/ins/g/${groupNo}/stu-list`}>
+          <Link to={`/ins/g/${id}/stu-list`}>
             <Button variant="contained" sx={{ borderRadius: "30px", padding: "7px 25px" }}>Student</Button>
           </Link>
         </Stack>
@@ -55,6 +55,7 @@ const TypographyStack = ({ label, value }) => (
 );
 
 GroupCard.propTypes = {
+  id: PropTypes.string.isRequired,
   groupNo: PropTypes.string.isRequired,
   schedule: PropTypes.string.isRequired,
   year: PropTypes.string.isRequired,

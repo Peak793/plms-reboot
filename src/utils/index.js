@@ -30,7 +30,7 @@ export const groups = [
 ]
 
 export const SemesterOptions = new Set(["1", "2"])
-export const ClassDateOptions = new Set(["จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์", "อาทิตย์"])
+export const ClassDateOptions = new Set(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"])
 export const InstructorOptions = new Set(["ชรินดา สนธิดี"])
 
 export const mockStudentsLabScores = [

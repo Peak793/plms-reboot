@@ -16,9 +16,8 @@ function MyGroups() {
 
   useEffect(() => {
     setSelected(1.1);
-
     const fetchGroupList = async () => {
-      const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/getGroupListById`, { withCredentials: true });
+      const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/getGroupListById?year=${import.meta.env.VITE_YEAR}`, { withCredentials: true });
       setGroupList(res.data.payload.group_list ?? []);
     };
 
@@ -37,6 +36,7 @@ function MyGroups() {
             {groupList.map((group) => (
               <GroupCard
                 key={group.group_id}
+                id={group.group_id}
                 groupNo={group.group_no}
                 schedule={`${group.day_of_week}, ${group.time_start} - ${group.time_end}`}
                 year={group.year}
