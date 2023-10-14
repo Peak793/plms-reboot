@@ -1,36 +1,45 @@
+/* eslint-disable react/prop-types */
 import { Stack, TextField, FormControl, IconButton } from "@mui/material"
 import AddCircleTwoToneIcon from '@mui/icons-material/AddCircleTwoTone';
-import PropTypes from "prop-types"
-import { useAtom } from 'jotai';
-import { keywordConstraintsList } from '../store/store';
+import { useAtomValue, useAtom } from 'jotai';
+import { suggestedConstraints, userDefinedConstraints } from '../store/store';
 
-const SuggestedRule = ({ category, ruleIndex }) => {
-  const [kwConList, setKwConList] = useAtom(keywordConstraintsList);
+const SuggestedRule = ({ ruleCategory, ruleIndex }) => {
+  const sugested = useAtomValue(suggestedConstraints)
+  const [userDefined, setUserDefined] = useAtom(userDefinedConstraints)
 
-  const rule = kwConList[category][ruleIndex]
+  const rule = sugested[ruleCategory][ruleIndex]
 
   const handleAddingRule = () => {
+    const isDuplicate = userDefined[ruleCategory].some((userRule) => userRule.keyword === rule.keyword);
+
+    if (isDuplicate) {
+      // handle duplicate rule
+      alert(`A rule with the keyword "${rule.keyword}" already exists in the "${ruleCategory}" category.`);
+      return;
+    }
+
     const newRule = {
-      active: true,
       keyword: rule.keyword,
+      active: true,
       type: "eq",
       limit: rule.limit,
     };
 
-    setKwConList(prev => {
-      const updatedUserDefined = [...prev["user_defined"], newRule];
-      return {
+    setUserDefined((prev) => {
+      const newKwConList = {
         ...prev,
-        ["user_defined"]: updatedUserDefined,
+        [ruleCategory]: [...prev[ruleCategory], newRule],
       };
+      return newKwConList;
     });
-  }
+  };
 
   return (
     <Stack direction={'row'} spacing={1} sx={{ paddingLeft: "20px" }} >
       <Stack direction={"row"} spacing={1}>
         <TextField disabled type="text" size="small" value={rule.keyword} sx={{
-          width: "140px",
+          width: "250px",
           "& .MuiInputBase-input.Mui-disabled": {
             WebkitTextFillColor: "#000000",
           },
@@ -49,16 +58,12 @@ const SuggestedRule = ({ category, ruleIndex }) => {
           </Stack>
         </FormControl>
       </Stack>
-      <IconButton onClick={handleAddingRule} >
+      <IconButton onClick={handleAddingRule}>
         <AddCircleTwoToneIcon color="success" />
       </IconButton>
     </Stack>
   )
 }
 
-SuggestedRule.propTypes = {
-  category: PropTypes.string.isRequired,
-  ruleIndex: PropTypes.number.isRequired,
-}
 
 export default SuggestedRule

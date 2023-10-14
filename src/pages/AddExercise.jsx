@@ -1,8 +1,8 @@
 import { useState, useRef } from 'react';
-import { useAtom } from 'jotai';
+import { useSetAtom } from 'jotai';
 import { Box, Button, Container, Stack, TextField, Typography } from '@mui/material';
 import folderIcon from '@/assets/images/Folder-Icon.png';
-import { keywordConstraintsList } from '../store/store';
+import { suggestedConstraints } from '../store/store';
 import { getKwConSourceCode } from '../utils/pythonCode';
 import Header from '@/components/Header';
 import KeywordCon from '@/components/KeywordCon';
@@ -11,7 +11,7 @@ import MyCodeEditor from '@/components/MyCodeEditor';
 import MyTextEditor from '@/components/MyTextEditor';
 import Testcases from '@/components/Testcases';
 
-const initializeWorker = (ref, setIsPyodideReady, setKwConList) => {
+const initializeWorker = (ref, setIsPyodideReady, setSuggested) => {
   if (ref.current) return;
 
   ref.current = new Worker('/workers/pyodideWorker.js');
@@ -20,7 +20,7 @@ const initializeWorker = (ref, setIsPyodideReady, setKwConList) => {
       setIsPyodideReady(true);
       console.log(data.message);
     } else if (data.status === "success") {
-      setKwConList(prev => ({ ...prev, ...data.data }))
+      setSuggested(data.data)
     } else {
       alert(data.message)
     }
@@ -32,9 +32,9 @@ const AddExercise = () => {
   const [contentValue, setContentValue] = useState('');
   const [codeValue, setCodeValue] = useState(`# Source code\n`);
   const [isPyodideReady, setIsPyodideReady] = useState(false);
-  const [, setKwConList] = useAtom(keywordConstraintsList);
+  const setSuggested = useSetAtom(suggestedConstraints);
 
-  initializeWorker(pyodideWorkerRef, setIsPyodideReady, setKwConList);
+  initializeWorker(pyodideWorkerRef, setIsPyodideReady, setSuggested);
 
   const handleSubmit = () => {
     if (!isPyodideReady) {
@@ -63,7 +63,7 @@ const AddExercise = () => {
             </Stack>
             <TextField label="Lab name" />
             <MyTextEditor value={contentValue} onChange={setContentValue} placeholder="Write your content" />
-            <MyCodeEditor value={codeValue} highlight={true} onChange={setCodeValue} />
+            <MyCodeEditor value={codeValue} highlight={true} onChange={setCodeValue} maxHeight={"400px"} />
             <KeywordCon />
           </Stack>
 

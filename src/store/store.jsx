@@ -1,11 +1,20 @@
 import { atomWithStorage } from 'jotai/utils';
 import { atom } from 'jotai';
 
-export const keywordConstraintsList = atom({
-  "builtin_functions": [],
+export const suggestedConstraints = atom({
   "reserved_words": [],
-  "other": [],
-  "user_defined": []
+  "functions": [],
+  "methods": [],
+  "classes": [],
+  "variables": [],
+});
+
+export const userDefinedConstraints = atom({
+  "reserved_words": [],
+  "functions": [],
+  "methods": [],
+  "classes": [],
+  "variables": [],
 });
 
 export const userAtom = atomWithStorage('user', null);

@@ -1,57 +1,84 @@
-import UserDefinedRule from "./UserDefinedRule";
-import PropTypes from 'prop-types';
-import { Link, Stack, Typography } from "@mui/material";
-import { useSetAtom } from "jotai";
-import { keywordConstraintsList } from "../store/store";
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
+import { Stack, Typography, Accordion, AccordionSummary, AccordionDetails, Link, Box } from "@mui/material";
+import { useAtom } from "jotai";
+import { suggestedConstraints, userDefinedConstraints } from "../store/store";
 import SuggestedRule from "./SuggestedRule";
+import UserDefinedRule from "./UserDefinedRule";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const CategorySection = ({ title, category, rules }) => {
-  const setKwConList = useSetAtom(keywordConstraintsList);
 
-  const defaultRule = {
-    active: false,
-    keyword: "",
-    type: "eq",
-    limit: null,
+const CategorySection = ({ title, category, ruleCategory }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [suggeted, setSuggeted] = useAtom(suggestedConstraints);
+  const [userDefined, setUserDefined] = useAtom(userDefinedConstraints);
+  const rules = category == "suggested" ? suggeted[ruleCategory] : userDefined[ruleCategory];
+
+  useEffect(() => {
+    if (rules.length !== 0) {
+      setIsExpanded(true);
+    }
+  }, [rules]);
+
+  const handleChange = () => {
+    setIsExpanded((prevExpanded) => !prevExpanded);
   };
 
-  const handleAddingRule = () => {
-    setKwConList(prev => {
-      const updatedCategory = [...(prev[category] || []), defaultRule];
-      return {
+  const handleAddingUserDefined = () => {
+    // const isDuplicate = userDefined[ruleCategory].some((userRule) => userRule.keyword === rule.keyword);
+
+    // if (isDuplicate) {
+    //   // handle duplicate rule
+    //   alert(`A rule with the keyword "${rule.keyword}" already exists in the "${ruleCategory}" category.`);
+    //   return;
+    // }
+
+    const newRule = {
+      keyword: "",
+      active: true,
+      type: "eq",
+      limit: null,
+    };
+
+    setUserDefined((prev) => {
+      const newKwConList = {
         ...prev,
-        [category]: updatedCategory,
+        [ruleCategory]: [...prev[ruleCategory], newRule],
       };
+      return newKwConList;
     });
   }
 
   return (
-    <Stack spacing={"10px"} >
-      <Typography sx={{ textDecoration: "underline", textUnderlineOffset: "5px" }} >{title}:</Typography>
-      {rules.length !== 0 ? (
-        rules.map((rule, index) => category === "user_defined" ?
-          <UserDefinedRule key={index} category={category} ruleIndex={index} /> :
-          <SuggestedRule key={index} category={category} ruleIndex={index} />
-        )
-      ) : (
-        <Typography color={"var(--raven)"} >No constraints added yet.</Typography>
-      )}
-      {category === "user_defined" && <Link sx={{ cursor: "pointer", width: "fit-content" }} onClick={handleAddingRule} >Add new keyword constraint</Link>}
-    </Stack>
+    <Accordion expanded={isExpanded} onChange={handleChange} sx={{ borderRadius: "8px", overflow: "hidden" }} disableGutters>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel1a-content"
+        id="panel1a-header"
+      >
+        <Typography >{title} ({rules.length})</Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+        <Stack>
+          <Stack spacing={1} >
+            {category === "suggested" && rules.length !== 0 && rules?.map((rule, index) => (
+              <SuggestedRule key={index} ruleCategory={ruleCategory} ruleIndex={index} />
+            ))}
+
+            {category === "user_defined" && rules.length !== 0 && rules?.map((rule, index) => (
+              <UserDefinedRule key={index} ruleCategory={ruleCategory} ruleIndex={index} />
+            ))}
+
+            {Object.keys(rules).length == 0 && <Typography paddingLeft={2} sx={{ color: "var(--frenchGray)" }} >No constraints added yet.</Typography>}
+            {category === "user_defined" && <Box paddingLeft={2} sx={{ marginLeft: "20px" }} >
+              <Link onClick={handleAddingUserDefined} sx={{ cursor: "pointer" }} >Add new keyword constrain</Link>
+            </Box>}
+          </Stack>
+        </Stack>
+      </AccordionDetails>
+    </Accordion>
   )
 }
 
-CategorySection.propTypes = {
-  title: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-  rules: PropTypes.arrayOf(
-    PropTypes.shape({
-      keyword: PropTypes.string,
-      type: PropTypes.string,
-      limit: PropTypes.number,
-      active: PropTypes.bool,
-    })
-  ),
-};
 
 export default CategorySection

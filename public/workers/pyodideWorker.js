@@ -34,6 +34,107 @@ self.onmessage = (event) => {
     `);
 
     // Execute the user's code
+    self.pyodide.runPython(`
+    import json
+    import tokenize
+    from io import BytesIO
+    import keyword
+    
+    
+    def keyword_analyzer(code_str):
+        tokens = list(tokenize.tokenize(BytesIO(code_str.encode("utf-8")).readline))
+    
+        reserved_keywords = set(keyword.kwlist)
+    
+        suggested_constraints = {
+            "reserved_words": {},
+            "functions": {},
+            "methods": {},
+            "classes": {},
+            "variables": {},
+        }
+    
+        num_tokens = len(tokens)
+        i = 0
+    
+        while i < num_tokens:
+            token = tokens[i]
+            if token.type == tokenize.NAME:
+                name = token.string
+                category = None
+    
+                if name in reserved_keywords:
+                    category = "reserved_words"
+                elif (
+                    i + 2 < num_tokens
+                    and tokens[i - 1].string == "."
+                    and tokens[i + 1].string == "("
+                ):
+                    # Method
+                    category = "methods"
+                elif (
+                    i + 2 < num_tokens
+                    and tokens[i + 1].string == "("
+                    and tokens[i + 2].string == "self"
+                ):
+                    # Method in class
+                    category = "methods"
+                elif i + 1 < num_tokens and tokens[i + 1].string == "(":
+                    if name[0].islower():
+                        # Function
+                        category = "functions"
+                    else:
+                        # Class
+                        category = "classes"
+                elif i > 0 and tokens[i - 1].string == "class" and name[0].isupper():
+                    # Class
+                    category = "classes"
+                else:
+                    # Variable
+                    category = "variables"
+    
+                suggested_constraints[category][name] = (
+                    suggested_constraints[category].get(name, 0) + 1
+                )
+    
+            i += 1
+    
+        # Transform the dictionary into the desired shape
+        transformed_constraints = {
+            category: [
+                {"keyword": keyword, "limit": limit} for keyword, limit in keywords.items()
+            ]
+            for category, keywords in suggested_constraints.items()
+        }
+    
+        return transformed_constraints
+    
+    
+    def check_syntax(code_str):
+        try:
+            compile(code_str, "<string>", "exec")
+            return None  # No syntax error found
+        except SyntaxError as e:
+            return str(e)  # Return the syntax error message
+    
+    
+    def analyze_code(code_str):
+        syntax_error = check_syntax(code_str)
+        if syntax_error:
+            return {
+                "status": "error",
+                "message": f"Syntax Error: {syntax_error}",
+                "data": None,
+            }
+        else:
+            suggested_constraints = keyword_analyzer(code_str)
+            return {
+                "status": "success",
+                "message": "Analysis completed successfully.",
+                "data": suggested_constraints,
+            }
+    `);
+
     self.pyodide.runPython(pythonCode);
 
     // Capture and reset stdout

@@ -1,31 +1,36 @@
 import { Stack, Typography, Grid } from "@mui/material";
-
 import { useAtom } from "jotai";
-import { keywordConstraintsList } from "../store/store";
+import { suggestedConstraints, userDefinedConstraints } from "../store/store";
 import CategorySection from "./CategorySection";
 
-
 const KeywordCon = () => {
-  const [kwConList,] = useAtom(keywordConstraintsList);
+  const [suggested,] = useAtom(suggestedConstraints);
+  const [userDefined,] = useAtom(userDefinedConstraints);
+
+  const getCategoryTitle = (category) => {
+    const words = category.split('_');
+    const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+    return capitalizedWords.join(' ');
+  }
 
   return (
     <>
-      <Typography
-        sx={{
-          color: "var(--frenchGray)"
-        }}
-      >Suggested Keyword Constraints:</Typography>
       <Grid container spacing={1}>
-        <Grid item xs={12} md={4} >
-          <Stack spacing={1} >
-            <CategorySection title="Build-in functions" category="builtin_functions" rules={kwConList["builtin_functions"]} />
-            <CategorySection title="Reserved words" category="reserved_words" rules={kwConList["reserved_words"]} />
-            <CategorySection title="Other" category="other" rules={kwConList.other} />
+        <Grid item xs={12} md={6}>
+          <Typography paddingBottom={2}>Suggested Keyword Constraints :</Typography>
+          <Stack spacing={1}>
+            {Object.keys(suggested).map((ruleCategory, index) => (
+              <CategorySection key={index} title={getCategoryTitle(ruleCategory)} category={"suggested"} ruleCategory={ruleCategory} />
+            ))}
           </Stack>
         </Grid>
-        <Grid item xs={12} md={8} >
-          <Stack spacing={1} >
-            <CategorySection title="User defined" category="user_defined" rules={kwConList["user_defined"] || []} />
+
+        <Grid item xs={12} md={6}>
+          <Typography paddingBottom={2}>User defined Keyword Constraints :</Typography>
+          <Stack spacing={1}>
+            {Object.keys(userDefined).map((ruleCategory, index) => (
+              <CategorySection key={index} title={getCategoryTitle(ruleCategory)} category={"user_defined"} ruleCategory={ruleCategory} />
+            ))}
           </Stack>
         </Grid>
       </Grid>
