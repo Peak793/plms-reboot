@@ -1,7 +1,7 @@
 import { Box, Stack, Typography, Button, IconButton } from "@mui/material";
 import { useState } from "react";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import TerminalBlock from '@/components/TerminalBlock'
+import TerminalBlock from '@/components/_shared/TerminalBlock'
 
 const containerStyle = {
   overflow: "hidden",

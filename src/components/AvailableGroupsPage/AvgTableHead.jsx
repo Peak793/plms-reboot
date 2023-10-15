@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
-import { Typography, Button, Menu, MenuItem, Box, FormControlLabel, FormGroup, Checkbox, Link, Grid } from "@mui/material"
+import { Typography, Button, Menu, MenuItem, FormControlLabel, FormGroup, Checkbox, Link, Grid } from "@mui/material"
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import {
   usePopupState,
   bindTrigger,
   bindMenu,
 } from 'material-ui-popup-state/hooks'
-import { SemesterOptions, ClassDateOptions, InstructorOptions, dayColor } from '@/utils'
+import { SemesterOptions, ClassDateOptions, dayColor } from '@/utils'
 import { useState, useCallback } from "react";
 import PropTypes from 'prop-types'
 

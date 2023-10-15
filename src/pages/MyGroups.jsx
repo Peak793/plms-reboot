@@ -1,14 +1,14 @@
 import { Box, Container, Stack, Grid } from "@mui/material";
-import slideShow from '@/assets/images/SlideShow-Icon.png';
+import slideShow from '@/assets/images/slideshowicon.png';
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSetAtom } from "jotai";
 import { sidebarSelectedAtom } from "@/store/store";
 
 // components
-import MyBreadCrumbs from '@/components/MyBreadCrumbs';
-import GroupCard from "@/components/GroupCard";
-import Header from '@/components/Header';
+import MyBreadCrumbs from '@/components/_shared/MyBreadCrumbs';
+import Header from '@/components/_shared/Header';
+import GroupCard from "@/components/MyGroupsPage/GroupCard";
 
 function MyGroups() {
   const [groupList, setGroupList] = useState([]);

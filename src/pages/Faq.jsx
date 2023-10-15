@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { Box, Stack, Container } from '@mui/material'
-import DialogBubble from '@/assets/images/DialogBubble.png'
+import DialogBubble from '@/assets/images/dialogbubble.png'
 import { useSetAtom } from "jotai";
 import { sidebarSelectedAtom } from "../store/store";
 
 // components
-import MyBreadCrumbs from '@/components/MyBreadCrumbs'
+import MyBreadCrumbs from '@/components/_shared/MyBreadCrumbs'
 import FaqList from '@/components/FaqList'
-import Header from '@/components/Header'
+import Header from '@/components/_shared/Header'
 
 
 const Examination = () => {

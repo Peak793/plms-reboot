@@ -1,7 +1,7 @@
 import { Stack, Typography, Grid } from "@mui/material";
 import { useAtom } from "jotai";
-import { suggestedConstraints, userDefinedConstraints } from "../store/store";
-import CategorySection from "./CategorySection";
+import { suggestedConstraints, userDefinedConstraints } from "@/store/store";
+import CategorySection from "@/components/AddExercisePage/CategorySection";
 
 const KeywordCon = () => {
   const [suggested,] = useAtom(suggestedConstraints);

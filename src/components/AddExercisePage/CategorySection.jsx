@@ -2,9 +2,9 @@
 import { useEffect, useState } from "react";
 import { Stack, Typography, Accordion, AccordionSummary, AccordionDetails, Link, Box } from "@mui/material";
 import { useAtom } from "jotai";
-import { suggestedConstraints, userDefinedConstraints } from "../store/store";
-import SuggestedRule from "./SuggestedRule";
-import UserDefinedRule from "./UserDefinedRule";
+import { suggestedConstraints, userDefinedConstraints } from "@/store/store";
+import SuggestedRule from "@/components/AddExercisePage/SuggestedRule";
+import UserDefinedRule from "@/components/AddExercisePage/UserDefinedRule";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 

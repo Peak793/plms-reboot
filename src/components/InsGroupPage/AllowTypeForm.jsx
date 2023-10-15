@@ -2,8 +2,8 @@ import PropTypes from "prop-types";
 import { useState } from 'react';
 import { Stack, Box, Typography, FormControl, RadioGroup, FormControlLabel, Radio, Paper, Button, TextField } from "@mui/material";
 import { DateTimeField } from '@mui/x-date-pickers/DateTimeField';
-import checked from '@/assets/images/Checked.png';
-import { modalStyle } from '../utils';
+import checked from '@/assets/images/checked.png';
+import { modalStyle } from '@/utils';
 import moment from 'moment';
 
 const AllowTypeForm = ({ title, open }) => {

@@ -1,13 +1,13 @@
 import { Box, Container, Stack, Typography, Button } from "@mui/material"
-import blueFolderIcon from '@/assets/images/BlueFolder-Icon.png'
-import avatarPlaceholder from '@/assets/images/AvatarPlaceholder.png'
+import blueFolderIcon from '@/assets/images/bluefoldericon.png'
+import avatarPlaceholder from '@/assets/images/avatarplaceholder.png'
 import classes from '@/assets/css/StudentScore.module.css'
 import { Link } from "react-router-dom"
 
 // components
-import MyBreadCrumbs from '@/components/MyBreadCrumbs'
-import Header from '@/components/Header'
-import StudentBriefInfo from "../components/StudentBriefInfo"
+import MyBreadCrumbs from '@/components/_shared/MyBreadCrumbs'
+import Header from '@/components/_shared/Header'
+import StudentBriefInfo from "@/components/_shared/StudentBriefInfo"
 
 const StudentScore = () => {
   return (

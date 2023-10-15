@@ -2,7 +2,7 @@
 import { Stack, TextField, FormControl, IconButton } from "@mui/material"
 import AddCircleTwoToneIcon from '@mui/icons-material/AddCircleTwoTone';
 import { useAtomValue, useAtom } from 'jotai';
-import { suggestedConstraints, userDefinedConstraints } from '../store/store';
+import { suggestedConstraints, userDefinedConstraints } from '@/store/store';
 
 const SuggestedRule = ({ ruleCategory, ruleIndex }) => {
   const sugested = useAtomValue(suggestedConstraints)

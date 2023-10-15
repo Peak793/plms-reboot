@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-vars */
 import { Box, Container, Stack } from "@mui/material"
-import peopleIcon from "@/assets/images/People-Icon.png"
+import peopleIcon from "@/assets/images/peopleicon.png"
 import { useState, useEffect } from "react"
 import { useSetAtom } from "jotai";
-import { sidebarSelectedAtom } from "../store/store";
+import { sidebarSelectedAtom } from "@/store/store";
 import axios from "axios";
 
 // components
-import Header from "@/components/Header";
-import MyBreadCrumbs from "@/components/MyBreadCrumbs"
-import AvgTableRow from "@/components/AvgTableRow";
-import AvgTableHead from "@/components/AvgTableHead";
+import Header from "@/components/_shared/Header";
+import MyBreadCrumbs from "@/components/_shared/MyBreadCrumbs"
+import AvgTableRow from "@/components/AvailableGroupsPage/AvgTableRow";
+import AvgTableHead from "@/components/AvailableGroupsPage/AvgTableHead";
 
 const AvailableGroups = () => {
   const [groups, setGroups] = useState([]);

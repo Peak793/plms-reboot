@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import PropTypes from 'prop-types';
 
-import TimeSchedule from "@/components/TimeSchedule";
+import TimeSchedule from "@/components/_shared/TimeSchedule";
 
 const AvgTableRow = ({
   groupId,

@@ -1,7 +1,7 @@
 import { Stack, Typography, TextField, FormControlLabel, Switch, Button, Grid } from "@mui/material"
 import { useState } from "react";
-import MyCodeEditor from "./MyCodeEditor";
-import TerminalBlock from "./TerminalBlock";
+import MyCodeEditor from "@/components/_shared/MyCodeEditor";
+import TerminalBlock from "@/components/_shared/TerminalBlock";
 
 const Testcase = () => {
   const [showToStudent, setShowToStudent] = useState(true);

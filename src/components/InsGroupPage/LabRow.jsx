@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Stack, Switch, Typography, Modal, Link as MuiLink, Box } from "@mui/material"
 import { Link } from 'react-router-dom';
-import AllowTypeForm from './AllowTypeForm';
+import AllowTypeForm from '@/components/InsGroupPage/AllowTypeForm';
 
 const LabRow = ({ lab, groupId, groupNo }) => {
   const [isAccessModalOpen, setIsAccessModalOpen] = useState(false);

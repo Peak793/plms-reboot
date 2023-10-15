@@ -1,4 +1,4 @@
-import avatarPlaceholder from "@/assets/images/AvatarPlaceholder.png"
+import avatarPlaceholder from "@/assets/images/avatarplaceholder.png"
 
 export const getClassNames = (classes, ...classNames) => classNames.map(className => classes[className]).join(' ');
 

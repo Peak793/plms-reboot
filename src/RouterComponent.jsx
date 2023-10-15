@@ -1,13 +1,13 @@
 import { HashRouter as Router, Route, Routes, Outlet, Navigate } from "react-router-dom";
 import { Suspense, lazy } from 'react';
-import RootLayout from '@/layouts/RootLayout';
+import RootLayout from '@/components/layouts/RootLayout';
 import SignIn from "@/pages/SignIn";
 import Instruction from '@/pages/Instructions';
 import Examination from '@/pages/Examination';
 import Faq from '@/pages/Faq';
 import EditProfile from '@/pages/EditProfile';
 import AddStudent from '@/pages/AddStudent';
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 // Lazy-load page components
 const MyGroups = lazy(() => import('@/pages/MyGroups'));
@@ -42,6 +42,7 @@ const RouterComponent = () => {
           <Route path="edit-profile/:userId" element={<EditProfile />} />
         </Route>
         <Route path="signin" element={<SignIn />} />
+        <Route path="kw" element={<Suspense fallback={<div>Loading...</div>}><AddExercise /></Suspense>} />
       </Routes>
     </Router >
   )

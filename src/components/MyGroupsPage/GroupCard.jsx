@@ -1,6 +1,6 @@
 import { Stack, Typography, Box, Button, Grid } from "@mui/material"
 import PropTypes from 'prop-types';
-import { dayColor } from "../utils";
+import { dayColor } from "@/utils";
 import { Link } from "react-router-dom";
 
 const GroupCard = ({ id, groupNo, schedule, year, semester, department }) => {

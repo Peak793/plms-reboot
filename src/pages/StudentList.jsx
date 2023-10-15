@@ -1,15 +1,15 @@
 import { Box, Button, Stack } from "@mui/material"
 import { Link, useParams } from "react-router-dom";
-import blueFolder from "@/assets/images/BlueFolder-Icon.png"
+import blueFolder from "@/assets/images/bluefoldericon.png"
 // import { mockStudentsLabScores } from "@/utils";
 import { useState, useEffect } from "react";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import avatarPlaceHolder from '@/assets/images/AvatarPlaceHolder.png'
+import avatarPlaceHolder from '@/assets/images/avatarplaceholder.png'
 import axios from "axios";
 
 // components
-import MyBreadCrumbs from '@/components/MyBreadCrumbs'
-import Header from '@/components/Header'
+import MyBreadCrumbs from '@/components/_shared/MyBreadCrumbs'
+import Header from '@/components/_shared/Header'
 
 const buttonStyle = { height: "100%", color: "white" }
 

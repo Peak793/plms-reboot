@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect } from 'react';
 import { useAtom } from 'jotai';
-import { userDefinedConstraints } from '../store/store';
+import { userDefinedConstraints } from '../../store/store';
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import { Stack, Checkbox, TextField, Select, FormControl, InputLabel, MenuItem, Box, IconButton } from "@mui/material";
 

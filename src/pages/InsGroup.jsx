@@ -1,14 +1,15 @@
 import { Box, Button, Container, Grid, Stack, Typography, FormControlLabel, Switch } from "@mui/material"
-import MyBreadCrumbs from '@/components/MyBreadCrumbs'
-import blueFolderIcon from '@/assets/images/BlueFolder-Icon.png'
+import blueFolderIcon from '@/assets/images/bluefoldericon.png'
 import classes from '@/assets/css/InsGroup.module.css'
-import TimeSchedule from "../components/TimeSchedule"
 import LoginIcon from '@mui/icons-material/Login';
-import LabRow from "@/components/LabRow"
-import Header from "@/components/Header"
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import axios from "axios"
+
+import Header from "@/components/_shared/Header"
+import MyBreadCrumbs from '@/components/_shared/MyBreadCrumbs'
+import TimeSchedule from "@/components/_shared/TimeSchedule"
+import LabRow from "@/components/InsGroupPage/LabRow"
 
 const InsGroup = () => {
   const [groupData, setGroupData] = useState({});

@@ -1,9 +1,9 @@
-import avatarPlaceholder from "@/assets/images/avatarPlaceholder.png";
+import avatarPlaceholder from "@/assets/images/avatarplaceholder.png";
 import classes from "@/assets/css/UserAvatar.module.css";
-import { getClassNames } from "../utils";
+import { getClassNames } from "../../utils";
 import { Avatar, Stack, Typography } from "@mui/material";
 import { useAtom } from "jotai";
-import { userAtom } from "../store/store";
+import { userAtom } from "@/store/store";
 
 const UserAvatar = () => {
   const [user] = useAtom(userAtom);

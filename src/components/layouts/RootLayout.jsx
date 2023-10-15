@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import Sidebar from "@/components/Sidebar";
-import UserAvatar from "@/components/UserAvatar"
+import Sidebar from "@/components/_shared/Sidebar";
+import UserAvatar from "@/components/_shared/UserAvatar"
 import { Box, Container } from "@mui/system";
 
 const RootLayout = () => {

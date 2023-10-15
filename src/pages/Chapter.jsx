@@ -1,9 +1,9 @@
 import { Box, Stack, Container, Grid } from '@mui/material'
-import folderIcon from '@/assets/images/Folder-Icon.png'
-import { leveledExerciseList } from '../placeholder-data/placeholder-data'
-import MyBreadCrumbs from '@/components/MyBreadCrumbs'
-import Header from '@/components/Header'
-import LabLevel from '@/components/LabLevel'
+import folderIcon from '@/assets/images/foldericon.png'
+import { leveledExerciseList } from '@/placeholder-data/placeholder-data'
+import MyBreadCrumbs from '@/components/_shared/MyBreadCrumbs'
+import Header from '@/components/_shared/Header'
+import LabLevel from '@/components/ChapterPage/LabLevel'
 import { useParams } from 'react-router'
 
 const Chapter = () => {

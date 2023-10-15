@@ -1,13 +1,13 @@
 import { Box, Stack, Container } from '@mui/material'
 import { useEffect } from 'react'
-import Book from '@/assets/images/Book-Icon.png'
+import Book from '@/assets/images/bookicon.png'
 import classes from '@/assets/css/Instruction.module.css'
 import { useSetAtom } from "jotai";
 import { sidebarSelectedAtom } from "../store/store";
 
 // components
-import MyBreadCrumbs from '@/components/MyBreadCrumbs'
-import Header from '@/components/Header'
+import MyBreadCrumbs from '@/components/_shared/MyBreadCrumbs'
+import Header from '@/components/_shared/Header'
 
 const Examination = () => {
   const setSelected = useSetAtom(sidebarSelectedAtom);

@@ -1,9 +1,9 @@
 import { Box, Button, Stack, TextField } from "@mui/material"
-import blueFolder from "@/assets/images/BlueFolder-Icon.png"
+import blueFolder from "@/assets/images/bluefoldericon.png"
 
 // components
-import MyBreadCrumbs from '@/components/MyBreadCrumbs'
-import Header from "@/components/Header"
+import MyBreadCrumbs from '@/components/_shared/MyBreadCrumbs'
+import Header from "@/components/_shared/Header"
 
 const placeholder = `Copy from Excel and paste here
 

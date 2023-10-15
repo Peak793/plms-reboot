@@ -1,12 +1,12 @@
 import { Box, Stack, Container } from "@mui/material";
-import folderIcon from '@/assets/images/Folder-Icon.png';
+import folderIcon from '@/assets/images/foldericon.png';
 
 // components
-import MyBreadCrumbs from '@/components/MyBreadCrumbs';
-import Header from '@/components/Header';
-import StudentBriefInfo from "@/components/StudentBriefInfo";
-import ExerciseInfoBox from "@/components/ExerciseInfoBox";
-import SubmissionHistoryBox from "@/components/SubmissionHistoryBox";
+import MyBreadCrumbs from '@/components/_shared/MyBreadCrumbs';
+import Header from '@/components/_shared/Header';
+import StudentBriefInfo from "@/components/_shared/StudentBriefInfo";
+import ExerciseInfoBox from "@/components/SubmissionHistoryPage/ExerciseInfoBox";
+import SubmissionHistoryBox from "@/components/SubmissionHistoryPage/SubmissionHistoryBox";
 
 const SubmissionHistory = () => {
 

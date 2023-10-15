@@ -1,5 +1,5 @@
 import { Stack, Typography, Button } from "@mui/material"
-import Testcase from "./Testcase"
+import Testcase from "@/components/AddExercisePage/Testcase"
 
 const Testcases = () => {
   return (

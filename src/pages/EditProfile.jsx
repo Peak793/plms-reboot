@@ -7,8 +7,8 @@ import {
 import { DatePicker } from "@mui/x-date-pickers";
 import ForumIcon from '@mui/icons-material/Forum';
 import { styled } from "@mui/system";
-import MyBreadCrumbs from "@/components/MyBreadCrumbs";
-import Header from '@/components/Header';
+import MyBreadCrumbs from "@/components/_shared/MyBreadCrumbs";
+import Header from '@/components/_shared/Header';
 
 const boxStyle = {
   padding: "20px",

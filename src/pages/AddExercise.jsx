@@ -1,15 +1,15 @@
 import { useState, useRef } from 'react';
 import { useSetAtom } from 'jotai';
 import { Box, Button, Container, Stack, TextField, Typography } from '@mui/material';
-import folderIcon from '@/assets/images/Folder-Icon.png';
-import { suggestedConstraints } from '../store/store';
-import { getKwConSourceCode } from '../utils/pythonCode';
-import Header from '@/components/Header';
-import KeywordCon from '@/components/KeywordCon';
-import MyBreadCrumbs from '@/components/MyBreadCrumbs';
-import MyCodeEditor from '@/components/MyCodeEditor';
-import MyTextEditor from '@/components/MyTextEditor';
-import Testcases from '@/components/Testcases';
+import folderIcon from '@/assets/images/foldericon.png';
+import { suggestedConstraints } from '@/store/store';
+import { getKwConSourceCode } from '@/utils/pythonCode';
+import Header from '@/components/_shared/Header';
+import KeywordCon from '@/components/AddExercisePage/KeywordCon';
+import MyBreadCrumbs from '@/components/_shared/MyBreadCrumbs';
+import MyCodeEditor from '@/components/_shared/MyCodeEditor';
+import MyTextEditor from '@/components/_shared/MyTextEditor';
+import Testcases from '@/components/AddExercisePage/Testcases';
 
 const initializeWorker = (ref, setIsPyodideReady, setSuggested) => {
   if (ref.current) return;

@@ -1,5 +1,5 @@
 import { Stack, Box, Typography } from '@mui/material'
-import avatarPlaceholder from '@/assets/images/AvatarPlaceholder.png'
+import avatarPlaceholder from '@/assets/images/avatarplaceholder.png'
 import PropTypes from 'prop-types'
 
 const StudentBriefInfo = ({ imgSrc, studentId, studentName, studentNickName, groupId, groupNo }) => {
