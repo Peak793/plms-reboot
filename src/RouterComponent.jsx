@@ -27,13 +27,13 @@ const RouterComponent = () => {
         <Route element={<ProtectedRoute><RootLayout /></ProtectedRoute>}>
           <Route path="/ins" element={<Outlet />}  >
             <Route index element={<Suspense fallback={<div>Loading...</div>}><MyGroups /></Suspense>} />
-            <Route path="g/:groupId" element={<Suspense fallback={<div>Loading...</div>}><InsGroup /></Suspense>} />
-            <Route path="g/:groupId/c/:chapterId" element={<Suspense fallback={<div>Loading...</div>}><Chapter /></Suspense>} />
-            <Route path="g/:groupId/c/:chapterId/add-ex/:level" element={<Suspense fallback={<div>Loading...</div>}><AddExercise /></Suspense>} />
-            <Route path="g/:groupId/stu-list" element={<Suspense fallback={<div>Loading...</div>}><StudentList /></Suspense>} />
-            <Route path="g/:groupId/add-stu" element={<AddStudent />} />
-            <Route path="g/:groupId/score/stu/:studentId" element={<Suspense fallback={<div>Loading...</div>}><StudentScore /></Suspense>} />
-            <Route path="g/:groupId/sub-his/stu/:studentId/c/:chapterId/ex/:exerciseId" element={<Suspense fallback={<div>Loading...</div>}><SubmissionHistory /></Suspense>} />
+            <Route path="g/:groupId/:groupNo" element={<Suspense fallback={<div>Loading...</div>}><InsGroup /></Suspense>} />
+            <Route path="g/:groupId/:groupNo/c/:chapterId" element={<Suspense fallback={<div>Loading...</div>}><Chapter /></Suspense>} />
+            <Route path="g/:groupId/:groupNo/c/:chapterId/add-ex/:level" element={<Suspense fallback={<div>Loading...</div>}><AddExercise /></Suspense>} />
+            <Route path="g/:groupId/:groupNo/stu-list" element={<Suspense fallback={<div>Loading...</div>}><StudentList /></Suspense>} />
+            <Route path="g/:groupId/:groupNo/add-stu" element={<AddStudent />} />
+            <Route path="g/:groupId/:groupNo/score/stu/:studentId" element={<Suspense fallback={<div>Loading...</div>}><StudentScore /></Suspense>} />
+            <Route path="g/:groupId/:groupNo/sub-his/stu/:studentId/c/:chapterId/ex/:exerciseId" element={<Suspense fallback={<div>Loading...</div>}><SubmissionHistory /></Suspense>} />
             <Route path="available-groups" element={<Suspense fallback={<div>Loading...</div>}><AvailableGroups /></Suspense>} />
           </Route>
           <Route path="instruction" element={<Instruction />} />

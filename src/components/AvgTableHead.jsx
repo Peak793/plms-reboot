@@ -45,7 +45,10 @@ const AvgTableHead = ({
 
   return (
     <Grid container sx={{
-      display: { xs: "none", md: "flex" }
+      display: { xs: "none", md: "flex" },
+      position: "sticky",
+      top: "0px",
+      bgcolor: "var(--ebony)"
     }} >
       <Grid item lg={1.5} className="flex-center table-head-column" sx={{ padding: "0px 2.5px" }} >
         <Button fullWidth variant="outlined" sx={{ color: "white" }} >Group ID</Button>

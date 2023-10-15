@@ -13,11 +13,11 @@ import axios from "axios"
 const InsGroup = () => {
   const [groupData, setGroupData] = useState({});
   const [labData, setLabData] = useState([]);
-  const [assignGroupItem, setAssignGroupItem] = useState([]);
-  const [groupPermission, setGroupPermission] = useState({});//{allow_login: true, allow_upload: true}
+  // const [assignGroupItem, setAssignGroupItem] = useState([]);
+  // const [groupPermission, setGroupPermission] = useState({});//{allow_login: true, allow_upload: true}
 
   // get the params from url using useParams() hook
-  const { groupId } = useParams();
+  const { groupId, groupNo } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,9 +27,9 @@ const InsGroup = () => {
       // set the data to state
       if (res.data.status) {
         setGroupData(res.data.payload.class_schedule);
-        setLabData(res.data.payload.lab_info);
-        setAssignGroupItem(res.data.payload.assigned_group_item);
-        setGroupPermission(res.data.payload.group_permission);
+        setLabData(res.data.payload.group_permission);
+        // setAssignGroupItem(res.data.payload.assigned_group_item);
+        // setGroupPermission(res.data.payload.group_permission);
       }
     }
 
@@ -42,10 +42,10 @@ const InsGroup = () => {
         <Stack spacing={"20px"} >
           <MyBreadCrumbs items={[
             { label: 'My Groups', href: '/ins' },
-            { label: 'Group 401', href: '#' },
+            { label: `Group ${groupNo}`, href: '#' },
           ]} />
 
-          <Header logoSrc={blueFolderIcon} title="Group 401" />
+          <Header logoSrc={blueFolderIcon} title={`Group ${groupNo}`} />
 
           <Grid container spacing={"10px"} >
             <Grid item xs={4} >
@@ -157,8 +157,8 @@ const InsGroup = () => {
               </Box>
             </Stack>
 
-            {labData?.map((lab, index) => (
-              <LabRow key={index} lab={lab} />
+            {Object.keys(labData).map((key, index) => (
+              <LabRow key={index} lab={labData[key]} groupId={groupId} groupNo={groupNo} />
             ))}
 
           </Stack>

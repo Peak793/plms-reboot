@@ -4,7 +4,7 @@ import { Stack, Switch, Typography, Modal, Link as MuiLink, Box } from "@mui/mat
 import { Link } from 'react-router-dom';
 import AllowTypeForm from './AllowTypeForm';
 
-const LabRow = ({ lab }) => {
+const LabRow = ({ lab, groupId, groupNo }) => {
   const [isAccessModalOpen, setIsAccessModalOpen] = useState(false);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [accessAllowType, setAccessAllowType] = useState('always');
@@ -24,7 +24,7 @@ const LabRow = ({ lab }) => {
   return (
     <Stack direction={"row"} padding="10px" bgcolor="var(--biscay)" borderRadius="8px" >
       <Stack flex={1} justifyContent="center" >
-        <MuiLink to={"/ins/g/:groupId/c/:chapterId"} component={Link} color={'inherit'} underline='none' sx={{ ":hover": { color: "var(--blueRibbon)" } }} >
+        <MuiLink to={`/ins/g/${groupId}/${groupNo}/c/${lab.chapter_id}`} component={Link} color={'inherit'} underline='none' sx={{ ":hover": { color: "var(--blueRibbon)" } }} >
           <Typography>{lab.chapter_id}. {lab.chapter_name} ({lab.no_items})</Typography>
         </MuiLink>
       </Stack>

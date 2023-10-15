@@ -1,9 +1,11 @@
 import { Box, Button, Stack } from "@mui/material"
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import blueFolder from "@/assets/images/BlueFolder-Icon.png"
-import { mockStudentsLabScores } from "@/utils";
-import { useState } from "react";
+// import { mockStudentsLabScores } from "@/utils";
+import { useState, useEffect } from "react";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import avatarPlaceHolder from '@/assets/images/AvatarPlaceHolder.png'
+import axios from "axios";
 
 // components
 import MyBreadCrumbs from '@/components/MyBreadCrumbs'
@@ -12,21 +14,44 @@ import Header from '@/components/Header'
 const buttonStyle = { height: "100%", color: "white" }
 
 const StudentList = () => {
-  const [students, setStudents] = useState(mockStudentsLabScores);
+  const [labInfo, setLabInfo] = useState([]);
+  const [students, setStudents] = useState([]);
+
+  const { groupId, groupNo } = useParams();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // fetch data from api
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/getStudentListInGroupWithLabScore?group_id=${groupId}`, { withCredentials: true })
+
+        // set the data to state
+        if (res.data.status) {
+          setLabInfo(res.data.payload.lab_info);
+          setStudents(res.data.payload.student_list);
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    fetchData();
+  }, [])
 
   return (
     <Box>
       <Stack spacing={"20px"} >
         <MyBreadCrumbs items={[
-          { label: 'My Groups', href: '#' },
-          { label: 'Group 401', href: '#' },
+          { label: 'My Groups', href: '/ins' },
+          { label: `Group ${groupNo}`, href: `/ins/g/${groupId}/${groupNo}` },
+          { label: 'Student List', href: '#' }
         ]} />
 
-        <Header logoSrc={blueFolder} title="Group 401" />
+        <Header logoSrc={blueFolder} title={`Group ${groupNo}`} />
 
         <Stack spacing={"10px"}>
           <Box>
-            <Link to={"/ins/g/:groupId/add-stu"} ><Button variant="outlined" color="primary" startIcon={<AddCircleIcon color="primary" />} >Add Student</Button></Link>
+            <Link to={`/ins/g/${groupId}/${groupNo}/add-stu`} ><Button variant="outlined" color="primary" startIcon={<AddCircleIcon color="primary" />} >Add Student</Button></Link>
           </Box>
 
           {/* Table Head */}
@@ -38,13 +63,13 @@ const StudentList = () => {
               <Box width={150} className="table-head-column">
                 <Button fullWidth sx={buttonStyle} >Student ID</Button>
               </Box>
-              <Box width={180} className="table-head-column">
+              <Box width={250} className="table-head-column">
                 <Button fullWidth sx={buttonStyle} >Name</Button>
               </Box>
             </Stack>
-            {[...Array(20)].map((_, index) => (
+            {labInfo.map((lab, index) => (
               <Box width={85} key={index} className="table-head-column">
-                <Button fullWidth sx={buttonStyle} >Lab {index + 1} <br /> (10)</Button>
+                <Button fullWidth sx={buttonStyle} >Lab {index + 1} <br /> ({lab.chapter_fullmark})</Button>
               </Box>
             ))}
             <Box width={85} className="table-head-column">
@@ -63,27 +88,27 @@ const StudentList = () => {
             >
               <Stack direction="row" spacing={"5px"} sx={{ position: "sticky", left: "80px", zIndex: "10", bgcolor: "inherit" }}> {/* and this one */}
                 <Box width={120} className="table-body-column" paddingX={"10px"}>
-                  <img src={student.avatar} alt="user avatar" className="image" />
+                  <img src={student.avatar ? `${import.meta.env.VITE_BASE_URL}/${student.avatar}` : avatarPlaceHolder} alt="user avatar" className="image" />
                 </Box>
                 <Stack gap={"10px"} width={150} className="table-body-column" paddingX={"10px"}>
-                  {student.studentID}
+                  {student.stu_id}
                   <Button variant="contained" size="small" sx={{ textTransform: "none", fontSize: "14px" }}>Reset Password</Button>
                 </Stack>
-                <Box width={180} className="table-body-column" paddingX={"10px"}>
-                  {student.name}
+                <Box width={250} className="table-body-column" sx={{ textAlign: "left", justifyContent: "flex-start", paddingX: "15px" }} paddingX={"10px"}>
+                  {student.stu_firstname + " " + student.stu_lastname}
                 </Box>
               </Stack>
-              <Link to="/ins/g/:groupId/score/stu/:studentId" >
+              <Link to={`/ins/g/${groupId}/${groupNo}/score/stu/:studentId`}>
                 <Stack direction={"row"} spacing={"5px"} height={"100%"} >
-                  {student.scores.map((score, i) => (
+                  {[...Array(labInfo.length)].map((_, i) => (
                     <Box key={i} width={85} className="table-body-column">
-                      {score}
+                      {student.chapter_score[String(i + 1)]}
                     </Box>
                   ))}
                 </Stack>
               </Link>
               <Box width={85} className="table-body-column">
-                {student.scores.reduce((acc, curr) => acc + curr, 0)}
+                {Object.values(student["chapter_score"]).reduce((a, b) => a + b, 0)}
               </Box>
             </Stack>
           ))}

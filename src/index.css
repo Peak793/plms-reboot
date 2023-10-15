@@ -44,6 +44,7 @@ body {
   font-family: 'Kanit';
   color: white;
   background-color: var(--ebony);
+  scrollbar-gutter: stable both-edges;
 }
 
 .default-content-container {

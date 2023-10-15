@@ -34,11 +34,11 @@ const GroupCard = ({ id, groupNo, schedule, year, semester, department }) => {
         </Stack>
 
         <Stack direction="row" spacing={2} sx={{ width: "100%" }}>
-          <Link to={`/ins/g/${id}`}>
+          <Link to={`/ins/g/${id}/${groupNo}`}>
             <Button variant="contained" sx={{ borderRadius: "30px", padding: "7px 25px" }}>Exercise</Button>
           </Link>
 
-          <Link to={`/ins/g/${id}/stu-list`}>
+          <Link to={`/ins/g/${id}/${groupNo}/stu-list`}>
             <Button variant="contained" sx={{ borderRadius: "30px", padding: "7px 25px" }}>Student</Button>
           </Link>
         </Stack>

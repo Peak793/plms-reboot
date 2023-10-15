@@ -4,8 +4,12 @@ import { leveledExerciseList } from '../placeholder-data/placeholder-data'
 import MyBreadCrumbs from '@/components/MyBreadCrumbs'
 import Header from '@/components/Header'
 import LabLevel from '@/components/LabLevel'
+import { useParams } from 'react-router'
 
 const Chapter = () => {
+
+  const { groupId, groupNo } = useParams();
+
   return (
     <Box>
       <Container>
@@ -13,7 +17,7 @@ const Chapter = () => {
 
           <MyBreadCrumbs items={[
             { label: 'My Groups', href: '/ins' },
-            { label: 'Group 401', href: '/ins/g/1' },
+            { label: `Group ${groupNo}`, href: `/ins/g/${groupId}/${groupNo}` },
             { label: 'Variables Expression Statement', href: '#' },
           ]} />
 
