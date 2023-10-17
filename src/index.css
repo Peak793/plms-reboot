@@ -151,3 +151,19 @@ body {
 .nocursor {
   pointer-events: none !important;
 }
+
+.my-rte {
+  height: 300px;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.ProseMirror ol {
+  padding: 0 1rem;
+  list-style: decimal !important;
+}
+
+.ProseMirror ul {
+  padding: 0 1rem;
+  list-style: disc !important;
+}

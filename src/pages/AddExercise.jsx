@@ -8,8 +8,8 @@ import Header from '@/components/_shared/Header';
 import KeywordCon from '@/components/AddExercisePage/KeywordCon';
 import MyBreadCrumbs from '@/components/_shared/MyBreadCrumbs';
 import MyCodeEditor from '@/components/_shared/MyCodeEditor';
-import MyTextEditor from '@/components/_shared/MyTextEditor';
 import Testcases from '@/components/AddExercisePage/Testcases';
+import MyRte from '../components/_shared/MyRte';
 
 const initializeWorker = (ref, setIsPyodideReady, setSuggested) => {
   if (ref.current) return;
@@ -62,7 +62,7 @@ const AddExercise = () => {
               <Button variant="contained" size="medium" sx={{ paddingX: "25px", borderRadius: "8px", bgcolor: "var(--cerulean )", textTransform: "none" }} onClick={handleSubmit}>Submit</Button>
             </Stack>
             <TextField label="Lab name" />
-            <MyTextEditor value={contentValue} onChange={setContentValue} placeholder="Write your content" />
+            <MyRte value={contentValue} setContentValue={setContentValue} />
             <MyCodeEditor value={codeValue} highlight={true} onChange={setCodeValue} maxHeight={"400px"} />
             <KeywordCon />
           </Stack>
