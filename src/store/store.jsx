@@ -2,6 +2,7 @@ import { atomWithStorage } from 'jotai/utils';
 import { atom } from 'jotai';
 
 export const suggestedConstraints = atom({
+  "imports": [],
   "reserved_words": [],
   "functions": [],
   "methods": [],
@@ -10,6 +11,7 @@ export const suggestedConstraints = atom({
 });
 
 export const userDefinedConstraints = atom({
+  "imports": [],
   "reserved_words": [],
   "functions": [],
   "methods": [],

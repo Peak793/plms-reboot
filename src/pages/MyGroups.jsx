@@ -1,28 +1,27 @@
-import { Box, Container, Stack, Grid } from "@mui/material";
+import { Box, Container, Stack, Grid, Skeleton } from "@mui/material";
 import slideShow from '@/assets/images/slideshowicon.png';
-import { useState, useEffect } from "react";
-import axios from "axios";
 import { useSetAtom } from "jotai";
 import { sidebarSelectedAtom } from "@/store/store";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 // components
 import MyBreadCrumbs from '@/components/_shared/MyBreadCrumbs';
 import Header from '@/components/_shared/Header';
 import GroupCard from "@/components/MyGroupsPage/GroupCard";
+import { getGroupListById } from "../utils/api";
 
 function MyGroups() {
-  const [groupList, setGroupList] = useState([]);
   const setSelected = useSetAtom(sidebarSelectedAtom);
+
+  const { data: groupList = [], isLoading } = useQuery({
+    queryKey: ['groupList', import.meta.env.VITE_YEAR],
+    queryFn: getGroupListById,
+  });
 
   useEffect(() => {
     setSelected(1.1);
-    const fetchGroupList = async () => {
-      const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/getGroupListById?year=${import.meta.env.VITE_YEAR}`, { withCredentials: true });
-      setGroupList(res.data.payload.group_list ?? []);
-    };
-
-    fetchGroupList();
-  }, []);
+  }, [setSelected]);
 
   const items = [{ label: 'My Groups', href: '/ins' }];
 
@@ -33,7 +32,30 @@ function MyGroups() {
           <MyBreadCrumbs items={items} />
           <Header logoSrc={slideShow} title="My Groups" />
           <Grid container spacing="10px" sx={{ width: "100%" }}>
-            {groupList.map((group) => (
+            {isLoading &&
+              <>
+                <Grid item xs={12} md={4}>
+                  <Skeleton variant="rounded" animation="wave" width={"100%"} height={296.35} />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Skeleton variant="rounded" animation="wave" width={"100%"} height={296.35} />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Skeleton variant="rounded" animation="wave" width={"100%"} height={296.35} />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Skeleton variant="rounded" animation="wave" width={"100%"} height={296.35} />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Skeleton variant="rounded" animation="wave" width={"100%"} height={296.35} />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Skeleton variant="rounded" animation="wave" width={"100%"} height={296.35} />
+                </Grid>
+              </>
+            }
+
+            {!isLoading && groupList.map((group) => (
               <GroupCard
                 key={group.group_id}
                 id={group.group_id}

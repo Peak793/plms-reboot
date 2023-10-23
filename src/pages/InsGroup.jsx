@@ -1,9 +1,9 @@
-import { Box, Button, Container, Grid, Stack, Typography, FormControlLabel, Switch } from "@mui/material"
+import { Box, Button, Container, Grid, Stack, Typography, FormControlLabel, Switch, Skeleton } from "@mui/material"
 import blueFolderIcon from '@/assets/images/bluefoldericon.png'
 import classes from '@/assets/css/InsGroup.module.css'
 import LoginIcon from '@mui/icons-material/Login';
 import { useParams } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios"
 
 import Header from "@/components/_shared/Header"
@@ -12,30 +12,23 @@ import TimeSchedule from "@/components/_shared/TimeSchedule"
 import LabRow from "@/components/InsGroupPage/LabRow"
 
 const InsGroup = () => {
-  const [groupData, setGroupData] = useState({});
-  const [labData, setLabData] = useState([]);
-  // const [assignGroupItem, setAssignGroupItem] = useState([]);
-  // const [groupPermission, setGroupPermission] = useState({});//{allow_login: true, allow_upload: true}
-
-  // get the params from url using useParams() hook
   const { groupId, groupNo } = useParams();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      // fetch data from api
+  const { data: groupData, isLoading: isClassLoading } = useQuery({
+    queryKey: ['groupData', groupId],
+    queryFn: async () => {
       const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/getGroupDataById?group_id=${groupId}`, { withCredentials: true })
-
-      // set the data to state
-      if (res.data.status) {
-        setGroupData(res.data.payload.class_schedule);
-        setLabData(res.data.payload.group_permission);
-        // setAssignGroupItem(res.data.payload.assigned_group_item);
-        // setGroupPermission(res.data.payload.group_permission);
-      }
+      return res.data.payload.class_schedule;
     }
+  });
 
-    fetchData();
-  }, [])
+  const { data: labData, isLoading: isLabChapterLoading } = useQuery({
+    queryKey: ['labData', groupId],
+    queryFn: async () => {
+      const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/getGroupDataById?group_id=${groupId}`, { withCredentials: true })
+      return res.data.payload.group_permission;
+    }
+  });
 
   return (
     <Box>
@@ -55,29 +48,29 @@ const InsGroup = () => {
                 <Stack direction={"row"} spacing={"20px"} >
                   <Stack direction={"row"} gap={"5px"} >
                     <Typography color={"primary"}  >Group ID</Typography>
-                    <Typography >{groupData?.group_id}</Typography>
+                    <Typography >{isClassLoading ? <Skeleton variant="text" width={90} sx={{ fontSize: "16px" }} /> : groupData?.group_id}</Typography>
                   </Stack>
                   <Stack direction={"row"} gap={"5px"} >
                     <Typography color={"primary"}  >Group</Typography>
-                    <Typography >{groupData?.group_no}</Typography>
+                    <Typography >{isClassLoading ? <Skeleton variant="text" width={45} sx={{ fontSize: "16px" }} /> : groupData?.group_no}</Typography>
                   </Stack>
                 </Stack>
 
                 <Stack direction={"row"} spacing={"20px"} >
                   <Stack direction={"row"} gap={"5px"} >
                     <Typography color={"primary"}  >Year</Typography>
-                    <Typography >{groupData?.year}</Typography>
+                    <Typography >{isClassLoading ? <Skeleton variant="text" width={55} sx={{ fontSize: "16px" }} /> : groupData?.year}</Typography>
                   </Stack>
                   <Stack direction={"row"} gap={"5px"} >
                     <Typography color={"primary"}  >Semester</Typography>
-                    <Typography >{groupData?.semester}</Typography>
+                    <Typography >{isClassLoading ? <Skeleton variant="text" width={30} sx={{ fontSize: "16px" }} /> : groupData?.semester}</Typography>
                   </Stack>
                 </Stack>
 
                 <Stack direction={"row"} spacing={"20px"} >
                   <Stack direction={"row"} gap={"5px"} >
                     <Typography color={"primary"}  >Instructor</Typography>
-                    <Typography >{groupData?.supervisor_firstname + " " + groupData?.supervisor_lastname}</Typography>
+                    <Typography >{isClassLoading ? <Skeleton variant="text" width={180} sx={{ fontSize: "16px" }} /> : (groupData?.supervisor_firstname + " " + groupData?.supervisor_lastname)}</Typography>
                   </Stack>
                 </Stack>
 
@@ -87,22 +80,25 @@ const InsGroup = () => {
                   </Stack>
                 </Stack>
 
-                <TimeSchedule classDate={`${groupData?.day_of_week}, ${groupData?.time_start} - ${groupData?.time_end}`} />
+                {
+                  isClassLoading ? <Skeleton variant="rounded" width={250} height={24} /> : <TimeSchedule classDate={`${groupData?.day_of_week}, ${groupData?.time_start} - ${groupData?.time_end}`} />
+                }
 
               </Stack>
             </Grid>
+
             <Grid item xs={4} >
               <Stack spacing={"10px"} className={classes['info-box']} padding={"20px"}>
                 <Stack direction={"row"} spacing={"20px"} >
                   <Stack direction={"row"} gap={"5px"} >
                     <Typography color={"primary"}  >Department</Typography>
-                    <Typography >{groupData?.dept_name}</Typography>
+                    <Typography >{isClassLoading ? <Skeleton variant="text" width={90} sx={{ fontSize: "16px" }} /> : groupData?.dept_name}</Typography>
                   </Stack>
                 </Stack>
                 <Stack direction={"row"} spacing={"20px"} >
                   <Stack direction={"row"} gap={"5px"} >
                     <Typography color={"primary"}  >All Student</Typography>
-                    <Typography >{groupData?.student_no}</Typography>
+                    <Typography >{isClassLoading ? <Skeleton variant="text" width={40} sx={{ fontSize: "16px" }} /> : groupData?.student_no}</Typography>
                   </Stack>
                 </Stack>
                 <Stack direction={"row"} spacing={"20px"} >
@@ -118,6 +114,7 @@ const InsGroup = () => {
                 </Box>
               </Stack>
             </Grid>
+
             <Grid item xs={4} >
               <Stack spacing={"10px"} className={classes['info-box']} padding={"20px"}
                 sx={{
@@ -158,7 +155,14 @@ const InsGroup = () => {
               </Box>
             </Stack>
 
-            {Object.keys(labData).map((key, index) => (
+            {isLabChapterLoading && <>
+              <Skeleton variant="rounded" height={62} />
+              <Skeleton variant="rounded" height={62} />
+              <Skeleton variant="rounded" height={62} />
+              <Skeleton variant="rounded" height={62} />
+              <Skeleton variant="rounded" height={62} />
+            </>}
+            {!isLabChapterLoading && Object.keys(labData || {}).map((key, index) => (
               <LabRow key={index} lab={labData[key]} groupId={groupId} groupNo={groupNo} />
             ))}
 

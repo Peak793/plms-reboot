@@ -1,64 +1,88 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import {
   Grid, Select, Stack, Typography, FormControl, MenuItem, InputLabel, Box,
   TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Checkbox, Button, TablePagination, Link as MuiLink
 } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 // Sub-components
-const TableHeader = () => (
-  <TableHead sx={{ bgcolor: "var(--ebony)" }}>
-    <TableRow>
-      <TableCell width={"10%"}>
-        <Checkbox inputProps={{ "aria-label": "checkbox" }} sx={{ height: "40px" }} />
-      </TableCell>
-      <TableCell align="left" sx={{ fontSize: "16px", fontWeight: "500" }} >Exercise</TableCell>
-    </TableRow>
-  </TableHead>
-);
+const TableHeader = ({ exerciseList, selected, setSelected }) => {
+  const handleChecked = () => {
+    if (selected.length !== 0) {
+      setSelected([])
+    } else {
+      setSelected(exerciseList.map(ex => ex.exercise_id))
+    }
+  }
 
-const TableContent = ({ exerciseList, page, rowsPerPage }) => (
-  <TableBody>
-    {exerciseList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((ex) => (
-      <TableRow
-        key={ex.id}
-        sx={{
-          cursor: "pointer",
-          "td": {
-            padding: "0px 16px",
-            borderTop: "1px solid var(--raven)",
-            borderBottom: "1px solid var(--raven)",
-            fontSize: "16px",
-          },
-          "&:last-child td, &:last-child th": { border: "0" },
-          ":hover": {
-            bgcolor: "var(--hover)"
-          }
-        }}
-      >
+  return (
+    <TableHead sx={{ bgcolor: "var(--ebony)" }}>
+      <TableRow>
         <TableCell width={"10%"}>
-          <Checkbox
-            inputProps={{ "aria-label": "checkbox" }}
-            sx={{
-              height: "40px",
-            }}
-          />
+          <Checkbox inputProps={{ "aria-label": "checkbox" }} sx={{ height: "40px" }} checked={selected.length === exerciseList.length} indeterminate={selected.length != 0 && selected.length !== exerciseList.length} onClick={handleChecked} />
         </TableCell>
-        <TableCell align="left">
-          <MuiLink sx={{
-            color: "white",
-            ":hover": {
-              color: "var(--blueRibbon)"
-            },
-            textOverflow: "ellipsis"
-          }}>{ex.name}</MuiLink>
-        </TableCell>
+        <TableCell align="left" sx={{ fontSize: "16px", fontWeight: "500" }} >Exercise</TableCell>
       </TableRow>
-    ))}
-  </TableBody>
-);
+    </TableHead>
+  );
+}
+
+const TableContent = ({ exerciseList, page, rowsPerPage, selected, setSelected }) => {
+
+  const handleChecked = (exerciseId) => {
+    if (selected.includes(exerciseId)) {
+      setSelected(selected.filter(id => id !== exerciseId))
+    } else {
+      setSelected([...selected, exerciseId])
+    }
+  }
+
+  return (
+    <TableBody>
+      {exerciseList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((ex, index) => (
+        <TableRow
+          key={index}
+          sx={{
+            cursor: "pointer",
+            "td": {
+              padding: "0px 16px",
+              borderTop: "1px solid var(--raven)",
+              borderBottom: "1px solid var(--raven)",
+              fontSize: "16px",
+            },
+            "&:last-child td, &:last-child th": { border: "0" },
+            ":hover": {
+              bgcolor: "var(--hover)"
+            }
+          }}
+        >
+          <TableCell width={"10%"}>
+            <Checkbox
+              inputProps={{ "aria-label": "checkbox" }}
+              sx={{
+                height: "40px",
+              }}
+              checked={selected.includes(ex.exercise_id)}
+              onClick={() => { handleChecked(ex.exercise_id) }}
+            />
+          </TableCell>
+          <TableCell align="left">
+            <MuiLink sx={{
+              color: "white",
+              ":hover": {
+                color: "var(--blueRibbon)"
+              },
+              textOverflow: "ellipsis"
+            }}>{ex.lab_name}</MuiLink>
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
+  );
+}
 
 const Actions = () => (
   <Stack direction={"row"} alignItems={"center"} spacing={"10px"} justifyContent={"flex-end"}>
@@ -78,10 +102,32 @@ const Actions = () => (
 );
 
 // Main Component
-const LabLevel = ({ lv }) => {
+const LabLevel = ({ lv, index, selectedList }) => {
   const [filterRule, setFilterRule] = useState('all');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(6);
+  const [selected, setSelected] = useState(selectedList);
+  const [filteredList, setFilteredList] = useState(lv);
+
+  useEffect(() => {
+    const filter = (rule) => {
+      switch (rule) {
+        case "all":
+          setFilteredList(lv)
+          break;
+        case "selected":
+          setFilteredList(lv.filter(ex => selected.includes(ex.exercise_id)))
+          break;
+        case "Not selected":
+          setFilteredList(lv.filter(ex => !selected.includes(ex.exercise_id)))
+          break;
+        default:
+          break;
+      }
+    }
+
+    filter(filterRule)
+  }, [filterRule, lv, selected])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -101,7 +147,7 @@ const LabLevel = ({ lv }) => {
       }}>
         {/* Filter UI */}
         <Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"} >
-          <Typography>{lv.level}</Typography>
+          <Typography>Level {index + 1} - Exercises Pool</Typography>
           <Box width={"120px"}  >
             <FormControl size="small" fullWidth>
               <InputLabel id="filter-rule">Filter</InputLabel>
@@ -123,8 +169,8 @@ const LabLevel = ({ lv }) => {
         <Box width={"100%"} height={"300px"} sx={{ overflowY: "auto" }} >
           <TableContainer component={Paper}>
             <Table size="small">
-              <TableHeader />
-              <TableContent exerciseList={lv.exerciseList} page={page} rowsPerPage={rowsPerPage} />
+              <TableHeader exerciseList={lv} selected={selected} setSelected={setSelected} />
+              <TableContent exerciseList={filteredList} page={page} rowsPerPage={rowsPerPage} selected={selected} setSelected={setSelected} />
             </Table>
           </TableContainer>
         </Box>
@@ -132,12 +178,12 @@ const LabLevel = ({ lv }) => {
         {/* Pagination */}
         <TablePagination
           component="div"
-          count={lv.exerciseList.length}
+          count={filteredList.length}
           page={page}
           onPageChange={handleChangePage}
           rowsPerPage={rowsPerPage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          rowsPerPageOptions={[6, 12]} // Add this line
+          rowsPerPageOptions={[6, 12]}
         />
 
         {/* Actions */}
@@ -145,31 +191,6 @@ const LabLevel = ({ lv }) => {
       </Stack>
     </Grid>
   );
-};
-
-LabLevel.propTypes = {
-  lv: PropTypes.shape({
-    level: PropTypes.string.isRequired,
-    exerciseList: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        isSelected: PropTypes.bool.isRequired,
-        name: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-  }).isRequired,
-};
-
-TableContent.propTypes = {
-  exerciseList: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      isSelected: PropTypes.bool.isRequired,
-      name: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  page: PropTypes.number.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
 };
 
 export default LabLevel 

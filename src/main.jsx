@@ -8,10 +8,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { Provider } from 'jotai';
 import RouterComponent from './RouterComponent';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import 'react-quill/dist/quill.snow.css';
 import './index.css';
 
 const customTheme = createTheme(themeOptions);
+const queryClient = new QueryClient()
 
 const App = () => {
   return (
@@ -19,7 +21,9 @@ const App = () => {
       <ThemeProvider theme={customTheme}>
         <LocalizationProvider dateAdapter={AdapterMoment}>
           <CssBaseline />
-          <RouterComponent />
+          <QueryClientProvider client={queryClient} >
+            <RouterComponent />
+          </QueryClientProvider>
         </LocalizationProvider>
       </ThemeProvider>
     </Provider>
