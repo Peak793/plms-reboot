@@ -9,9 +9,7 @@ const UserAvatar = () => {
   const [user] = useAtom(userAtom);
 
   return (
-    <Stack direction={"row"} className={getClassNames(classes, "user-avatar-container")} sx={{
-      marginY: "30px",
-    }}>
+    <Stack direction={"row"} className={getClassNames(classes, "user-avatar-container")} >
       {user ? (
         <Stack spacing={"5px"} height={"100%"} className={getClassNames(classes, "text-container")}>
           <Typography className={getClassNames(classes, "role")} >{user.role.charAt(0).toUpperCase() + user.role.slice(1)}</Typography>

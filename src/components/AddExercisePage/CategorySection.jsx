@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import { Stack, Typography, Accordion, AccordionSummary, AccordionDetails, Link, Box } from "@mui/material";
+import { Stack, Typography, Accordion, AccordionSummary, AccordionDetails, Link, Box, TextField } from "@mui/material";
 import { useAtom } from "jotai";
 import { suggestedConstraints, userDefinedConstraints } from "@/store/store";
 import SuggestedRule from "@/components/AddExercisePage/SuggestedRule";
@@ -53,12 +53,11 @@ const CategorySection = ({ title, category, ruleCategory }) => {
     <Accordion expanded={isExpanded} onChange={handleChange} sx={{ borderRadius: "8px", overflow: "hidden" }} disableGutters>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1a-content"
-        id="panel1a-header"
+        sx={{ bgcolor: category === "user_defined" ? "var(--hover)" : "" }}
       >
         <Typography >{title} ({rules.length})</Typography>
       </AccordionSummary>
-      <AccordionDetails>
+      <AccordionDetails sx={{ bgcolor: category === "user_defined" ? "var(--hover)" : "" }} >
         <Stack>
           <Stack spacing={1} >
             {category === "suggested" && rules.length !== 0 && rules?.map((rule, index) => (

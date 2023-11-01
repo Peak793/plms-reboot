@@ -48,6 +48,7 @@ const Testcase = () => {
             basicSetup={{
               lineNumbers: false,
               foldGutter: false,
+              syntaxHighlighting: false,
             }}
             height='150px'
           />

@@ -167,3 +167,83 @@ body {
   padding: 0 1rem;
   list-style: disc !important;
 }
+
+.split {
+  display: flex;
+  flex-direction: row;
+}
+
+.gutter {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.gutter.gutter-horizontal {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+  cursor: col-resize;
+}
+
+.gutter.gutter-vertical {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=');
+  cursor: row-resize;
+}
+
+.stu-exercise {
+  height: 100%;
+}
+
+.work-space {
+  height: 100%;
+  overflow: hidden;
+}
+
+.cm-editor, .cm-theme {
+  height: 100% !important;
+}
+
+.cm-mergeViewEditors {
+  gap: 5px
+}
+
+.ͼ1.cm-merge-b .cm-changedLine {
+  background: rgba(78, 199, 83, 0.30);
+}
+
+.ͼ1.cm-merge-a .cm-changedLine {
+  background: rgba(244, 67, 54, 0.30);
+}
+
+.ͼ3.cm-merge-a .cm-changedText, .ͼ3 .cm-deletedChunk .cm-deletedText {
+  background: linear-gradient(red, red) bottom/100% 2px no-repeat;
+}
+
+.ͼ3.cm-merge-b .cm-changedText {
+  background: linear-gradient(lime, lime) bottom/100% 2px no-repeat;
+}
+
+::-webkit-scrollbar{
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #222;
+  border-radius: 100vw;
+  margin-block: .5em;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 100vw;
+  border: 1px solid #222;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+  border-radius: 100vw;
+}
+
+
+/* .cm-content {
+  background-color: black;
+} */

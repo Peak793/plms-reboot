@@ -1,6 +1,7 @@
 import { HashRouter as Router, Route, Routes, Outlet, Navigate } from "react-router-dom";
 import { Suspense, lazy } from 'react';
 import RootLayout from '@/components/layouts/RootLayout';
+import StudentLayout from '@/components/layouts/StudentLayout';
 import SignIn from "@/pages/SignIn";
 import Instruction from '@/pages/Instructions';
 import Examination from '@/pages/Examination';
@@ -18,6 +19,7 @@ const StudentList = lazy(() => import('@/pages/StudentList'));
 const StudentScore = lazy(() => import('@/pages/StudentScore'));
 const InsGroup = lazy(() => import('@/pages/InsGroup'));
 const SubmissionHistory = lazy(() => import('@/pages/SubmissionHistory'));
+const StuExcercise = lazy(() => import('@/pages/StuExcercise'));
 
 const RouterComponent = () => {
   return (
@@ -43,6 +45,10 @@ const RouterComponent = () => {
         </Route>
         <Route path="signin" element={<SignIn />} />
         <Route path="kw" element={<Suspense fallback={<div>Loading...</div>}><AddExercise /></Suspense>} />
+
+        <Route path="/stu" element={<StudentLayout />} >
+          <Route path="ex" element={<Suspense fallback={<div>Loading...</div>}><StuExcercise /></Suspense>} />
+        </Route>
       </Routes>
     </Router >
   )

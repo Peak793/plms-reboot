@@ -49,10 +49,10 @@ const SuggestedRule = ({ ruleCategory, ruleIndex }) => {
             <Stack direction={"row"} spacing={1} >
               <TextField
                 disabled
-                type="number"
+                type="text"
                 size="small"
                 value={rule.limit}
-                sx={{ width: "85px" }}
+                sx={{ width: "55px" }}
               />
             </Stack>
           </Stack>

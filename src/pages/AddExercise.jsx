@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSetAtom } from 'jotai';
 import { Box, Button, Container, Stack, TextField, Typography } from '@mui/material';
 import folderIcon from '@/assets/images/foldericon.png';
@@ -9,23 +9,23 @@ import KeywordCon from '@/components/AddExercisePage/KeywordCon';
 import MyBreadCrumbs from '@/components/_shared/MyBreadCrumbs';
 import MyCodeEditor from '@/components/_shared/MyCodeEditor';
 import Testcases from '@/components/AddExercisePage/Testcases';
-import MyRte from '../components/_shared/MyRte';
+import MyRte from '@/components/_shared/MyRte';
 
-const initializeWorker = (ref, setIsPyodideReady, setSuggested) => {
-  if (ref.current) return;
+// const initializeWorker = (ref, setIsPyodideReady, setSuggested) => {
+//   if (ref.current) return;
 
-  ref.current = new Worker('/workers/pyodideWorker.js');
-  ref.current.onmessage = ({ data }) => {
-    if (data.status === 'initialized') {
-      setIsPyodideReady(true);
-      console.log(data.message);
-    } else if (data.status === "success") {
-      setSuggested(data.data)
-    } else {
-      alert(data.message)
-    }
-  };
-};
+//   ref.current = new Worker('/workers/pyodideWorker.js');
+//   ref.current.onmessage = ({ data }) => {
+//     if (data.status === 'initialized') {
+//       setIsPyodideReady(true);
+//       console.log(data.message);
+//     } else if (data.status === "success") {
+//       setSuggested(data.data)
+//     } else {
+//       alert(data.message)
+//     }
+//   };
+// };
 
 const AddExercise = () => {
   const pyodideWorkerRef = useRef(null);
@@ -34,7 +34,27 @@ const AddExercise = () => {
   const [isPyodideReady, setIsPyodideReady] = useState(false);
   const setSuggested = useSetAtom(suggestedConstraints);
 
-  initializeWorker(pyodideWorkerRef, setIsPyodideReady, setSuggested);
+  useEffect(() => {
+    // Initialize the worker when the component mounts
+    pyodideWorkerRef.current = new Worker('/workers/pyodideWorker.js');
+    pyodideWorkerRef.current.onmessage = ({ data }) => {
+      if (data.status === 'initialized') {
+        setIsPyodideReady(true);
+        console.log(data.message);
+      } else if (data.status === "success") {
+        setSuggested(data.data);
+      } else {
+        alert(data.message);
+      }
+    };
+
+    // Cleanup function to terminate the worker when the component is unmounted
+    return () => {
+      if (pyodideWorkerRef.current) {
+        pyodideWorkerRef.current.terminate();
+      }
+    };
+  }, []);
 
   const handleSubmit = () => {
     if (!isPyodideReady) {
@@ -63,7 +83,9 @@ const AddExercise = () => {
             </Stack>
             <TextField label="Lab name" />
             <MyRte value={contentValue} setContentValue={setContentValue} />
-            <MyCodeEditor value={codeValue} highlight={true} onChange={setCodeValue} maxHeight={"400px"} />
+            <Box height={400} >
+              <MyCodeEditor value={codeValue} highlight={true} onChange={setCodeValue} />
+            </Box>
             <KeywordCon />
           </Stack>
 

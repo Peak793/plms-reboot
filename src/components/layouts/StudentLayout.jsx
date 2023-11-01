@@ -6,12 +6,9 @@ import { Box, Container } from "@mui/system";
 const RootLayout = () => {
   return (
     <>
-      <Sidebar />
-      <Box marginX={10} paddingTop={2} paddingBottom={5} >
-        <UserAvatar />
-        <Container maxWidth="xl" >
-          <Outlet />
-        </Container>
+      {/* <Sidebar /> */}
+      <Box marginLeft={10} paddingX={4} paddingY={2} minHeight={"100vh"} position={"relative"} >
+        <Outlet />
       </Box>
       <footer></footer>
     </>

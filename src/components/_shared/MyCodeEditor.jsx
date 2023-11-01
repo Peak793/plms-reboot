@@ -4,15 +4,44 @@ import CodeMirror from '@uiw/react-codemirror';
 import { githubDark } from "@uiw/codemirror-theme-github"
 import { python } from '@codemirror/lang-python';
 
-const MyCodeEditor = ({ highlight, basicSetup, height, ...props }) => {
+const MyCodeEditor = ({ highlight, basicSetup: bs, height, ...props }) => {
   return (
     <CodeMirror
       {...props}
       theme={githubDark}
-      extensions={highlight ? ([python()]) : ([])}
-      basicSetup={{ tabSize: 4, ...basicSetup }}
+      extensions={[python()]}
+      basicSetup={{
+        tabSize: 4,
+        lineNumbers: true,
+        highlightActiveLineGutter: true,
+        highlightSpecialChars: true,
+        history: true,
+        foldGutter: true,
+        drawSelection: true,
+        dropCursor: true,
+        allowMultipleSelections: true,
+        indentOnInput: true,
+        syntaxHighlighting: false,
+        bracketMatching: true,
+        closeBrackets: true,
+        autocompletion: true,
+        rectangularSelection: true,
+        crosshairCursor: true,
+        highlightActiveLine: true,
+        highlightSelectionMatches: true,
+        closeBracketsKeymap: true,
+        defaultKeymap: true,
+        searchKeymap: true,
+        historyKeymap: true,
+        foldKeymap: true,
+        completionKeymap: true,
+        lintKeymap: true,
+        ...bs,
+      }}
       mode={"python"}
-      minHeight={height ? height : '400px'}
+      style={{
+        fontSize: "16px",
+      }}
     />
   );
 };

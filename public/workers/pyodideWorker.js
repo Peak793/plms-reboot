@@ -47,12 +47,12 @@ self.onmessage = (event) => {
         reserved_keywords = set(keyword.kwlist)
     
         suggested_constraints = {
-            "imports": {},
             "reserved_words": {},
             "functions": {},
             "methods": {},
-            "classes": {},
             "variables": {},
+            "imports": {},
+            "classes": {},
         }
     
         num_tokens = len(tokens)
@@ -140,7 +140,11 @@ self.onmessage = (event) => {
             }
     `);
 
-        self.pyodide.runPython(pythonCode);
+        // self.pyodide.runPython(pythonCode);
+        self.pyodide.runPython(`
+        result = analyze_code(${pythonCode})
+        print(json.dumps(result, indent=2, sort_keys=False))
+    `)
 
         // Capture and reset stdout
         const output = self.pyodide.runPython(`
