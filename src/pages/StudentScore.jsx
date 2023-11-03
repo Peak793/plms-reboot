@@ -58,7 +58,7 @@ const StudentScore = () => {
                 <Box width={395} className={classes['row-info-box']}>
                   <Stack direction={"row"} flexWrap={"wrap"} >
                     {[...Array(Math.floor(Math.random() * 10) + 1)].map((_, index) => (
-                      <Link key={index} to="/ins/g/:groupId/sub-his/stu/:studentId/c/:chapterId/ex/:exerciseId" >
+                      <Link key={index} to="/ins/group/:groupId/sub-his/stu/:studentId/c/:chapterId/ex/:exerciseId" >
                         <Box className={classes['item-score-box']}>
                           <Typography>ข้อ {index + 1}</Typography>
                           <Typography>2/2</Typography>

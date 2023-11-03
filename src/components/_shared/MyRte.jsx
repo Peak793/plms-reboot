@@ -21,7 +21,7 @@ function fileListToImageFiles(fileList) {
 }
 
 
-const MyRte = ({ contentValue, setContentValue }) => {
+const MyRte = ({ editable = false, contentValue, setContentValue }) => {
   const rteRef = useRef(null);
 
   const handleNewImageFiles = useCallback(
@@ -99,6 +99,7 @@ const MyRte = ({ contentValue, setContentValue }) => {
       },
     }}>
       <RichTextEditor
+        editable={editable}
         ref={rteRef}
         extensions={extensions}
         content={contentValue}

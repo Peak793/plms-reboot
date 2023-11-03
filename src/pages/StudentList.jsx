@@ -4,7 +4,7 @@ import blueFolder from "@/assets/images/bluefoldericon.png";
 import { useState, useEffect } from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import avatarPlaceHolder from "@/assets/images/avatarplaceholder.png";
-import axios from "axios";
+import { getStudentListInGroupWithLabScore } from "@/utils/api";
 import { useQuery } from "@tanstack/react-query";
 
 // components
@@ -17,17 +17,11 @@ const StudentList = () => {
   const [labInfo, setLabInfo] = useState([]);
   const [students, setStudents] = useState([]);
 
-  const { groupId, groupNo } = useParams();
+  const { groupId } = useParams();
 
   const { data: studentList = [], isLoading } = useQuery({
     queryKey: ["studentList", groupId],
-    queryFn: async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/getStudentListInGroupWithLabScore?group_id=${groupId}`,
-        { withCredentials: true }
-      );
-      return res.data.payload;
-    }
+    queryFn: ({ queryKey }) => getStudentListInGroupWithLabScore(queryKey[1]),
   });
 
   useEffect(() => {
@@ -43,16 +37,16 @@ const StudentList = () => {
         <MyBreadCrumbs
           items={[
             { label: "My Groups", href: "/ins" },
-            { label: `Group ${groupNo}`, href: `/ins/g/${groupId}/${groupNo}` },
+            { label: `Group ${studentList.group_no}`, href: `/ins/group/${groupId}/` },
             { label: "Student List", href: "#" },
           ]}
         />
 
-        <Header logoSrc={blueFolder} title={`Group ${groupNo}`} />
+        <Header logoSrc={blueFolder} title={`Group ${studentList.group_no}`} />
 
         <Stack spacing={"10px"}>
           <Box>
-            <Link to={`/ins/g/${groupId}/${groupNo}/add-stu`}>
+            <Link to={`/ins/group/${groupId}/add-stu`}>
               <Button
                 variant="outlined"
                 color="primary"
@@ -182,7 +176,7 @@ const StudentList = () => {
                   {student.stu_firstname + " " + student.stu_lastname}
                 </Box>
               </Stack>
-              <Link to={`/ins/g/${groupId}/${groupNo}/score/stu/:studentId`}>
+              <Link to={`/ins/group/${groupId}/score/stu/:studentId`}>
                 <Stack direction={"row"} spacing={"5px"} height={"100%"}>
                   {[...Array(labInfo.length)].map((_, i) => (
                     <Box key={i} width={85} className="table-body-column">

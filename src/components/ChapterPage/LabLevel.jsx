@@ -5,7 +5,7 @@ import {
   TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Checkbox, Button, TablePagination, Link as MuiLink
 } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 
 // Sub-components
@@ -30,7 +30,7 @@ const TableHeader = ({ exerciseList, selected, setSelected }) => {
   );
 }
 
-const TableContent = ({ exerciseList, page, rowsPerPage, selected, setSelected }) => {
+const TableContent = ({ lv, exerciseList, page, rowsPerPage, selected, setSelected }) => {
 
   const handleChecked = (exerciseId) => {
     if (selected.includes(exerciseId)) {
@@ -39,6 +39,8 @@ const TableContent = ({ exerciseList, page, rowsPerPage, selected, setSelected }
       setSelected([...selected, exerciseId])
     }
   }
+
+  const { groupId, chapterId } = useParams();
 
   return (
     <TableBody>
@@ -70,13 +72,16 @@ const TableContent = ({ exerciseList, page, rowsPerPage, selected, setSelected }
             />
           </TableCell>
           <TableCell align="left">
-            <MuiLink sx={{
-              color: "white",
-              ":hover": {
-                color: "var(--blueRibbon)"
-              },
-              textOverflow: "ellipsis"
-            }}>{ex.lab_name}</MuiLink>
+            <MuiLink
+              to={`/ins/group/${groupId}/chapter/${chapterId}/level/${lv}/edit-exercise/${ex.exercise_id}`}
+              component={Link}
+              sx={{
+                color: "white",
+                ":hover": {
+                  color: "var(--blueRibbon)"
+                },
+                textOverflow: "ellipsis"
+              }}>{ex.lab_name}</MuiLink>
           </TableCell>
         </TableRow>
       ))}
@@ -84,22 +89,25 @@ const TableContent = ({ exerciseList, page, rowsPerPage, selected, setSelected }
   );
 }
 
-const Actions = () => (
-  <Stack direction={"row"} alignItems={"center"} spacing={"10px"} justifyContent={"flex-end"}>
-    <Button variant='contained' size='medium' sx={{
-      paddingX: "25px",
-      borderRadius: "8px",
-      bgcolor: "var(--cerulean )",
-      textTransform: "none",
-      flexShrink: "0",
-    }}>Update</Button>
-    <Link to={"/ins/g/:groupId/:groupNo/c/:chapterId/add-ex/:level"} >
-      <Button variant='outlined' size='medium' sx={{
-        textTransform: "none"
-      }} startIcon={<AddCircleIcon size="small" color="primary" />}>Add Lab</Button>
-    </Link>
-  </Stack>
-);
+const Actions = ({ groupId, chapterId, lv }) => {
+
+  return (
+    <Stack direction={"row"} alignItems={"center"} spacing={"10px"} justifyContent={"flex-end"}>
+      <Button variant='contained' size='medium' sx={{
+        paddingX: "25px",
+        borderRadius: "8px",
+        bgcolor: "var(--cerulean )",
+        textTransform: "none",
+        flexShrink: "0",
+      }}>Update</Button>
+      <Link to={`/ins/group/${groupId}/chapter/${chapterId}/level/${lv}/add-exercise`} >
+        <Button variant='outlined' size='medium' sx={{
+          textTransform: "none"
+        }} startIcon={<AddCircleIcon size="small" color="primary" />}>Add Lab</Button>
+      </Link>
+    </Stack>
+  )
+};
 
 // Main Component
 const LabLevel = ({ lv, index, selectedList }) => {
@@ -108,6 +116,7 @@ const LabLevel = ({ lv, index, selectedList }) => {
   const [rowsPerPage, setRowsPerPage] = useState(6);
   const [selected, setSelected] = useState(selectedList);
   const [filteredList, setFilteredList] = useState(lv);
+  const { groupId, groupNo, chapterId } = useParams();
 
   useEffect(() => {
     const filter = (rule) => {
@@ -166,11 +175,11 @@ const LabLevel = ({ lv, index, selectedList }) => {
         </Stack>
 
         {/* Table */}
-        <Box width={"100%"} height={"300px"} sx={{ overflowY: "auto" }} >
+        <Box width={"100%"} /* height={"300px"} */ sx={{ overflowY: "auto" }} >
           <TableContainer component={Paper}>
             <Table size="small">
-              <TableHeader exerciseList={lv} selected={selected} setSelected={setSelected} />
-              <TableContent exerciseList={filteredList} page={page} rowsPerPage={rowsPerPage} selected={selected} setSelected={setSelected} />
+              {/* <TableHeader exerciseList={lv} selected={selected} setSelected={setSelected} /> */}
+              <TableContent lv={index + 1} exerciseList={filteredList} page={page} rowsPerPage={rowsPerPage} selected={selected} setSelected={setSelected} />
             </Table>
           </TableContainer>
         </Box>
@@ -187,7 +196,8 @@ const LabLevel = ({ lv, index, selectedList }) => {
         />
 
         {/* Actions */}
-        <Actions />
+        <Actions groupId={groupId} groupNo={groupNo} chapterId={chapterId} lv={index + 1} />
+
       </Stack>
     </Grid>
   );

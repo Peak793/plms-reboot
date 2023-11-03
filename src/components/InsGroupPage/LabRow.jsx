@@ -24,7 +24,7 @@ const LabRow = ({ lab, groupId, groupNo }) => {
   return (
     <Stack direction={"row"} padding="10px" bgcolor="var(--biscay)" borderRadius="8px" >
       <Stack flex={1} justifyContent="center" >
-        <MuiLink to={`/ins/g/${groupId}/${groupNo}/c/${lab.chapter_id}`} component={Link} color={'inherit'} underline='none' sx={{ ":hover": { color: "var(--blueRibbon)" } }} >
+        <MuiLink to={`/ins/group/${groupId}/chapter/${lab.chapter_id}`} component={Link} color={'inherit'} underline='none' sx={{ ":hover": { color: "var(--blueRibbon)" } }} >
           <Typography>{lab.chapter_id}. {lab.chapter_name} ({lab.no_items})</Typography>
         </MuiLink>
       </Stack>

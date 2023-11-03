@@ -12,8 +12,9 @@ import TimeSchedule from "@/components/_shared/TimeSchedule"
 import LabRow from "@/components/InsGroupPage/LabRow"
 
 const InsGroup = () => {
-  const { groupId, groupNo } = useParams();
+  const { groupId } = useParams();
 
+  // TODO: Do something with this later
   const { data: groupData, isLoading: isClassLoading } = useQuery({
     queryKey: ['groupData', groupId],
     queryFn: async () => {
@@ -36,10 +37,10 @@ const InsGroup = () => {
         <Stack spacing={"20px"} >
           <MyBreadCrumbs items={[
             { label: 'My Groups', href: '/ins' },
-            { label: `Group ${groupNo}`, href: '#' },
+            { label: `Group ${groupData?.group_no}`, href: '#' },
           ]} />
 
-          <Header logoSrc={blueFolderIcon} title={`Group ${groupNo}`} />
+          <Header logoSrc={blueFolderIcon} title={`Group ${!isClassLoading ? groupData?.group_no : "..."}`} />
 
           <Grid container spacing={"10px"} >
             <Grid item xs={4} >
@@ -163,7 +164,7 @@ const InsGroup = () => {
               <Skeleton variant="rounded" height={62} />
             </>}
             {!isLabChapterLoading && Object.keys(labData || {}).map((key, index) => (
-              <LabRow key={index} lab={labData[key]} groupId={groupId} groupNo={groupNo} />
+              <LabRow key={index} lab={labData[key]} groupId={groupId} groupNo={groupData?.group_no} />
             ))}
 
           </Stack>

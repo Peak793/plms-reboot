@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Stack, Typography } from "@mui/material"
 import PropTypes from "prop-types";
 
@@ -9,12 +10,6 @@ const Header = ({ logoSrc, logoIcon, title }) => {
       <Typography variant='h6' component={"h1"}>{title}</Typography>
     </Stack>
   )
-}
-
-Header.propTypes = {
-  logoSrc: PropTypes.string,
-  logoIcon: PropTypes.node,
-  title: PropTypes.string.isRequired
 }
 
 export default Header

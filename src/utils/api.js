@@ -1,13 +1,8 @@
 import axios from "axios"
 
 export const getLabChapterInfo = async (groupId, labNo) => {
-  try {
-    const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/getLabChapterInfo?group_id=${groupId}&lab_no=${labNo}`, { withCredentials: true })
-    return data.payload
-  } catch (err) {
-    console.log(err)
-    return null
-  }
+  const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/getLabChapterInfo?group_id=${groupId}&lab_no=${labNo}`, { withCredentials: true })
+  return data.payload
 }
 
 export const getAllAvailableGroups = async () => {
@@ -26,4 +21,21 @@ export const getStudentListInGroupWithLabScore = async (groupId) => {
     { withCredentials: true }
   );
   return data.payload;
+}
+
+export const getAddExercisePageInfo = async (groupId, chapterId) => {
+  const { data } = await axios.get(
+    `${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/getAddExercisePageInfo?group_id=${groupId}&chapter_id=${chapterId}`,
+    { withCredentials: true }
+  );
+  return data;
+}
+
+export const getEditExercisePageInfo = async (groupId, exercise_id) => {
+  let { data } = await axios.get(
+    `${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/getEditExercisePageInfo?group_id=${groupId}&exercise_id=${exercise_id}`,
+    { withCredentials: true }
+  );
+
+  return data;
 }

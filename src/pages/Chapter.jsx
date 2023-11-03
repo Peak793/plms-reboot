@@ -9,7 +9,7 @@ import { getLabChapterInfo } from "@/utils/api"
 
 const Chapter = () => {
 
-  const { groupId, groupNo, chapterId } = useParams();
+  const { groupId, chapterId } = useParams();
   const { data: labChapterInfo, isLoading } = useQuery({
     queryKey: ['labChapterInfo', groupId, chapterId],
     queryFn: ({ queryKey }) => getLabChapterInfo(queryKey[1], queryKey[2]),
@@ -25,7 +25,7 @@ const Chapter = () => {
 
           <MyBreadCrumbs items={[
             { label: 'My Groups', href: '/ins' },
-            { label: `Group ${groupNo}`, href: `/ins/g/${groupId}/${groupNo}` },
+            { label: `Group ${labChapterInfo?.group_no}`, href: `/ins/group/${groupId}/` },
             { label: isLoading ? "Loading..." : labChapterInfo.chapter_name, href: '#' },
           ]} />
 
@@ -48,6 +48,7 @@ const Chapter = () => {
             </>}
             {!isLoading && labLevelInfo?.map((lv, index) => (
               <LabLevel
+                chapterName={labChapterInfo.chapter_name}
                 key={index}
                 lv={lv}
                 index={index}

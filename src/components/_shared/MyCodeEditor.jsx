@@ -4,12 +4,14 @@ import CodeMirror from '@uiw/react-codemirror';
 import { githubDark } from "@uiw/codemirror-theme-github"
 import { python } from '@codemirror/lang-python';
 
-const MyCodeEditor = ({ highlight, basicSetup: bs, height, ...props }) => {
+const MyCodeEditor = ({ editable = true, highlight, basicSetup: bs, height, ...props }) => {
   return (
     <CodeMirror
       {...props}
       theme={githubDark}
       extensions={[python()]}
+      editable={editable}
+      readOnly={!editable}
       basicSetup={{
         tabSize: 4,
         lineNumbers: true,

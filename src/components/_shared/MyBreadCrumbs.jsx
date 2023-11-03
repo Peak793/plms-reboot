@@ -1,7 +1,7 @@
+/* eslint-disable react/prop-types */
 import { Breadcrumbs as MuiBreadcrumbs, Box, Typography } from '@mui/material';
 import { NavigateNext } from '@mui/icons-material';
 import { NavLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 const MyBreadCrumbs = ({ items, lastItemColor = 'var(--cerulean)' }) => {
   return (
@@ -26,16 +26,6 @@ const MyBreadCrumbs = ({ items, lastItemColor = 'var(--cerulean)' }) => {
       </MuiBreadcrumbs>
     </Box>
   );
-};
-
-MyBreadCrumbs.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      href: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  lastItemColor: PropTypes.string,
 };
 
 export default MyBreadCrumbs;

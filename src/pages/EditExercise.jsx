@@ -12,37 +12,31 @@ import folderIcon from '@/assets/images/foldericon.png';
 import MyBreadCrumbs from '@/components/_shared/MyBreadCrumbs';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { getAddExercisePageInfo } from '@/utils/api';
+import { getEditExercisePageInfo } from '@/utils/api';
 
-// const initializeWorker = (ref, setIsPyodideReady, setSuggested) => {
-//   if (ref.current) return;
-
-//   ref.current = new Worker('/workers/pyodideWorker.js');
-//   ref.current.onmessage = ({ data }) => {
-//     if (data.status === 'initialized') {
-//       setIsPyodideReady(true);
-//       console.log(data.message);
-//     } else if (data.status === "success") {
-//       setSuggested(data.data)
-//     } else {
-//       alert(data.message)
-//     }
-//   };
-// };
-
-const AddExercise = () => {
+const EditExercise = () => {
   const pyodideWorkerRef = useRef(null);
   const [labName, setLabName] = useState('');
   const [contentValue, setContentValue] = useState('');
   const [codeValue, setCodeValue] = useState(`# Source code\n`);
   const [isPyodideReady, setIsPyodideReady] = useState(false);
   const setSuggested = useSetAtom(suggestedConstraints);
-  const { groupId, chapterId, level } = useParams();
+  const { groupId, level, exerciseId } = useParams();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['add-exercise-info', groupId, level],
-    queryFn: ({ queryKey }) => getAddExercisePageInfo(queryKey[1], queryKey[2])
+    queryKey: ['add-exercise-info', groupId, exerciseId],
+    queryFn: ({ queryKey }) => getEditExercisePageInfo(queryKey[1], queryKey[2])
   })
+
+  useEffect(() => {
+    console.log(data)
+
+    if (!isLoading && data) {
+      setLabName(data.labName || '');
+      setContentValue(data.contentValue || '');
+      setCodeValue(data.codeValue || `# Source code\n`);
+    }
+  }, [data, isLoading]);
 
   useEffect(() => {
     // Initialize the worker when the component mounts
@@ -98,13 +92,13 @@ const AddExercise = () => {
         <Stack spacing={2}>
           <MyBreadCrumbs items={[
             { label: 'My Groups', href: '/ins' },
-            { label: isLoading ? "Group ..." : `Group ${data?.group_no}`, href: `/ins/group/${groupId}` },
-            { label: isLoading ? "..." : data?.chapter_name, href: `/ins/group/${groupId}/chapter/${chapterId}` },
-            { label: "Add Exercise", href: '#' },
+            { label: "Group ...", href: `/ins/group/${groupId}` },
+            { label: "Chapter Name", href: '#' },
+            { label: "Exercise Name", href: '#' },
           ]} />
 
-          <Header logoSrc={folderIcon} title={data?.chapter_name} />
-          <ExerciseForm lv={level} mode={"add"} editable formData={formData} onSubmit={handleSubmit} />
+          <Header logoSrc={folderIcon} title={"Chatper Name"} />
+          <ExerciseForm lv={level} onPreviewPage formData={formData} onSubmit={handleSubmit} />
           <Testcases />
         </Stack>
       </Container>
@@ -112,4 +106,4 @@ const AddExercise = () => {
   );
 };
 
-export default AddExercise;
+export default EditExercise;
