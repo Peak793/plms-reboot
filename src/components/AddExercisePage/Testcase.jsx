@@ -1,11 +1,17 @@
+/* eslint-disable react/prop-types */
 import { Stack, Typography, TextField, FormControlLabel, Switch, Button, Grid } from "@mui/material"
-import { useState } from "react";
-import MyCodeEditor from "@/components/_shared/MyCodeEditor";
 import TerminalBlock from "@/components/_shared/TerminalBlock";
+import InputTerminalBlock from "@/components/_shared/InputTerminalBlock";
 
-const Testcase = () => {
-  const [showToStudent, setShowToStudent] = useState(true);
-  const [useForMarking, setUseForMarking] = useState(true);
+const Testcase = ({ testcaseData, testcase, index }) => {
+
+  const handleInputChange = (value, index) => {
+    testcaseData.setValue(prev => {
+      const newTestcase = [...prev]; // Create a new array
+      newTestcase[index].testcase_content = value; // Update the value
+      return newTestcase; // Return the new array
+    });
+  }
 
   return (
     <Stack>
@@ -19,17 +25,17 @@ const Testcase = () => {
         }}
       >
         <Stack direction={"row"} spacing={"10px"} alignItems={"center"} >
-          <Typography>Testcase 1 :</Typography>
-          <TextField size="small" type="text" label="Testcase name" />
+          <Typography>Testcase {index + 1} :</Typography>
+          <TextField size="small" type="text" value={testcase.testcase_note || ""} label="Testcase name" />
           <FormControlLabel
             value="show-to-student"
-            control={<Switch color="success" checked={showToStudent} onChange={() => setShowToStudent(value => !value)} />}
+            control={<Switch color="success" checked={testcase.show_to_student === "yes" ? true : false} onChange={() => { }} />}
             label="Show to student :"
             labelPlacement="start"
           />
           <FormControlLabel
             value="use-for-marking"
-            control={<Switch color="success" checked={useForMarking} onChange={() => setUseForMarking(value => !value)} />}
+            control={<Switch color="success" checked={testcase.active === "yes" ? true : false} onChange={() => { }} />}
             label="Use for marking :"
             labelPlacement="start"
           />
@@ -44,17 +50,10 @@ const Testcase = () => {
       </Stack>
       <Grid container spacing={"5px"} >
         <Grid item xs={12} md={6} >
-          <MyCodeEditor
-            basicSetup={{
-              lineNumbers: false,
-              foldGutter: false,
-              syntaxHighlighting: false,
-            }}
-            height='150px'
-          />
+          <InputTerminalBlock value={testcase.testcase_content} onChange={(e) => handleInputChange(e.target.value, index)} />
         </Grid>
         <Grid item className="hide-cursor" xs={12} md={6}>
-          <TerminalBlock text={""} />
+          <TerminalBlock text={testcase.testcase_output} />
         </Grid>
       </Grid>
     </Stack >

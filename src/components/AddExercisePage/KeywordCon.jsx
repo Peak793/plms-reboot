@@ -1,12 +1,8 @@
+/* eslint-disable react/prop-types */
 import { Stack, Typography, Grid } from "@mui/material";
-import { useAtom } from "jotai";
-import { suggestedConstraints, userDefinedConstraints } from "@/store/store";
 import CategorySection from "@/components/AddExercisePage/CategorySection";
 
-const KeywordCon = () => {
-  const [suggested,] = useAtom(suggestedConstraints);
-  const [userDefined,] = useAtom(userDefinedConstraints);
-
+const KeywordCon = ({ kwCon, onChange, editable }) => {
   const getCategoryTitle = (category) => {
     const words = category.split('_');
     const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
@@ -19,8 +15,8 @@ const KeywordCon = () => {
         <Grid item xs={12} md={6}>
           <Typography paddingBottom={2}>Suggested Keyword Constraints :</Typography>
           <Stack spacing={1}>
-            {Object.keys(suggested).map((ruleCategory, index) => (
-              <CategorySection key={index} title={getCategoryTitle(ruleCategory)} category={"suggested"} ruleCategory={ruleCategory} />
+            {Object.keys(kwCon.suggestedCon.value).map((ruleCategory, index) => (
+              <CategorySection editable={editable} onChange={onChange} kwCon={kwCon} key={index} title={getCategoryTitle(ruleCategory)} category={"suggested"} ruleCategory={ruleCategory} />
             ))}
           </Stack>
         </Grid>
@@ -28,8 +24,8 @@ const KeywordCon = () => {
         <Grid item xs={12} md={6}>
           <Typography paddingBottom={2}>User defined Keyword Constraints :</Typography>
           <Stack spacing={1}>
-            {Object.keys(userDefined).map((ruleCategory, index) => (
-              <CategorySection key={index} title={getCategoryTitle(ruleCategory)} category={"user_defined"} ruleCategory={ruleCategory} />
+            {Object.keys(kwCon.userDefinedCon.value).map((ruleCategory, index) => (
+              <CategorySection editable={editable} onChange={onChange} kwCon={kwCon} key={index} title={getCategoryTitle(ruleCategory)} category={"user_defined"} ruleCategory={ruleCategory} />
             ))}
           </Stack>
         </Grid>

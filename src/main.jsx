@@ -13,7 +13,13 @@ import 'react-quill/dist/quill.snow.css';
 import './index.css';
 
 const customTheme = createTheme(themeOptions);
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+    },
+  },
+});
 
 const App = () => {
   return (

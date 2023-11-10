@@ -1,4 +1,5 @@
 import axios from "axios"
+import stripBom from 'strip-bom';
 
 export const getLabChapterInfo = async (groupId, labNo) => {
   const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/getLabChapterInfo?group_id=${groupId}&lab_no=${labNo}`, { withCredentials: true })
@@ -31,11 +32,15 @@ export const getAddExercisePageInfo = async (groupId, chapterId) => {
   return data;
 }
 
-export const getEditExercisePageInfo = async (groupId, exercise_id) => {
+export const getEditExercisePageInfo = async (groupId, exercise_id, chapter_id) => {
   let { data } = await axios.get(
-    `${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/getEditExercisePageInfo?group_id=${groupId}&exercise_id=${exercise_id}`,
+    `${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/getEditExercisePageInfo?group_id=${groupId}&exercise_id=${exercise_id}&chapter_id=${chapter_id}`,
     { withCredentials: true }
   );
+
+  if (typeof data === 'string') {
+    data = JSON.parse(stripBom(data));
+  }
 
   return data;
 }

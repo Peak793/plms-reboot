@@ -1,17 +1,13 @@
 /* eslint-disable react/prop-types */
 import { Stack, TextField, FormControl, IconButton } from "@mui/material"
 import AddCircleTwoToneIcon from '@mui/icons-material/AddCircleTwoTone';
-import { useAtomValue, useAtom } from 'jotai';
-import { suggestedConstraints, userDefinedConstraints } from '@/store/store';
 
-const SuggestedRule = ({ ruleCategory, ruleIndex }) => {
-  const sugested = useAtomValue(suggestedConstraints)
-  const [userDefined, setUserDefined] = useAtom(userDefinedConstraints)
+const SuggestedRule = ({ onAddingRule, editable, kwCon, ruleCategory, ruleIndex }) => {
 
-  const rule = sugested[ruleCategory][ruleIndex]
+  const rule = kwCon.suggestedCon.value[ruleCategory][ruleIndex]
 
   const handleAddingRule = () => {
-    const isDuplicate = userDefined[ruleCategory].some((userRule) => userRule.keyword === rule.keyword);
+    const isDuplicate = kwCon.userDefinedCon.value[ruleCategory].some((userRule) => userRule.keyword === rule.keyword);
 
     if (isDuplicate) {
       // handle duplicate rule
@@ -26,11 +22,9 @@ const SuggestedRule = ({ ruleCategory, ruleIndex }) => {
       limit: rule.limit,
     };
 
-    setUserDefined((prev) => {
-      const newKwConList = {
-        ...prev,
-        [ruleCategory]: [...prev[ruleCategory], newRule],
-      };
+    onAddingRule((prev) => {
+      const newKwConList = { ...prev };
+      newKwConList.userDefinedCon[ruleCategory] = [...prev.userDefinedCon[ruleCategory], newRule];
       return newKwConList;
     });
   };
@@ -38,7 +32,7 @@ const SuggestedRule = ({ ruleCategory, ruleIndex }) => {
   return (
     <Stack direction={'row'} spacing={1} sx={{ paddingLeft: "20px" }} >
       <Stack direction={"row"} spacing={1}>
-        <TextField disabled type="text" size="small" value={rule.keyword} sx={{
+        <TextField disabled type="text" size="small" value={rule?.keyword} sx={{
           width: "250px",
           "& .MuiInputBase-input.Mui-disabled": {
             WebkitTextFillColor: "#000000",
@@ -51,16 +45,16 @@ const SuggestedRule = ({ ruleCategory, ruleIndex }) => {
                 disabled
                 type="text"
                 size="small"
-                value={rule.limit}
+                value={rule?.limit}
                 sx={{ width: "55px" }}
               />
             </Stack>
           </Stack>
         </FormControl>
       </Stack>
-      <IconButton onClick={handleAddingRule}>
+      {editable && <IconButton onClick={handleAddingRule}>
         <AddCircleTwoToneIcon color="success" />
-      </IconButton>
+      </IconButton>}
     </Stack>
   )
 }

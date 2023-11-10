@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import { Stack, Typography, Button } from "@mui/material"
 import Testcase from "@/components/AddExercisePage/Testcase"
 
-const Testcases = () => {
+const Testcases = ({ testcaseData = { value: [], setValue: () => { } } }) => {
   return (
     <Stack spacing={"20px"} sx={{
       padding: "20px",
@@ -25,7 +26,9 @@ const Testcases = () => {
         </Stack>
       </Stack>
 
-      <Testcase />
+      {/* <Testcase /> */}
+
+      {/* {testcaseData.value.map((testcase, index) => <Testcase key={index} index={index} testcaseData={testcaseData} testcase={testcase} />)} */}
 
     </Stack>
   )

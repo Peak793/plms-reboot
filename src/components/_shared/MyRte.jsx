@@ -6,7 +6,7 @@ import {
   TableBubbleMenu
 } from "mui-tiptap";
 import { Button, Box } from "@mui/material";
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useEffect } from "react";
 import { extensions } from "@/utils/tiptap-extensions";
 import MyRteMenus from "./MyRteMenus";
 
@@ -21,8 +21,12 @@ function fileListToImageFiles(fileList) {
 }
 
 
-const MyRte = ({ editable = false, contentValue, setContentValue }) => {
-  const rteRef = useRef(null);
+const MyRte = ({ rteRef, editable = false, contentValue, ...props }) => {
+  useEffect(() => {
+    if (rteRef.current?.editor) {
+      rteRef.current.editor.commands.setContent(contentValue);
+    }
+  }, [contentValue]);
 
   const handleNewImageFiles = useCallback(
     (files, insertPosition) => {
@@ -99,11 +103,10 @@ const MyRte = ({ editable = false, contentValue, setContentValue }) => {
       },
     }}>
       <RichTextEditor
+        {...props}
         editable={editable}
         ref={rteRef}
         extensions={extensions}
-        content={contentValue}
-        onChange={() => { setContentValue(rteRef.current?.editor?.getHTML()) }}
         renderControls={() => (
           <MyRteMenus />
         )}

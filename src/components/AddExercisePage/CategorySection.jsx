@@ -1,22 +1,20 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import { Stack, Typography, Accordion, AccordionSummary, AccordionDetails, Link, Box, TextField } from "@mui/material";
-import { useAtom } from "jotai";
-import { suggestedConstraints, userDefinedConstraints } from "@/store/store";
+import { Stack, Typography, Accordion, AccordionSummary, AccordionDetails, Link, Box } from "@mui/material";
 import SuggestedRule from "@/components/AddExercisePage/SuggestedRule";
 import UserDefinedRule from "@/components/AddExercisePage/UserDefinedRule";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
-const CategorySection = ({ title, category, ruleCategory }) => {
+const CategorySection = ({ kwCon, editable, onChange, title, category, ruleCategory }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [suggeted, setSuggeted] = useAtom(suggestedConstraints);
-  const [userDefined, setUserDefined] = useAtom(userDefinedConstraints);
-  const rules = category == "suggested" ? suggeted[ruleCategory] : userDefined[ruleCategory];
+  const rules = category == "suggested" ? kwCon.suggestedCon.value[ruleCategory] : kwCon.userDefinedCon.value[ruleCategory];
 
   useEffect(() => {
     if (rules.length !== 0) {
       setIsExpanded(true);
+    } else {
+      setIsExpanded(false);
     }
   }, [rules]);
 
@@ -25,13 +23,14 @@ const CategorySection = ({ title, category, ruleCategory }) => {
   };
 
   const handleAddingUserDefined = () => {
-    // const isDuplicate = userDefined[ruleCategory].some((userRule) => userRule.keyword === rule.keyword);
 
-    // if (isDuplicate) {
-    //   // handle duplicate rule
-    //   alert(`A rule with the keyword "${rule.keyword}" already exists in the "${ruleCategory}" category.`);
-    //   return;
-    // }
+    // const isDuplicate = kwCon.userDefinedCon.value[ruleCategory].some((userRule) => userRule.keyword === rule.keyword);
+
+    // // if (isDuplicate) {
+    // //   // handle duplicate rule
+    // //   alert(`A rule with the keyword "${rule.keyword}" already exists in the "${ruleCategory}" category.`);
+    // //   return;
+    // // }
 
     const newRule = {
       keyword: "",
@@ -40,11 +39,10 @@ const CategorySection = ({ title, category, ruleCategory }) => {
       limit: null,
     };
 
-    setUserDefined((prev) => {
-      const newKwConList = {
-        ...prev,
-        [ruleCategory]: [...prev[ruleCategory], newRule],
-      };
+    onChange((prev) => {
+      console.log(prev)
+      const newKwConList = { ...prev };
+      newKwConList.userDefinedCon[ruleCategory] = [...prev.userDefinedCon[ruleCategory], newRule];
       return newKwConList;
     });
   }
@@ -61,15 +59,15 @@ const CategorySection = ({ title, category, ruleCategory }) => {
         <Stack>
           <Stack spacing={1} >
             {category === "suggested" && rules.length !== 0 && rules?.map((rule, index) => (
-              <SuggestedRule key={index} ruleCategory={ruleCategory} ruleIndex={index} />
+              <SuggestedRule editable={editable} onAddingRule={onChange} kwCon={kwCon} key={index} ruleCategory={ruleCategory} ruleIndex={index} />
             ))}
 
             {category === "user_defined" && rules.length !== 0 && rules?.map((rule, index) => (
-              <UserDefinedRule key={index} ruleCategory={ruleCategory} ruleIndex={index} />
+              <UserDefinedRule editable={editable} onChange={onChange} kwCon={kwCon} key={index} ruleCategory={ruleCategory} ruleIndex={index} />
             ))}
 
             {Object.keys(rules).length == 0 && <Typography paddingLeft={2} sx={{ color: "var(--frenchGray)" }} >No constraints added yet.</Typography>}
-            {category === "user_defined" && <Box paddingLeft={2} sx={{ marginLeft: "20px" }} >
+            {editable && category === "user_defined" && <Box paddingLeft={2} sx={{ marginLeft: "20px" }} >
               <Link onClick={handleAddingUserDefined} sx={{ cursor: "pointer" }} >Add new keyword constrain</Link>
             </Box>}
           </Stack>

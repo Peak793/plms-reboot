@@ -26,10 +26,10 @@ const Chapter = () => {
           <MyBreadCrumbs items={[
             { label: 'My Groups', href: '/ins' },
             { label: `Group ${labChapterInfo?.group_no}`, href: `/ins/group/${groupId}/` },
-            { label: isLoading ? "Loading..." : labChapterInfo.chapter_name, href: '#' },
+            { label: isLoading ? "Loading..." : `Chapter ${chapterId} : ${labChapterInfo?.chapter_name}`, href: '#' },
           ]} />
 
-          <Header logoSrc={folderIcon} title={isLoading ? "Loading..." : labChapterInfo.chapter_name} />
+          <Header logoSrc={folderIcon} title={isLoading ? "Loading..." : `Chapter ${chapterId} : ${labChapterInfo?.chapter_name}`} />
 
           <Grid container spacing={"10px"}>
             {isLoading && <>
