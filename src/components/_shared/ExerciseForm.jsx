@@ -7,6 +7,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getKwConSourceCode } from '@/utils/pythonCode';
 import { useRef, useState, useEffect } from 'react';
+import { ABS_INS_URL } from '@/utils/constants/routeConst';
 import { defaultCon } from '@/store/store';
 
 const defaultValues = {
@@ -89,7 +90,7 @@ const ExerciseForm = ({ onAddExercisePage = false, lv, onSave, onCancelEdit, for
   };
 
   const handleCancelAdd = () => {
-    navigate(`/ins/group/${groupId}/chapter/${chapterId}`);
+    navigate(ABS_INS_URL.DYNAMIC.CHAPTER(groupId, chapterId));
   };
 
   const handleSave = () => {

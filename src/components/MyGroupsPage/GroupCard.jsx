@@ -1,6 +1,7 @@
 import { Stack, Typography, Box, Button, Grid } from "@mui/material"
 import PropTypes from 'prop-types';
-import { dayColor } from "@/utils";
+import { dayColor } from "@/utils/constants/common";
+import { ABS_INS_URL } from "@/utils/constants/routeConst";
 import { Link } from "react-router-dom";
 
 const GroupCard = ({ id, groupNo, schedule, year, semester, department }) => {
@@ -34,11 +35,11 @@ const GroupCard = ({ id, groupNo, schedule, year, semester, department }) => {
         </Stack>
 
         <Stack direction="row" spacing={2} sx={{ width: "100%" }}>
-          <Link to={`/ins/group/${id}`}>
+          <Link to={ABS_INS_URL.DYNAMIC.GROUP(id)}>
             <Button variant="contained" sx={{ borderRadius: "30px", padding: "7px 25px" }}>Exercise</Button>
           </Link>
 
-          <Link to={`/ins/group/${id}/stu-list`}>
+          <Link to={ABS_INS_URL.DYNAMIC.STUDENT_LIST(id)}>
             <Button variant="contained" sx={{ borderRadius: "30px", padding: "7px 25px" }}>Student</Button>
           </Link>
         </Stack>

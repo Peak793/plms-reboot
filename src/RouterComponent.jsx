@@ -1,6 +1,6 @@
 import { HashRouter as Router, Route, Routes, Outlet, Navigate } from "react-router-dom";
 import { Suspense, lazy } from 'react';
-import RootLayout from '@/components/layouts/RootLayout';
+import InstructorLayout from '@/components/layouts/InstructorLayout';
 import StudentLayout from '@/components/layouts/StudentLayout';
 import SignIn from "@/pages/SignIn";
 import Instruction from '@/pages/Instructions';
@@ -9,6 +9,7 @@ import Faq from '@/pages/Faq';
 import EditProfile from '@/pages/EditProfile';
 import AddStudent from '@/pages/AddStudent';
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { ABS_INS_URL, REL_INS_URL, STU_URL, REL_STU_URL, COMMON_URL } from "@/utils/constants/routeConst";
 
 // Lazy-load page components
 const MyGroups = lazy(() => import('@/pages/MyGroups'));
@@ -26,30 +27,30 @@ const RouterComponent = () => {
   return (
     <Router>
       <Routes>
-        <Route index element={<Navigate to="/signin" />} />
-        <Route element={<ProtectedRoute><RootLayout /></ProtectedRoute>}>
-          <Route path="/ins" element={<Outlet />}  >
+        <Route index element={<Navigate to={COMMON_URL.STATIC.SIGNIN} />} />
+        <Route element={<ProtectedRoute><InstructorLayout /></ProtectedRoute>}>
+          <Route path={ABS_INS_URL.STATIC.MY_GROUPS} element={<Outlet />}  >
             <Route index element={<Suspense fallback={<div>Loading...</div>}><MyGroups /></Suspense>} />
-            <Route path="group/:groupId/" element={<Suspense fallback={<div>Loading...</div>}><InsGroup /></Suspense>} />
-            <Route path="group/:groupId/chapter/:chapterId" element={<Suspense fallback={<div>Loading...</div>}><Chapter /></Suspense>} />
-            <Route path="group/:groupId/chapter/:chapterId/level/:level/add-exercise" element={<Suspense fallback={<div>Loading...</div>}><AddExercise /></Suspense>} />
-            <Route path="group/:groupId/chapter/:chapterId/level/:level/edit-exercise/:exerciseId" element={<Suspense fallback={<div>Loading...</div>}><EditExercise /></Suspense>} />
-            <Route path="group/:groupId/stu-list" element={<Suspense fallback={<div>Loading...</div>}><StudentList /></Suspense>} />
-            <Route path="group/:groupId/add-stu" element={<AddStudent />} />
-            <Route path="group/:groupId/score/stu/:studentId" element={<Suspense fallback={<div>Loading...</div>}><StudentScore /></Suspense>} />
-            <Route path="group/:groupId/sub-his/stu/:studentId/c/:chapterId/ex/:exerciseId" element={<Suspense fallback={<div>Loading...</div>}><SubmissionHistory /></Suspense>} />
-            <Route path="available-groups" element={<Suspense fallback={<div>Loading...</div>}><AvailableGroups /></Suspense>} />
+            <Route path={REL_INS_URL.DYNAMIC.GROUP()} element={<Suspense fallback={<div>Loading...</div>}><InsGroup /></Suspense>} />
+            <Route path={REL_INS_URL.DYNAMIC.CHAPTER()} element={<Suspense fallback={<div>Loading...</div>}><Chapter /></Suspense>} />
+            <Route path={REL_INS_URL.DYNAMIC.ADD_EXERCISE()} element={<Suspense fallback={<div>Loading...</div>}><AddExercise /></Suspense>} />
+            <Route path={REL_INS_URL.DYNAMIC.EDIT_EXERCISE()} element={<Suspense fallback={<div>Loading...</div>}><EditExercise /></Suspense>} />
+            <Route path={REL_INS_URL.DYNAMIC.STUDENT_LIST()} element={<Suspense fallback={<div>Loading...</div>}><StudentList /></Suspense>} />
+            <Route path={REL_INS_URL.DYNAMIC.ADD_STUDENT()} element={<AddStudent />} />
+            <Route path={REL_INS_URL.DYNAMIC.STUDENT_INDIVIDUAL()} element={<Suspense fallback={<div>Loading...</div>}><StudentScore /></Suspense>} />
+            <Route path={REL_INS_URL.DYNAMIC.STUDENT_SUBMIT_HISTORY()} element={<Suspense fallback={<div>Loading...</div>}><SubmissionHistory /></Suspense>} />
+            <Route path={REL_INS_URL.STATIC.AVAILABLE_GROUPS} element={<Suspense fallback={<div>Loading...</div>}><AvailableGroups /></Suspense>} />
           </Route>
-          <Route path="instruction" element={<Instruction />} />
-          <Route path="examination" element={<Examination />} />
-          <Route path="faq" element={<Faq />} />
-          <Route path="edit-profile/:userId" element={<EditProfile />} />
+          <Route path={COMMON_URL.STATIC.INSTRUCTION} element={<Instruction />} />
+          <Route path={COMMON_URL.STATIC.EXAMINATION} element={<Examination />} />
+          <Route path={COMMON_URL.STATIC.FAQ} element={<Faq />} />
+          <Route path={COMMON_URL.DYNAMIC.EDIT_PROFILE()} element={<EditProfile />} />
         </Route>
-        <Route path="signin" element={<SignIn />} />
+        <Route path={COMMON_URL.STATIC.SIGNIN} element={<SignIn />} />
         <Route path="kw" element={<Suspense fallback={<div>Loading...</div>}><AddExercise /></Suspense>} />
 
-        <Route path="/stu" element={<StudentLayout />} >
-          <Route path="ex" element={<Suspense fallback={<div>Loading...</div>}><StuExcercise /></Suspense>} />
+        <Route path={STU_URL.STATIC.HOME} element={<StudentLayout />} >
+          <Route path={REL_STU_URL.DYNAMIC.EXERCISE()} element={<Suspense fallback={<div>Loading...</div>}><StuExcercise /></Suspense>} />
         </Route>
       </Routes>
     </Router >

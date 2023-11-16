@@ -5,6 +5,7 @@ import {
   TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Checkbox, Button, TablePagination, Link as MuiLink
 } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { ABS_INS_URL } from '@/utils/constants/routeConst';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 
@@ -73,7 +74,7 @@ const TableContent = ({ lv, exerciseList, page, rowsPerPage, selected, setSelect
           </TableCell>
           <TableCell align="left">
             <MuiLink
-              to={`/ins/group/${groupId}/chapter/${chapterId}/level/${lv}/edit-exercise/${ex.exercise_id}`}
+              to={ABS_INS_URL.DYNAMIC.EDIT_EXERCISE(groupId, chapterId, lv, ex.exercise_id)}
               component={Link}
               sx={{
                 color: "white",
@@ -100,7 +101,7 @@ const Actions = ({ groupId, chapterId, lv }) => {
         textTransform: "none",
         flexShrink: "0",
       }}>Update</Button>
-      <Link to={`/ins/group/${groupId}/chapter/${chapterId}/level/${lv}/add-exercise`} >
+      <Link to={ABS_INS_URL.DYNAMIC.ADD_EXERCISE(groupId, chapterId, lv)} >
         <Button variant='outlined' size='medium' sx={{
           textTransform: "none"
         }} startIcon={<AddCircleIcon size="small" color="primary" />}>Add Lab</Button>

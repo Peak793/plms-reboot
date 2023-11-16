@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import avatarPlaceHolder from "@/assets/images/avatarplaceholder.png";
 import { getStudentListInGroupWithLabScore } from "@/utils/api";
+import { ABS_INS_URL } from "@/utils/constants/routeConst";
 import { useQuery } from "@tanstack/react-query";
 
 // components
@@ -46,7 +47,7 @@ const StudentList = () => {
 
         <Stack spacing={"10px"}>
           <Box>
-            <Link to={`/ins/group/${groupId}/add-stu`}>
+            <Link to={ABS_INS_URL.DYNAMIC.ADD_STUDENT(groupId)} >
               <Button
                 variant="outlined"
                 color="primary"
@@ -176,7 +177,8 @@ const StudentList = () => {
                   {student.stu_firstname + " " + student.stu_lastname}
                 </Box>
               </Stack>
-              <Link to={`/ins/group/${groupId}/score/stu/:studentId`}>
+              {/* TODO: Change placeholder value in the URL. */}
+              <Link to={ABS_INS_URL.DYNAMIC.STUDENT_INDIVIDUAL(groupId, ":studentId")} >
                 <Stack direction={"row"} spacing={"5px"} height={"100%"}>
                   {[...Array(labInfo.length)].map((_, i) => (
                     <Box key={i} width={85} className="table-body-column">
@@ -195,7 +197,7 @@ const StudentList = () => {
           ))}
         </Stack>
       </Stack>
-    </Box>
+    </Box >
   );
 };
 

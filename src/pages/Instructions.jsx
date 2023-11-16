@@ -14,7 +14,7 @@ const Instruction = () => {
   const setSelected = useSetAtom(sidebarSelectedAtom);
 
   useEffect(() => {
-    setSelected(2.1);
+    setSelected('instruction');
   }, [])
 
   return (

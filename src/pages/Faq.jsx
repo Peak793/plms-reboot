@@ -14,7 +14,7 @@ const Examination = () => {
   const setSelected = useSetAtom(sidebarSelectedAtom);
 
   useEffect(() => {
-    setSelected(2.3);
+    setSelected('faq');
   }, [])
 
   return (

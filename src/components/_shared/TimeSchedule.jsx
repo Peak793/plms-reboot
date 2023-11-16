@@ -1,4 +1,4 @@
-import { dayColor } from "@/utils"
+import { dayColor } from "@/utils/constants/common"
 import { Typography } from "@mui/material"
 import PropTypes from 'prop-types';
 

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from 'jotai';
 import { userAtom } from '@/store/store';
+import { COMMON_URL } from "@/utils/constants/routeConst";
 import PropTypes from 'prop-types';
 
 const ONE_MINUTE = 60000; // 1 minute in milliseconds
@@ -22,13 +23,13 @@ const ProtectedRoute = ({ children }) => {
         } else {
           setUser(null);
           localStorage.removeItem('user');
-          navigate('/signin')
+          navigate(COMMON_URL.STATIC.SIGNIN);
         }
       } catch (error) {
         console.error("Failed to perform login check:", error);
         setUser(null);
         localStorage.removeItem('user');
-        navigate('/signin')
+        navigate(COMMON_URL.STATIC.SIGNIN);
       }
     };
 

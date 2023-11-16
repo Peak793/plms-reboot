@@ -2,23 +2,6 @@ import avatarPlaceholder from "@/assets/images/avatarplaceholder.png"
 
 export const getClassNames = (classes, ...classNames) => classNames.map(className => classes[className]).join(' ');
 
-export const dayColor = {
-  "จันทร์": "var(--monday)",
-  "อังคาร": "var(--tuesday)",
-  "พุธ": "var(--wednesday)",
-  "พฤหัสบดี": "var(--thursday)",
-  "ศุกร์": "var(--friday)",
-  "เสาร์": "var(--saturday)",
-  "อาทิตย์": "var(--sunday)",
-  "Monday": "var(--monday)",
-  "Tuesday": "var(--tuesday)",
-  "Wednesday": "var(--wednesday)",
-  "Thursday": "var(--thursday)",
-  "Friday": "var(--friday)",
-  "Saturday": "var(--saturday)",
-  "Sunday": "var(--sunday)",
-}
-
 export const groups = [
   { groupId: "22020401", groupNo: "401", year: "2022", semester: "1", classDate: "จันทร์, 09:00:00 - 12:00:00", students: 45, instructor: "ชรินดา สนธิดี" },
   { groupId: "22020402", groupNo: "402", year: "2022", semester: "1", classDate: "อังคาร, 09:00:00 - 12:00:00", students: 45, instructor: "ชรินดา สนธิดี" },

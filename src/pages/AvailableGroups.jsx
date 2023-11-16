@@ -31,7 +31,7 @@ const AvailableGroups = () => {
     const instructors = groups.map((group) => group.lecturer_name);
     setInstructorOptions(new Set(instructors));
 
-    setSelected(1.2);
+    setSelected('available_groups');
   }, [groups, setSelected])
 
   const filteredGroups = groups.filter((group) => {

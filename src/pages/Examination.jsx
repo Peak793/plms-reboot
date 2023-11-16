@@ -13,7 +13,7 @@ const Examination = () => {
   const setSelected = useSetAtom(sidebarSelectedAtom);
 
   useEffect(() => {
-    setSelected(2.2);
+    setSelected("examination");
   }, [])
 
   return (

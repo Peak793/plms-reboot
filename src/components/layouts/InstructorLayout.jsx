@@ -3,7 +3,7 @@ import Sidebar from "@/components/_shared/Sidebar";
 import UserAvatar from "@/components/_shared/UserAvatar"
 import { Box, Container } from "@mui/system";
 
-const RootLayout = () => {
+const InstructorLayout = () => {
   return (
     <>
       <Sidebar />
@@ -18,4 +18,4 @@ const RootLayout = () => {
   )
 }
 
-export default RootLayout
+export default InstructorLayout

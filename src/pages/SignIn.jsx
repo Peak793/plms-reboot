@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import { useAtom } from 'jotai';
 import { userAtom } from '@/store/store';
 import { useEffect } from "react";
+import { PREFIX } from "@/utils/constants/routeConst";
 import { useForm, Controller } from "react-hook-form"
 
 const SignIn = () => {
@@ -20,14 +21,8 @@ const SignIn = () => {
   })
 
   useEffect(() => {
-    const roleRedirect = {
-      'supervisor': '/ins',
-      'ta': '/ins',
-      'student': '/stu',
-    }
-
     if (user) {
-      navigate(roleRedirect[user.role])
+      navigate(PREFIX[user.role])
     }
   }, [navigate, user])
 

@@ -6,7 +6,8 @@ import {
   bindTrigger,
   bindMenu,
 } from 'material-ui-popup-state/hooks'
-import { SemesterOptions, ClassDateOptions, dayColor } from '@/utils'
+import { SemesterOptions, ClassDateOptions } from '@/utils'
+import { dayColor } from "@/utils/constants/common";
 import { useState, useCallback } from "react";
 import PropTypes from 'prop-types'
 

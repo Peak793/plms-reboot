@@ -2,6 +2,7 @@ import { Box, Container, Stack, Typography, Button } from "@mui/material"
 import blueFolderIcon from '@/assets/images/bluefoldericon.png'
 import avatarPlaceholder from '@/assets/images/avatarplaceholder.png'
 import classes from '@/assets/css/StudentScore.module.css'
+import { ABS_INS_URL } from "@/utils/constants/routeConst"
 import { Link } from "react-router-dom"
 
 // components
@@ -58,7 +59,10 @@ const StudentScore = () => {
                 <Box width={395} className={classes['row-info-box']}>
                   <Stack direction={"row"} flexWrap={"wrap"} >
                     {[...Array(Math.floor(Math.random() * 10) + 1)].map((_, index) => (
-                      <Link key={index} to="/ins/group/:groupId/sub-his/stu/:studentId/c/:chapterId/ex/:exerciseId" >
+                      /* TODO: update the URL
+                        "/ins/group/:groupId/sub-his/stu/:studentId/c/:chapterId/ex/:exerciseId"
+                      */
+                      <Link key={index} to={ABS_INS_URL.DYNAMIC.STUDENT_SUBMIT_HISTORY()} >
                         <Box className={classes['item-score-box']}>
                           <Typography>ข้อ {index + 1}</Typography>
                           <Typography>2/2</Typography>

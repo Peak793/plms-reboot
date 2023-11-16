@@ -20,7 +20,7 @@ function MyGroups() {
   });
 
   useEffect(() => {
-    setSelected(1.1);
+    setSelected('my_groups');
   }, [setSelected]);
 
   const items = [{ label: 'My Groups', href: '/ins' }];
