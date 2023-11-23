@@ -4,6 +4,7 @@ import blueFolder from "@/assets/images/bluefoldericon.png";
 import { useState, useEffect } from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import avatarPlaceHolder from "@/assets/images/avatarplaceholder.png";
+import { buttonStyle } from "@/utils";
 import { getStudentListInGroupWithLabScore } from "@/utils/api";
 import { ABS_INS_URL } from "@/utils/constants/routeConst";
 import { useQuery } from "@tanstack/react-query";
@@ -12,7 +13,8 @@ import { useQuery } from "@tanstack/react-query";
 import MyBreadCrumbs from "@/components/_shared/MyBreadCrumbs";
 import Header from "@/components/_shared/Header";
 
-const buttonStyle = { height: "100%", color: "white", minHeight: "63.48px" };
+
+const buttonStyleExtended = { ...buttonStyle, minHeight: "63.48px" }
 
 const StudentList = () => {
   const [labInfo, setLabInfo] = useState([]);
@@ -82,17 +84,17 @@ const StudentList = () => {
               }}
             >
               <Box width={120} className="table-head-column">
-                <Button fullWidth sx={buttonStyle}>
+                <Button fullWidth sx={buttonStyleExtended}>
                   Avatar
                 </Button>
               </Box>
               <Box width={150} className="table-head-column">
-                <Button fullWidth sx={buttonStyle}>
+                <Button fullWidth sx={buttonStyleExtended}>
                   Student ID
                 </Button>
               </Box>
               <Box width={250} className="table-head-column">
-                <Button fullWidth sx={buttonStyle}>
+                <Button fullWidth sx={buttonStyleExtended}>
                   Name
                 </Button>
               </Box>
@@ -100,13 +102,13 @@ const StudentList = () => {
             {isLoading && [...Array(11)].map((_, index) => <Skeleton key={index} variant="rounded" width={85} height={63.48} animation="wave" />)}
             {!isLoading && labInfo.map((lab, index) => (
               <Box width={85} key={index} className="table-head-column">
-                <Button fullWidth sx={buttonStyle}>
+                <Button fullWidth sx={buttonStyleExtended}>
                   Lab {index + 1} <br /> ({lab.chapter_fullmark})
                 </Button>
               </Box>
             ))}
             {!isLoading && <Box width={85} className="table-head-column">
-              <Button fullWidth sx={buttonStyle}>
+              <Button fullWidth sx={buttonStyleExtended}>
                 Total
               </Button>
             </Box>}

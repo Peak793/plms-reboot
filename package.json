@@ -55,6 +55,7 @@
     "material-ui-popup-state": "^5.0.9",
     "moment": "^2.29.4",
     "mui-tiptap": "^1.8.4",
+    "qs": "^6.11.2",
     "react": "^18.2.0",
     "react-codemirror-merge": "^4.21.20",
     "react-diff-viewer-continued": "^3.3.1",

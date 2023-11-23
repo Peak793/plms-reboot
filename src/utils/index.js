@@ -2,6 +2,8 @@ import avatarPlaceholder from "@/assets/images/avatarplaceholder.png"
 
 export const getClassNames = (classes, ...classNames) => classNames.map(className => classes[className]).join(' ');
 
+export const buttonStyle = { height: "100%", color: "white" };
+
 export const groups = [
   { groupId: "22020401", groupNo: "401", year: "2022", semester: "1", classDate: "จันทร์, 09:00:00 - 12:00:00", students: 45, instructor: "ชรินดา สนธิดี" },
   { groupId: "22020402", groupNo: "402", year: "2022", semester: "1", classDate: "อังคาร, 09:00:00 - 12:00:00", students: 45, instructor: "ชรินดา สนธิดี" },

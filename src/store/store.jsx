@@ -10,9 +10,9 @@ export const defaultCon = {
   "classes": [],
 }
 
-export const suggestedConstraints = atom(defaultCon);
+export const suggested_constraintsstraints = atom(defaultCon);
 
-export const userDefinedConstraints = atom(defaultCon);
+export const user_defined_constraintsstraints = atom(defaultCon);
 
 export const userAtom = atomWithStorage('user', null);
 

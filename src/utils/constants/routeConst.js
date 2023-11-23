@@ -59,13 +59,15 @@ export const REL_INS_URL = {
 }
 
 // URLs for Student (STU) role
-export const STU_URL = {
+export const ABS_STU_URL = {
   "STATIC": {
     "HOME": `${PREFIX[USER_ROLES.STUDENT]}`,
   },
   "DYNAMIC": {
     "EXERCISE": () =>
       `${PREFIX[USER_ROLES.STUDENT]}/exercise`,
+    "EXERCISE_LIST": (groupId = ":groupId") =>
+      `group/${groupId}/exercise-list`
   }
 }
 
@@ -76,6 +78,8 @@ export const REL_STU_URL = {
   "DYNAMIC": {
     "EXERCISE": () =>
       `exercise`,
+    "EXERCISE_LIST": (groupId = ":groupId") =>
+      `group/${groupId}/exercise-list`
   }
 }
 
@@ -88,7 +92,7 @@ export const COMMON_URL = {
     "FAQ": "/faq",
   },
   DYNAMIC: {
-    "EDIT_PROFILE": (userId = ":userId") =>
-      `/edit-profile/${userId}`,
+    "PROFILE": (userId = ":userId") =>
+      `/profile/${userId}`,
   }
 }

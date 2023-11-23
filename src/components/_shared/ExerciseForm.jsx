@@ -3,7 +3,7 @@ import { Box, Button, Stack, TextField, Typography } from '@mui/material';
 import KeywordCon from '@/components/AddExercisePage/KeywordCon';
 import MyCodeEditor from '@/components/_shared/MyCodeEditor';
 import MyRte from '@/components/_shared/MyRte';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getKwConSourceCode } from '@/utils/pythonCode';
 import { useRef, useState, useEffect } from 'react';
@@ -14,18 +14,18 @@ const defaultValues = {
   lab_name: '',
   lab_content: '',
   sourcecode_content: '# Source code\n',
-  keywordCon: {
-    suggestedCon: defaultCon,
-    userDefinedCon: defaultCon
+  keyword_constraints: {
+    suggested_constraints: defaultCon,
+    user_defined_constraints: defaultCon
   },
 }
 
-const ExerciseForm = ({ onAddExercisePage = false, lv, onSave, onCancelEdit, formData = defaultValues }) => {
+const ExerciseForm = ({ onAddExercisePage = false, lv, formData = defaultValues }) => {
   const navigate = useNavigate();
   const { groupId, chapterId } = useParams();
   const [isPyodideReady, setIsPyodideReady] = useState(false);
   const [editable, setEditable] = useState(onAddExercisePage);
-  const { register, control, setValue, getValues, handleSubmit, reset } = useForm({ defaultValues: formData });
+  const { control, setValue, getValues, handleSubmit, reset } = useForm({ defaultValues: formData });
   const onSubmit = data => console.log(data);
   const rteRef = useRef(null);
   const pyodideWorkerRef = useRef(null);
@@ -47,9 +47,9 @@ const ExerciseForm = ({ onAddExercisePage = false, lv, onSave, onCancelEdit, for
         console.log(data.message);
       } else if (data.status === 'success') {
         // Handle success response here
-        const prevKeywordCon = getValues('keywordCon');
-        const newKeywordCon = { ...prevKeywordCon, suggestedCon: data.data };
-        setValue('keywordCon', newKeywordCon);
+        const prevKeywordCon = getValues('keyword_constraints');
+        const newKeywordCon = { ...prevKeywordCon, suggested_constraints: data.data };
+        setValue('keyword_constraints', newKeywordCon);
       } else {
         alert(data.message);
       }
@@ -64,12 +64,6 @@ const ExerciseForm = ({ onAddExercisePage = false, lv, onSave, onCancelEdit, for
 
   useEffect(() => {
     reset(formData);
-    if (editor) {
-      editor
-        .chain()
-        .setContent(formData.lab_content)
-        .run();
-    }
   }, [editor, formData, reset]);
 
   const handleKeywordAnalyzer = (pythonCode) => {
@@ -84,18 +78,8 @@ const ExerciseForm = ({ onAddExercisePage = false, lv, onSave, onCancelEdit, for
     pyodideWorkerRef.current.postMessage({ pythonCode: getKwConSourceCode(pythonCode) });
   };
 
-  const handleCancelEdit = () => {
-    onCancelEdit();
-    setEditable(false);
-  };
-
   const handleCancelAdd = () => {
     navigate(ABS_INS_URL.DYNAMIC.CHAPTER(groupId, chapterId));
-  };
-
-  const handleSave = () => {
-    onSave();
-    setEditable(false);
   };
 
   const renderEditButtons = () => {
@@ -171,20 +155,18 @@ const ExerciseForm = ({ onAddExercisePage = false, lv, onSave, onCancelEdit, for
           />
         </Box>
         <Controller
-          name="keywordCon"
+          name="keyword_constraints"
           control={control}
           render={({ field }) => (
             <KeywordCon
               editable={editable}
               onChange={field.onChange}
               kwCon={{
-                suggestedCon: {
-                  value: field.value.suggestedCon,
-                  setValue: (value) => field.onChange({ ...field.value, suggestedCon: value })
+                suggested_constraints: {
+                  value: field.value.suggested_constraints,
                 },
-                userDefinedCon: {
-                  value: field.value.userDefinedCon,
-                  setValue: (value) => field.onChange({ ...field.value, userDefinedCon: value })
+                user_defined_constraints: {
+                  value: field.value.user_defined_constraints,
                 }
               }}
             />

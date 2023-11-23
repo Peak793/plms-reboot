@@ -1,44 +1,66 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { defaultCon } from '@/store/store';
 import { Box, Container, Stack } from '@mui/material';
-import { getKwConSourceCode } from '@/utils/pythonCode';
-import ExerciseForm from '@/components/_shared/ExerciseForm';
+import ExerciseInfoForm from '@/components/_shared/ExerciseInfoForm';
 import Header from '@/components/_shared/Header';
 import Testcases from '@/components/AddExercisePage/Testcases';
 import folderIcon from '@/assets/images/foldericon.png';
 import MyBreadCrumbs from '@/components/_shared/MyBreadCrumbs';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { getEditExercisePageInfo } from '@/utils/api';
+import { getBreadCrumbs, getExerciseFormData } from '@/utils/api';
 
 const EditExercise = () => {
   // Params
   const { groupId, level, chapterId, exerciseId } = useParams();
 
-  // Query
-  const { data, isLoading } = useQuery({
-    queryKey: ['edit-exercise-info', groupId, exerciseId, chapterId],
-    queryFn: ({ queryKey }) => getEditExercisePageInfo(queryKey[1], queryKey[2], queryKey[3])
-  })
+  const breadCrumbsId = useMemo(() => {
+    return {
+      'group_id': groupId,
+      'chapter_id': chapterId,
+      'exercise_id': exerciseId,
+    }
+  }, [chapterId, exerciseId, groupId])
 
-  const formData = (!isLoading && data) ? {
-    lab_name: data.lab_exercise.lab_name,
-    lab_content: data.lab_exercise.lab_content,
-    sourcecode_content: data.lab_exercise.sourcecode_content || "",
-    keywordCon: {
-      suggestedCon: defaultCon,
-      userDefinedCon: defaultCon
+  // Query breadCrumbs data
+  const { data: bc, isLoading: isBcLoading } = useQuery({
+    queryKey: ['breadcrumbs', breadCrumbsId],
+    queryFn: () => getBreadCrumbs(breadCrumbsId)
+  });
+
+  // Query the form data
+  const { data: form, isLoading: isFormLoading } = useQuery({
+    queryKey: ['edit-exercise-form', exerciseId],
+    queryFn: () => getExerciseFormData(exerciseId)
+  });
+
+  // Query the testcases data
+  // const { data: testcases, isLoading: isTestcasesLoading } = useQuery({
+  //   queryKey: ['edit-exercise-testcase', exerciseId],
+  //   queryFn: () => getExerciseFormData(exerciseId)
+  // });
+
+  const isLoading = true
+
+  const formData = isFormLoading ? {
+    lab_name: '',
+    lab_content: '',
+    sourcecode_content: '# Source code\n',
+    keyword_constraints: {
+      suggested_constraints: defaultCon,
+      user_defined_constraints: defaultCon
     }
-  } :
-    {
-      lab_name: '',
-      lab_content: '',
-      sourcecode_content: '# Source code\n',
-      keywordCon: {
-        suggestedCon: defaultCon,
-        userDefinedCon: defaultCon
-      },
-    }
+  } : {
+    lab_name: form.lab_name,
+    lab_content: form.lab_content,
+    sourcecode_content: form.sourcecode_content,
+    keyword_constraints: {
+      suggested_constraints: form["keyword_constraints"]["suggested_constraints"],
+      user_defined_constraints: form["keyword_constraints"]["user_defined_constraints"]
+    },
+  }
+
+  let testcaseData = []
 
   // Render
   return (
@@ -47,17 +69,17 @@ const EditExercise = () => {
         <Stack spacing={2}>
           <MyBreadCrumbs items={[
             { label: 'My Groups', href: '/ins' },
-            { label: isLoading ? "..." : `Group ${data?.group_no}`, href: `/ins/group/${groupId}` },
-            { label: isLoading ? "..." : `Chapter ${chapterId} : ${data?.chapter_name}`, href: isLoading ? "#" : `/ins/group/${groupId}/chapter/${data?.lab_exercise.lab_chapter}` },
-            { label: isLoading ? "..." : data?.lab_exercise.lab_name, href: '#' },
+            { label: isBcLoading ? "..." : `Group ${bc?.group_no}`, href: `/ins/group/${groupId}` },
+            { label: isBcLoading ? "..." : `Chapter ${chapterId} : ${bc?.chapter_name}`, href: isBcLoading ? "#" : `/ins/group/${groupId}/chapter/${chapterId}` },
+            { label: isBcLoading ? "..." : bc?.lab_name, href: '#' },
           ]} />
 
-          <Header logoSrc={folderIcon} title={`Chapter ${chapterId} : ${data?.chapter_name}`} />
-          <ExerciseForm lv={level} editable={true} formData={formData} setEditable={() => { }} />
-          <Testcases testcaseData={[]} />
+          <Header logoSrc={folderIcon} title={`Chapter ${chapterId} : ${bc?.chapter_name}`} />
+          <ExerciseInfoForm lv={level} editable={true} formData={formData} />
+          <Testcases testcaseData={testcaseData} />
         </Stack>
       </Container>
-    </Box>
+    </Box >
   );
 };
 

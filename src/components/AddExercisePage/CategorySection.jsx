@@ -8,7 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const CategorySection = ({ kwCon, editable, onChange, title, category, ruleCategory }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const rules = category == "suggested" ? kwCon.suggestedCon.value[ruleCategory] : kwCon.userDefinedCon.value[ruleCategory];
+  const rules = category == "suggested" ? kwCon.suggested_constraints.value[ruleCategory] : kwCon.user_defined_constraints.value[ruleCategory];
 
   useEffect(() => {
     if (rules.length !== 0) {
@@ -22,15 +22,8 @@ const CategorySection = ({ kwCon, editable, onChange, title, category, ruleCateg
     setIsExpanded((prevExpanded) => !prevExpanded);
   };
 
-  const handleAddingUserDefined = () => {
-
-    // const isDuplicate = kwCon.userDefinedCon.value[ruleCategory].some((userRule) => userRule.keyword === rule.keyword);
-
-    // // if (isDuplicate) {
-    // //   // handle duplicate rule
-    // //   alert(`A rule with the keyword "${rule.keyword}" already exists in the "${ruleCategory}" category.`);
-    // //   return;
-    // // }
+  const handleAddingUserDefined = (event) => {
+    event.stopPropagation();
 
     const newRule = {
       keyword: "",
@@ -40,9 +33,8 @@ const CategorySection = ({ kwCon, editable, onChange, title, category, ruleCateg
     };
 
     onChange((prev) => {
-      console.log(prev)
       const newKwConList = { ...prev };
-      newKwConList.userDefinedCon[ruleCategory] = [...prev.userDefinedCon[ruleCategory], newRule];
+      newKwConList.user_defined_constraints[ruleCategory] = [...newKwConList.user_defined_constraints[ruleCategory], newRule];
       return newKwConList;
     });
   }

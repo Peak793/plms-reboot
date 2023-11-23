@@ -9,7 +9,7 @@ import Faq from '@/pages/Faq';
 import EditProfile from '@/pages/EditProfile';
 import AddStudent from '@/pages/AddStudent';
 import ProtectedRoute from "@/components/ProtectedRoute";
-import { ABS_INS_URL, REL_INS_URL, STU_URL, REL_STU_URL, COMMON_URL } from "@/utils/constants/routeConst";
+import { ABS_INS_URL, REL_INS_URL, ABS_STU_URL, REL_STU_URL, COMMON_URL } from "@/utils/constants/routeConst";
 
 // Lazy-load page components
 const MyGroups = lazy(() => import('@/pages/MyGroups'));
@@ -22,6 +22,8 @@ const InsGroup = lazy(() => import('@/pages/InsGroup'));
 const SubmissionHistory = lazy(() => import('@/pages/SubmissionHistory'));
 const StuExcercise = lazy(() => import('@/pages/StuExcercise'));
 const EditExercise = lazy(() => import('@/pages/EditExercise'));
+const ExerciseList = lazy(() => import('@/pages/ExerciseList'));
+const Home = lazy(() => import('@/pages/Home'));
 
 const RouterComponent = () => {
   return (
@@ -44,12 +46,12 @@ const RouterComponent = () => {
           <Route path={COMMON_URL.STATIC.INSTRUCTION} element={<Instruction />} />
           <Route path={COMMON_URL.STATIC.EXAMINATION} element={<Examination />} />
           <Route path={COMMON_URL.STATIC.FAQ} element={<Faq />} />
-          <Route path={COMMON_URL.DYNAMIC.EDIT_PROFILE()} element={<EditProfile />} />
+          <Route path={COMMON_URL.DYNAMIC.PROFILE()} element={<EditProfile />} />
         </Route>
         <Route path={COMMON_URL.STATIC.SIGNIN} element={<SignIn />} />
-        <Route path="kw" element={<Suspense fallback={<div>Loading...</div>}><AddExercise /></Suspense>} />
-
-        <Route path={STU_URL.STATIC.HOME} element={<StudentLayout />} >
+        <Route path={ABS_STU_URL.STATIC.HOME} element={<ProtectedRoute><StudentLayout /></ProtectedRoute>} >
+          <Route index element={<Home />} />
+          <Route path={REL_STU_URL.DYNAMIC.EXERCISE_LIST()} element={<Suspense fallback={<div>Loading...</div>}><ExerciseList /></Suspense>} />
           <Route path={REL_STU_URL.DYNAMIC.EXERCISE()} element={<Suspense fallback={<div>Loading...</div>}><StuExcercise /></Suspense>} />
         </Route>
       </Routes>

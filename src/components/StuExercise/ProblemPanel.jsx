@@ -10,7 +10,7 @@ const ProblemPanel = () => {
     <Stack height={"100%"} sx={{ bgcolor: "black", borderRadius: "8px", position: "relative" }} >
       <PanelHeader display={"flex"} justifyContent={"space-between"} alignItems={"center"} >
         <Stack direction={"row"} spacing={"10px"} >
-          <PanelHeaderButton title={"Problem"} startIcon={<DateRangeIcon />} isactive={"true"} />
+          <PanelHeaderButton title={"Problem"} startIcon={<DateRangeIcon />} isactive={true} />
           <PanelHeaderButton title={"Submission history"} num={"0"} startIcon={<DateRangeIcon />} />
         </Stack>
         <Box sx={{

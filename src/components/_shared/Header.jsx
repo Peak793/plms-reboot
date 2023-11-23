@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { Stack, Typography } from "@mui/material"
-import PropTypes from "prop-types";
 
 const Header = ({ logoSrc, logoIcon, title }) => {
   return (

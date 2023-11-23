@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
+import React from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { githubDark } from "@uiw/codemirror-theme-github"
 import { python } from '@codemirror/lang-python';
