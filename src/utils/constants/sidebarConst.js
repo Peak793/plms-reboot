@@ -38,7 +38,7 @@ export const items = {
       label: "General Management",
       children: [
         { id: "home", label: "Home", icon: homeIcon, href: ABS_STU_URL.STATIC.HOME },
-        { id: "exercise", label: "Exercise", icon: codingIcon, href: ABS_STU_URL.DYNAMIC.EXERCISE_LIST() },
+        { id: "exercise", label: "Exercise", icon: codingIcon, href: ABS_STU_URL.STATIC.EXERCISE_LIST },
       ],
     },
     ...base_items

@@ -3,8 +3,20 @@ import Header from "@/components/_shared/Header"
 import ExerciseChapterList from "@/components/_shared/ExerciseChapterList"
 import MyBreadCrumbs from "@/components/_shared/MyBreadCrumbs"
 import codingIcon from '@/assets/images/codingicon.png'
+import { getChapterList } from "@/utils/api"
+import { useQuery } from "@tanstack/react-query"
+import { userAtom } from "@/store/store"
+import { useAtom } from "jotai"
 
-const ExerciseList = () => {
+const StuExerciseList = () => {
+  const [user] = useAtom(userAtom)
+
+  const { data: chapterList, isLoading: isChapterListLoading } = useQuery({
+    queryKey: ["chapterList", user?.id],
+    queryFn: () => getChapterList(user?.id),
+    refetchInterval: 300000,
+  })
+
   return (
     <Container>
       <Stack spacing="20px" >
@@ -16,11 +28,11 @@ const ExerciseList = () => {
             logoSrc={codingIcon}
             title="Exercises"
           />
-          <ExerciseChapterList />
+          <ExerciseChapterList isLoading={isChapterListLoading} data={chapterList} />
         </Stack>
       </Stack>
     </Container>
   )
 }
 
-export default ExerciseList
+export default StuExerciseList

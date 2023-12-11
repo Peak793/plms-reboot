@@ -25,7 +25,7 @@ export const ABS_INS_URL = {
       `${PREFIX[USER_ROLES.SUPERVISOR]}/group/${groupId}/stu-list`,
     "ADD_STUDENT": (groupId = ":groupId") =>
       `${PREFIX[USER_ROLES.SUPERVISOR]}/group/${groupId}/add-stu`,
-    "STUDENT_INDIVIDUAL": (groupId = ":groupId", studentId = ":studentId") =>
+    "STUDENT_SCORE": (groupId = ":groupId", studentId = ":studentId") =>
       `${PREFIX[USER_ROLES.SUPERVISOR]}/group/${groupId}/score/stu/${studentId}`,
     "STUDENT_SUBMIT_HISTORY": (groupId = ":groupId", studentId = ":studentId", chapterId = ":chapterId", exerciseId = ":exerciseId") =>
       `${PREFIX[USER_ROLES.SUPERVISOR]}/group/${groupId}/sub-his/stu/${studentId}/chapter/${chapterId}/exercise/${exerciseId}`,
@@ -51,7 +51,7 @@ export const REL_INS_URL = {
       `group/${groupId}/stu-list`,
     "ADD_STUDENT": (groupId = ":groupId") =>
       `group/${groupId}/add-stu`,
-    "STUDENT_INDIVIDUAL": (groupId = ":groupId", studentId = ":studentId") =>
+    "STUDENT_SCORE": (groupId = ":groupId", studentId = ":studentId") =>
       `group/${groupId}/score/stu/${studentId}`,
     "STUDENT_SUBMIT_HISTORY": (groupId = ":groupId", studentId = ":studentId", chapterId = ":chapterId", exerciseId = ":exerciseId") =>
       `group/${groupId}/sub-his/stu/${studentId}/chapter/${chapterId}/exercise/${exerciseId}`,
@@ -62,24 +62,22 @@ export const REL_INS_URL = {
 export const ABS_STU_URL = {
   "STATIC": {
     "HOME": `${PREFIX[USER_ROLES.STUDENT]}`,
+    "EXERCISE_LIST": `${PREFIX[USER_ROLES.STUDENT]}/exercise-list`
   },
   "DYNAMIC": {
-    "EXERCISE": () =>
-      `${PREFIX[USER_ROLES.STUDENT]}/exercise`,
-    "EXERCISE_LIST": (groupId = ":groupId") =>
-      `group/${groupId}/exercise-list`
+    "EXERCISE": (chapterId = ':chapterId', exerciseId = ":exerciseId") =>
+      `${PREFIX[USER_ROLES.STUDENT]}/exercise/chapter/${chapterId}/exercise/${exerciseId}`,
   }
 }
 
 export const REL_STU_URL = {
   "STATIC": {
     "HOME": ``,
+    "EXERCISE_LIST": `exercise-list`
   },
   "DYNAMIC": {
-    "EXERCISE": () =>
-      `exercise`,
-    "EXERCISE_LIST": (groupId = ":groupId") =>
-      `group/${groupId}/exercise-list`
+    "EXERCISE": (chapterId = ':chapterId', exerciseId = ":exerciseId") =>
+      `exercise/chapter/${chapterId}/exercise/${exerciseId}`,
   }
 }
 

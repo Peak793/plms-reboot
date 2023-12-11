@@ -7,10 +7,8 @@ import happyCoding from "@/assets/images/happycoding.png"
 import { useAtomValue } from "jotai"
 import { userAtom } from "@/store/store"
 
-const Home = () => {
+const StuHome = () => {
   const user = useAtomValue(userAtom)
-
-
 
   return (
     <Container>
@@ -53,4 +51,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default StuHome

@@ -173,7 +173,7 @@ body {
   flex-direction: row;
 }
 
-.gutter {
+.gutter{
   background-color: transparent;
   background-repeat: no-repeat;
   background-position: 50%;
@@ -181,7 +181,7 @@ body {
 
 .gutter.gutter-horizontal {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
-  cursor: col-resize;
+  cursor: re;
 }
 
 .gutter.gutter-vertical {
@@ -190,7 +190,7 @@ body {
 }
 
 .stu-exercise {
-  height: 100%;
+  flex: 1;
 }
 
 .work-space {
@@ -267,7 +267,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color : var(--fruitSalad);
   width: 70px;
   height: 70px;
   border-radius: 8px;

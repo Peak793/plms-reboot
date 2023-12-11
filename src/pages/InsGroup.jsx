@@ -3,7 +3,8 @@ import blueFolderIcon from '@/assets/images/bluefoldericon.png'
 import classes from '@/assets/css/InsGroup.module.css'
 import LoginIcon from '@mui/icons-material/Login';
 import { useParams } from "react-router-dom"
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { setAllowGroupLogin, setAllowGroupUploadPicture } from "@/utils/api";
 import axios from "axios"
 
 import Header from "@/components/_shared/Header"
@@ -13,6 +14,7 @@ import LabRow from "@/components/InsGroupPage/LabRow"
 
 const InsGroup = () => {
   const { groupId } = useParams();
+  const queryClient = useQueryClient();
 
   // TODO: Do something with this later
   const { data: groupData, isLoading: isClassLoading } = useQuery({
@@ -30,6 +32,40 @@ const InsGroup = () => {
       return res.data.payload.group_permission;
     }
   });
+
+  const { mutate: mutateAllowLogin } = useMutation({
+    mutationFn: setAllowGroupLogin,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['groupData', groupId])
+    },
+    onError: (error) => {
+      console.log(error)
+    }
+  })
+
+  const { mutate: mutateAllowUploadPicture } = useMutation({
+    mutationFn: setAllowGroupUploadPicture,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['groupData', groupId])
+    },
+    onError: (error) => {
+      console.log(error)
+    }
+  })
+
+  const toggleAllowLogin = () => {
+    mutateAllowLogin({
+      group_id: groupId,
+      allow_login: groupData?.allow_login === "yes" ? "no" : "yes"
+    })
+  }
+
+  const toggleAllowUploadPicture = () => {
+    mutateAllowUploadPicture({
+      group_id: groupId,
+      allow_upload_pic: groupData?.allow_upload_pic === "yes" ? "no" : "yes"
+    })
+  }
 
   return (
     <Box>
@@ -125,13 +161,13 @@ const InsGroup = () => {
               >
                 <FormControlLabel
                   value="start"
-                  control={<Switch color="success" checked={groupData?.allow_login === "yes"} />}
+                  control={<Switch color="success" onClick={toggleAllowLogin} checked={groupData?.allow_login === "yes"} />}
                   label={<Typography color={"primary"} fontWeight={600} >Allow Login</Typography>}
                   labelPlacement="start"
                 />
                 <FormControlLabel
                   value="start"
-                  control={<Switch color="success" checked={groupData?.allow_exercise === "yes"} />}
+                  control={<Switch color="success" onClick={toggleAllowUploadPicture} checked={groupData?.allow_upload_pic === "yes"} />}
                   label={<Typography color={"primary"} fontWeight={600} >Upload picture</Typography>}
                   labelPlacement="start"
                 />

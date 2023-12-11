@@ -83,7 +83,42 @@ export const updateExercise = async (updatedExercise) => {
 
 export const logout = async () => {
   const { data } = await axios.post(
-    `${import.meta.env.VITE_BASE_URL}/index.php/auth_rest/logout`,
+    `${import.meta.env.VITE_BASE_URL}/index.php/auth_rest/logout`, {},
+    { withCredentials: true }
+  );
+  return data;
+}
+
+export const getChapterList = async (stu_id) => {
+  const { data } = await axios.get(
+    `${import.meta.env.VITE_BASE_URL}/index.php/student_rest/getChapterList?stu_id=${stu_id}`,
+    { withCredentials: true }
+  );
+  return data;
+}
+
+export const setChapterPermission = async (formData) => {
+  const { data } = await axios.patch(
+    `${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/setChapterPermission`,
+    formData,
+    { withCredentials: true }
+  );
+  return data;
+}
+
+export const setAllowGroupLogin = async (body) => {
+  const { data } = await axios.patch(
+    `${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/setAllowGroupLogin`,
+    body,
+    { withCredentials: true }
+  );
+  return data;
+}
+
+export const setAllowGroupUploadPicture = async (body) => {
+  const { data } = await axios.patch(
+    `${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/setAllowGroupUploadPicture`,
+    body,
     { withCredentials: true }
   );
   return data;

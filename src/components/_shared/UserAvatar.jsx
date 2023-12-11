@@ -22,11 +22,9 @@ const UserAvatar = () => {
   const userMenuState = usePopupState({ variant: 'popover', popupId: 'userMenu' })
 
   const logoutMutation = useMutation({
-    mutationFn: () => {
-      logout();
-      setUser(null);
-    },
+    mutationFn: logout,
     onSuccess: () => {
+      setUser(null);
       navigate(COMMON_URL.STATIC.SIGNIN);
     }
   });

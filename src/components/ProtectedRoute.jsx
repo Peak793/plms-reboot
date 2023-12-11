@@ -18,17 +18,17 @@ const ProtectedRoute = ({ children }) => {
       try {
         const response = await axios.get(import.meta.env.VITE_BASE_URL + "/index.php/auth_rest/logged_in_check", { withCredentials: true });
         if (response.data.status) {
-          setUser(response.data.payload);
-          localStorage.setItem('user', JSON.stringify(response.data.payload));
+          /* setUser(response.data.payload);
+          localStorage.setItem('user', JSON.stringify(response.data.payload)); */
         } else {
           setUser(null);
-          localStorage.removeItem('user');
+          /* localStorage.removeItem('user'); */
           navigate(COMMON_URL.STATIC.SIGNIN);
         }
       } catch (error) {
         console.error("Failed to perform login check:", error);
         setUser(null);
-        localStorage.removeItem('user');
+        /* localStorage.removeItem('user'); */
         navigate(COMMON_URL.STATIC.SIGNIN);
       }
     };
@@ -37,7 +37,7 @@ const ProtectedRoute = ({ children }) => {
     performLoginCheck();
 
     // Periodically check isLoggedIn every 1 minute
-    const intervalId = setInterval(performLoginCheck, 0.5 * ONE_MINUTE);
+    const intervalId = setInterval(performLoginCheck, 1 * ONE_MINUTE);
 
     // Clean up the interval when the component is unmounted
     return () => clearInterval(intervalId);

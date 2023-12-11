@@ -22,8 +22,8 @@ const InsGroup = lazy(() => import('@/pages/InsGroup'));
 const SubmissionHistory = lazy(() => import('@/pages/SubmissionHistory'));
 const StuExcercise = lazy(() => import('@/pages/StuExcercise'));
 const EditExercise = lazy(() => import('@/pages/EditExercise'));
-const ExerciseList = lazy(() => import('@/pages/ExerciseList'));
-const Home = lazy(() => import('@/pages/Home'));
+const StuExerciseList = lazy(() => import('@/pages/StuExerciseList'));
+const StuHome = lazy(() => import('@/pages/StuHome'));
 
 const RouterComponent = () => {
   return (
@@ -39,7 +39,7 @@ const RouterComponent = () => {
             <Route path={REL_INS_URL.DYNAMIC.EDIT_EXERCISE()} element={<Suspense fallback={<div>Loading...</div>}><EditExercise /></Suspense>} />
             <Route path={REL_INS_URL.DYNAMIC.STUDENT_LIST()} element={<Suspense fallback={<div>Loading...</div>}><StudentList /></Suspense>} />
             <Route path={REL_INS_URL.DYNAMIC.ADD_STUDENT()} element={<AddStudent />} />
-            <Route path={REL_INS_URL.DYNAMIC.STUDENT_INDIVIDUAL()} element={<Suspense fallback={<div>Loading...</div>}><StudentScore /></Suspense>} />
+            <Route path={REL_INS_URL.DYNAMIC.STUDENT_SCORE()} element={<Suspense fallback={<div>Loading...</div>}><StudentScore /></Suspense>} />
             <Route path={REL_INS_URL.DYNAMIC.STUDENT_SUBMIT_HISTORY()} element={<Suspense fallback={<div>Loading...</div>}><SubmissionHistory /></Suspense>} />
             <Route path={REL_INS_URL.STATIC.AVAILABLE_GROUPS} element={<Suspense fallback={<div>Loading...</div>}><AvailableGroups /></Suspense>} />
           </Route>
@@ -50,8 +50,8 @@ const RouterComponent = () => {
         </Route>
         <Route path={COMMON_URL.STATIC.SIGNIN} element={<SignIn />} />
         <Route path={ABS_STU_URL.STATIC.HOME} element={<ProtectedRoute><StudentLayout /></ProtectedRoute>} >
-          <Route index element={<Home />} />
-          <Route path={REL_STU_URL.DYNAMIC.EXERCISE_LIST()} element={<Suspense fallback={<div>Loading...</div>}><ExerciseList /></Suspense>} />
+          <Route index element={<Suspense fallback={<div>Loading...</div>}><StuHome /></Suspense>} />
+          <Route path={REL_STU_URL.STATIC.EXERCISE_LIST} element={<Suspense fallback={<div>Loading...</div>}><StuExerciseList /></Suspense>} />
           <Route path={REL_STU_URL.DYNAMIC.EXERCISE()} element={<Suspense fallback={<div>Loading...</div>}><StuExcercise /></Suspense>} />
         </Route>
       </Routes>

@@ -1,180 +1,130 @@
-import PropTypes from "prop-types";
-import { useState } from 'react';
-import { Stack, Box, Typography, FormControl, RadioGroup, FormControlLabel, Radio, Paper, Button, TextField } from "@mui/material";
-import { DateTimeField } from '@mui/x-date-pickers/DateTimeField';
+/* eslint-disable react/prop-types */
+import { Stack, Box, Typography, FormControl, RadioGroup, FormControlLabel, Radio, Paper, Button } from "@mui/material";
+import { useForm, Controller } from "react-hook-form";
 import checked from '@/assets/images/checked.png';
 import { modalStyle } from '@/utils';
+import TimerFields from "@/components/InsGroupPage/TimerFields";
+import DateTimeFields from "@/components/InsGroupPage/DateTimeFields";
+import { setChapterPermission } from "@/utils/api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import moment from 'moment';
 
-const AllowTypeForm = ({ title, open }) => {
-  const [selectedAllowType, setSelectedAllowType] = useState("1");
-  const [time, setTime] = useState({ hours: '00', minutes: '00', seconds: '00' });
-  const [dateTime, setDateTime] = useState({
-    startDateTime: moment(),
-    endDateTime: moment(),
-  });
-
-  const handleRadioGroupChange = (event) => {
-    setSelectedAllowType(event.target.value);
-  };
-
-  const handleTimerChange = (key) => (event) => {
-    const value = event.target.value;
-
-    if (/^\d+$/.test(value) || value === '') {
-      setTime({ ...time, [key]: value.slice(0, 2) });
-    }
-  };
-
-  const handleBlur = (key) => {
-    let value = time[key];
-    if (value.length === 1) {
-      setTime({ ...time, [key]: '0' + value });
-    }
-  };
-
-  const handleDateTimeChange = (field) => (newDateTime) => {
-    if (newDateTime) {
-      setDateTime({
-        ...dateTime,
-        [field]: newDateTime
-      });
-    }
-  };
+const AllowTypeForm = ({ lab, groupId, chapterId, prefix, title, open }) => {
+  const queryClient = useQueryClient();
 
   const handleClose = (buttonType) => {
     if (buttonType === 'cancel') {
-      resetForm();
+      reset();
+      open(false);
     } else if (buttonType === 'done') {
       open(false);
     }
   };
 
-  const resetForm = () => {
-    setTime({ hours: '00', minutes: '00', seconds: '00' });
-    setDateTime({
-      startDateTime: moment(),
-      endDateTime: moment(),
-    });
-    setSelectedAllowType("1");
-    open(false);
+  const { mutate } = useMutation({
+    mutationFn: setChapterPermission,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['labData', groupId]);
+      handleClose('done');
+    },
+    onError: (error) => {
+      console.log(error);
+    }
+  })
+
+  const { watch, handleSubmit, control, setValue, reset } = useForm({
+    defaultValues: {
+      'class_id': groupId,
+      'chapter_id': chapterId,
+      [`allow_${prefix}_type`]: lab[`allow_${prefix}_type`],
+    }
+  });
+  const watchAllowType = watch(`allow_${prefix}_type`);
+
+  const onSubmit = (data) => {
+    let form = {
+      class_id: data.class_id,
+      chapter_id: data.chapter_id,
+      prefix: prefix,
+      [`allow_${prefix}_type`]: data[`allow_${prefix}_type`],
+      [`${prefix}_time_start`]: null,
+      [`${prefix}_time_end`]: null,
+    };
+
+    if (data[`allow_${prefix}_type`] === 'timer') {
+      form[`${prefix}_time_start`] = moment().format('YYYY-MM-DD HH:mm:ss');
+      form[`${prefix}_time_end`] = moment().add(data.hours, 'hours').add(data.minutes, 'minutes').add(data.seconds, 'seconds').format('YYYY-MM-DD HH:mm:ss');
+    } else if (data[`allow_${prefix}_type`] === 'datetime') {
+      form[`${prefix}_time_start`] = data[`${prefix}_time_start`].format('YYYY-MM-DD HH:mm:ss');
+      form[`${prefix}_time_end`] = data[`${prefix}_time_end`].format('YYYY-MM-DD HH:mm:ss');
+    }
+    mutate(form);
   };
 
-  const renderTimerFields = () => (
-    <Stack direction="row" spacing={"10px"} alignItems="center">
-      <TextField
-        value={time.hours}
-        size='small'
-        label="HH"
-        onChange={handleTimerChange('hours')}
-        onBlur={() => handleBlur('hours')}
-        inputProps={{ maxLength: 2 }}
-        sx={{ width: '50px' }}
-      />
-      <Typography variant="h6">:</Typography>
-      <TextField
-        value={time.minutes}
-        size='small'
-        label="MM"
-        onChange={handleTimerChange('minutes')}
-        onBlur={() => handleBlur('minutes')}
-        inputProps={{ maxLength: 2 }}
-        sx={{ width: '50px' }}
-      />
-      <Typography variant="h6">:</Typography>
-      <TextField
-        value={time.seconds}
-        size='small'
-        label="SS"
-        onChange={handleTimerChange('seconds')}
-        onBlur={() => handleBlur('seconds')}
-        inputProps={{ maxLength: 2 }}
-        sx={{ width: '50px' }}
-      />
-    </Stack>
-  );
 
-  const renderDateTimeFields = () => (
-    <Stack direction="row" spacing={"10px"} alignItems="center">
-      <DateTimeField
-        label="Start date"
-        size='small'
-        format="DD/MM/YYYY hh:mm A"
-        value={dateTime.startDateTime}
-        onChange={handleDateTimeChange('startDateTime')}
-      />
-
-      <DateTimeField
-        label="End date"
-        size='small'
-        format="DD/MM/YYYY hh:mm A"
-        value={dateTime.endDateTime}
-        onChange={handleDateTimeChange('endDateTime')}
-      />
-    </Stack>
-  );
 
   return (
-    <Stack spacing={"15px"} sx={modalStyle}>
-      <Stack direction="row" spacing={"10px"} alignItems="center">
-        <Box width={20} height={20}>
-          <img src={checked} style={{ width: "100%", height: "100%", objectFit: "cover" }} alt="checked" />
-        </Box>
-        <Typography variant='h6'>{title}</Typography>
-      </Stack>
-
-      <FormControl>
-        <RadioGroup
-          aria-label="type of allow access"
-          value={selectedAllowType}
-          onChange={handleRadioGroupChange}
-          name="access allow type"
-          sx={{
-            '& > :not(style)': {
-              marginBottom: 0,
-              marginTop: 0
-            }
-          }}
-        >
-          <FormControlLabel value="1" control={<Radio />} label="Until I come change it" />
-          <FormControlLabel value="2" control={<Radio />} label="Set timer" />
-          <FormControlLabel value="3" control={<Radio />} label="Set date and time" />
-        </RadioGroup>
-
-        {selectedAllowType === "2" && (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Stack spacing={"15px"} sx={modalStyle}>
+        <Stack direction="row" spacing={"10px"} alignItems="center">
+          <Box width={20} height={20}>
+            <img src={checked} style={{ width: "100%", height: "100%", objectFit: "cover" }} alt="checked" />
+          </Box>
+          <Typography variant='h6'>{title}</Typography>
+        </Stack>
+        <Controller
+          name={`allow_${prefix}_type`}
+          control={control}
+          defaultValue={"always"}
+          render={({ field }) => (
+            <FormControl>
+              <RadioGroup
+                aria-label="type of allow access"
+                value={field.value}
+                onChange={field.onChange}
+                name="access allow type"
+                sx={{
+                  '& > :not(style)': {
+                    marginBottom: 0,
+                    marginTop: 0
+                  }
+                }}
+              >
+                <FormControlLabel value="always" control={<Radio />} label="Always" />
+                <FormControlLabel value="timer" control={<Radio />} label="Set timer" />
+                <FormControlLabel value="datetime" control={<Radio />} label="Set date and time" />
+                <FormControlLabel value="deny" control={<Radio />} label="Deny" />
+              </RadioGroup>
+            </FormControl>
+          )}
+        />
+        {watchAllowType === "timer" && (
           <Paper sx={{
             display: 'flex',
             padding: '20px',
             justifyContent: "center",
             marginTop: "10px",
           }} >
-            {renderTimerFields()}
+            <TimerFields control={control} setValue={setValue} />
           </Paper>
         )}
-
-        {selectedAllowType === "3" && (
+        {watchAllowType === "datetime" && (
           <Paper sx={{
             display: 'flex',
             padding: '20px',
             justifyContent: "center",
             marginTop: "10px",
           }} >
-            {renderDateTimeFields()}
+            <DateTimeFields prefix={prefix} control={control} />
           </Paper>
         )}
-      </FormControl>
-
-      <Stack direction="row" justifyContent="flex-end" spacing={"5px"}>
-        <Button onClick={() => handleClose('cancel')} variant="contained" sx={{ width: "70px", bgcolor: "var(--raven)", ":hover": { bgcolor: "#444" } }}>Cancel</Button>
-        <Button onClick={() => handleClose('done')} variant="contained" sx={{ width: "70px" }}>Done</Button>
+        <Stack direction="row" justifyContent="flex-end" spacing={"5px"}>
+          <Button onClick={() => handleClose('cancel')} variant="contained" sx={{ width: "70px", bgcolor: "var(--raven)", ":hover": { bgcolor: "#444" } }}>Cancel</Button>
+          <Button type="submit" variant="contained" sx={{ width: "70px" }}>Done</Button>
+        </Stack>
       </Stack>
-    </Stack>
+    </form>
   );
 };
-
-AllowTypeForm.propTypes = {
-  title: PropTypes.string.isRequired,
-  open: PropTypes.func.isRequired
-}
 
 export default AllowTypeForm;
