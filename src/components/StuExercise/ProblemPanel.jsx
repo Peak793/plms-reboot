@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Stack, Box } from "@mui/material"
 import PanelHeader from "@/components/StuExercise/PanelHeader"
 import PanelHeaderButton from "@/components/StuExercise/PanelHeaderButton"
@@ -5,7 +6,7 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 
 import Problem from "@/components/StuExercise/Problem"
 
-const ProblemPanel = () => {
+const ProblemPanel = ({ exercise, isLoading }) => {
   return (
     <Stack height={"100%"} sx={{ bgcolor: "black", borderRadius: "8px", position: "relative" }} >
       <PanelHeader display={"flex"} justifyContent={"space-between"} alignItems={"center"} >
@@ -25,7 +26,7 @@ const ProblemPanel = () => {
           {"0"}/2
         </Box>
       </PanelHeader>
-      <Problem />
+      {!isLoading && <Problem exercise={exercise} />}
     </Stack>
   )
 }

@@ -1,14 +1,20 @@
+import { useEffect } from "react";
 import { Container, Typography, Grid, Box, Stack, Button } from "@mui/material"
 import StudentInfoCard from "@/components/Home/StudentInfoCard"
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import Assignments from "@/components/Home/Assignments"
 import ComputerEng from "@/assets/images/computereng.png"
 import happyCoding from "@/assets/images/happycoding.png"
-import { useAtomValue } from "jotai"
-import { userAtom } from "@/store/store"
+import { useAtomValue, useSetAtom } from "jotai"
+import { userAtom, sidebarSelectedAtom } from "@/store/store"
 
 const StuHome = () => {
   const user = useAtomValue(userAtom)
+  const setSelected = useSetAtom(sidebarSelectedAtom);
+
+  useEffect(() => {
+    setSelected('stu_home');
+  }, [])
 
   return (
     <Container>

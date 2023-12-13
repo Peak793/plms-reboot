@@ -65,8 +65,8 @@ export const ABS_STU_URL = {
     "EXERCISE_LIST": `${PREFIX[USER_ROLES.STUDENT]}/exercise-list`
   },
   "DYNAMIC": {
-    "EXERCISE": (chapterId = ':chapterId', exerciseId = ":exerciseId") =>
-      `${PREFIX[USER_ROLES.STUDENT]}/exercise/chapter/${chapterId}/exercise/${exerciseId}`,
+    "EXERCISE": (chapterId = ':chapterId', itemId = ":itemId") =>
+      `${PREFIX[USER_ROLES.STUDENT]}/chapter/${chapterId}/item/${itemId}`,
   }
 }
 
@@ -76,8 +76,8 @@ export const REL_STU_URL = {
     "EXERCISE_LIST": `exercise-list`
   },
   "DYNAMIC": {
-    "EXERCISE": (chapterId = ':chapterId', exerciseId = ":exerciseId") =>
-      `exercise/chapter/${chapterId}/exercise/${exerciseId}`,
+    "EXERCISE": (chapterId = ':chapterId', itemId = ":itemId") =>
+      `chapter/${chapterId}/item/${itemId}`,
   }
 }
 

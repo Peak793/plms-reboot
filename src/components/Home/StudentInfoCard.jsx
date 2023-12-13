@@ -1,8 +1,15 @@
 /* eslint-disable react/prop-types */
 import { Box, Stack, Avatar, Typography } from "@mui/material"
 import avatarPlaceholder from "@/assets/images/avatarplaceholder.png"
-
+import { useQuery } from "@tanstack/react-query";
+import { getStudentCardInfo } from "@/utils/api"
 const StudentInfoCard = ({ user }) => {
+
+  const { data: studentCard, isLoading } = useQuery({
+    queryKey: ['student-card-info', user.id],
+    queryFn: () => getStudentCardInfo(user.id),
+    staleTime: Infinity,
+  })
 
   return (
     <Box bgcolor={"var(--ebony)"} borderRadius={"8px"} padding={"20px"} >
@@ -10,7 +17,7 @@ const StudentInfoCard = ({ user }) => {
         <Stack spacing={"10px"} justifyContent={"space-between"}  >
           <Avatar src={user ? `${import.meta.env.VITE_BASE_URL}/${user.avatar}` : avatarPlaceholder} alt={user ? user.name : "Avatar Image"} variant="rounded" sx={{ width: 150, height: 150 }} />
           <Stack justifyContent={"center"} alignItems={"center"} width={"150px"} height={"30px"} sx={{ textAlign: "center" }} paddingY={"5px"} borderRadius={"8px"} bgcolor={"rgba(78, 199, 83, 0.50)"} >
-            <Typography>IP: 49.49.221.133</Typography>
+            <Typography>{!isLoading && studentCard && studentCard.stu_ip}</Typography>
           </Stack>
         </Stack>
 
@@ -19,50 +26,50 @@ const StudentInfoCard = ({ user }) => {
             <Stack direction="row">
               <Typography color={"var(--cerulean)"} fontWeight={600} >Student info</Typography>
               <Typography>&nbsp;</Typography>
-              <Typography>63010202 นางสาว ชรินดา สนธิดี</Typography>
+              <Typography>{!isLoading && studentCard && `${studentCard.stu_id} ${studentCard.stu_firstname} ${studentCard.stu_lastname}`}</Typography>
             </Stack>
           </Stack>
           <Stack direction={"row"} spacing="20px" >
             <Stack direction={"row"} >
               <Typography color={"var(--cerulean)"} fontWeight={600} >Group ID</Typography>
               <Typography>&nbsp;</Typography>
-              <Typography>22020402</Typography>
+              <Typography>{!isLoading && studentCard && studentCard.group_id}</Typography>
             </Stack>
             <Stack direction={"row"} >
               <Typography color={"var(--cerulean)"} fontWeight={600} >Group</Typography>
               <Typography>&nbsp;</Typography>
-              <Typography>401</Typography>
+              <Typography>{!isLoading && studentCard && studentCard.group_no}</Typography>
             </Stack>
           </Stack>
           <Stack direction={"row"} spacing="20px" >
             <Stack direction={"row"} >
               <Typography color={"var(--cerulean)"} fontWeight={600} >Class date</Typography>
               <Typography>&nbsp;</Typography>
-              <Typography>เสาร์, 09:00:00 - 12:00:00</Typography>
+              <Typography>{!isLoading && studentCard && `${studentCard.day_of_week}, ${studentCard.time_start} - ${studentCard.time_end}`}</Typography>
             </Stack>
           </Stack>
           <Stack direction={"row"} spacing="20px" >
             <Stack direction={"row"} >
               <Typography color={"var(--cerulean)"} fontWeight={600} >Year</Typography>
               <Typography>&nbsp;</Typography>
-              <Typography>2022</Typography>
+              <Typography>{!isLoading && studentCard && studentCard.year}</Typography>
             </Stack>
             <Stack direction={"row"} >
               <Typography color={"var(--cerulean)"} fontWeight={600} >Semeseter</Typography>
               <Typography>&nbsp;</Typography>
-              <Typography>1</Typography>
+              <Typography>{!isLoading && studentCard && studentCard.semester}</Typography>
             </Stack>
           </Stack>
           <Stack direction={"row"} spacing="20px" >
             <Stack direction={"row"} >
               <Typography color={"var(--cerulean)"} fontWeight={600} >Instructor</Typography>
               <Typography>&nbsp;</Typography>
-              <Typography>ชรินดา สนธิดี</Typography>
+              <Typography>{!isLoading && studentCard && studentCard.lecturer}</Typography>
             </Stack>
           </Stack>
 
           <Stack justifyContent={"center"} alignItems={"center"} width={"100%"} height={"30px"} sx={{ textAlign: "center" }} paddingY={"5px"} borderRadius={"8px"} bgcolor={"var(--chathamBlue)"} >
-            <Typography>คะแนนสอบกลางภาค (60) xx คะแนน</Typography>
+            <Typography>คะแนนสอบกลางภาค (60) {!isLoading && studentCard && studentCard.mid_score} คะแนน</Typography>
           </Stack>
 
         </Stack>

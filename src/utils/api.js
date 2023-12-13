@@ -123,3 +123,24 @@ export const setAllowGroupUploadPicture = async (body) => {
   );
   return data;
 }
+
+export const getStudentAssignedExercise = async (stu_id, chapter_id, item_id) => {
+  let { data } = await axios.get(
+    `${import.meta.env.VITE_BASE_URL}/index.php/student_rest/getStudentAssignedExercise?stu_id=${stu_id}&chapter_id=${chapter_id}&item_id=${item_id}`,
+    { withCredentials: true }
+  );
+
+  if (typeof data === 'string') {
+    data = JSON.parse(stripBom(data));
+  }
+
+  return data;
+}
+
+export const getStudentCardInfo = async (stu_id) => {
+  const { data } = await axios.get(
+    `${import.meta.env.VITE_BASE_URL}/index.php/student_rest/getStudentCardInfo?stu_id=${stu_id}`,
+    { withCredentials: true }
+  );
+  return data;
+}

@@ -9,7 +9,6 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { Provider } from 'jotai';
 import RouterComponent from './RouterComponent';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-import 'react-quill/dist/quill.snow.css';
 import './index.css';
 
 const customTheme = createTheme(themeOptions);

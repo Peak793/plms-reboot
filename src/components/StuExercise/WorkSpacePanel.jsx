@@ -7,15 +7,15 @@ import Split from "react-split";
 import MyDiff from "@/components/_shared/MyDiff";
 import { useEffect, useRef, useState } from "react";
 
-const expected = ` *** Distance *** 
+/* const expected = ` *** Distance *** 
 Enter Velocity Acceleration Time: 10,0,10
 Your Distance = 80.00`
 const actual = ` *** Distance *** 
 Enter Velocity Acceleration Time: 10,0,10
-Your Distance = 100.00`
+Your Distance = 100.00` */
 
 const WorkSpacePanel = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   const handleCollapse = () => {
     setIsCollapsed(prev => !prev);
@@ -49,21 +49,26 @@ const WorkSpacePanel = () => {
           </Box>
 
           <Stack borderRadius={"8px"} sx={{ overflowY: "hidden", position: "relative" }} >
-            <PanelHeader onClick={handleCollapse} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
-              <Stack direction={"row"} spacing={"10px"} >
+            <PanelHeader display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+              <Stack onClick={handleCollapse} direction={"row"} spacing={"10px"} flex={1} sx={{ cursor: "pointer" }} >
                 <CodeIcon />
                 <Typography>Result</Typography>
-                <ExpandLessIcon />
+                <ExpandLessIcon sx={{
+                  transform: isCollapsed ? "rotate(180deg)" : "rotate(0deg)",
+                  transition: "transform 0.2s ease-in-out"
+                }} />
               </Stack>
               <Stack>
                 <Button color="primary" variant="contained" sx={{ textTransform: "none" }} >Submit</Button>
               </Stack>
             </PanelHeader>
             <Stack spacing={"10px"} padding="5px" bgcolor="black" height="100%" sx={{ overflowY: "auto" }} >
-              <MyDiff actual={actual} expected={expected} />
-              <MyDiff actual={actual} expected={expected} />
-              <MyDiff actual={actual} expected={expected} />
-              <MyDiff actual={actual} expected={expected} />
+              {/* 
+                <MyDiff actual={actual} expected={expected} />
+                <MyDiff actual={actual} expected={expected} />
+                <MyDiff actual={actual} expected={expected} />
+                <MyDiff actual={actual} expected={expected} /> 
+              */}
             </Stack>
           </Stack>
         </Split>

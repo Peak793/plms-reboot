@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { Container, Stack } from "@mui/material"
 import Header from "@/components/_shared/Header"
 import ExerciseChapterList from "@/components/_shared/ExerciseChapterList"
@@ -5,11 +6,16 @@ import MyBreadCrumbs from "@/components/_shared/MyBreadCrumbs"
 import codingIcon from '@/assets/images/codingicon.png'
 import { getChapterList } from "@/utils/api"
 import { useQuery } from "@tanstack/react-query"
-import { userAtom } from "@/store/store"
-import { useAtom } from "jotai"
+import { userAtom, sidebarSelectedAtom } from "@/store/store"
+import { useAtom, useSetAtom } from "jotai"
 
 const StuExerciseList = () => {
   const [user] = useAtom(userAtom)
+  const setSelected = useSetAtom(sidebarSelectedAtom);
+
+  useEffect(() => {
+    setSelected('stu_exercise_list');
+  }, [])
 
   const { data: chapterList, isLoading: isChapterListLoading } = useQuery({
     queryKey: ["chapterList", user?.id],
@@ -21,12 +27,12 @@ const StuExerciseList = () => {
     <Container>
       <Stack spacing="20px" >
         <MyBreadCrumbs items={[
-          { label: 'Exercises', href: "#" },
+          { label: 'Exercise List', href: "#" },
         ]} />
         <Stack spacing="5px" >
           <Header
             logoSrc={codingIcon}
-            title="Exercises"
+            title="Exercise List"
           />
           <ExerciseChapterList isLoading={isChapterListLoading} data={chapterList} />
         </Stack>
