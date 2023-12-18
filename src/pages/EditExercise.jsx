@@ -40,8 +40,6 @@ const EditExercise = () => {
   //   queryFn: () => getExerciseFormData(exerciseId)
   // });
 
-  const isLoading = true
-
   const formData = isFormLoading ? {
     lab_name: '',
     lab_content: '',

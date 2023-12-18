@@ -10,27 +10,6 @@ import { Link, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 
 // Sub-components
-const TableHeader = ({ exerciseList, selected, setSelected }) => {
-  const handleChecked = () => {
-    if (selected.length !== 0) {
-      setSelected([])
-    } else {
-      setSelected(exerciseList.map(ex => ex.exercise_id))
-    }
-  }
-
-  return (
-    <TableHead sx={{ bgcolor: "var(--ebony)" }}>
-      <TableRow>
-        <TableCell width={"10%"}>
-          <Checkbox inputProps={{ "aria-label": "checkbox" }} sx={{ height: "40px" }} checked={selected.length === exerciseList.length} indeterminate={selected.length != 0 && selected.length !== exerciseList.length} onClick={handleChecked} />
-        </TableCell>
-        <TableCell align="left" sx={{ fontSize: "16px", fontWeight: "500" }} >Exercise</TableCell>
-      </TableRow>
-    </TableHead>
-  );
-}
-
 const TableContent = ({ lv, exerciseList, page, rowsPerPage, selected, setSelected }) => {
 
   const handleChecked = (exerciseId) => {

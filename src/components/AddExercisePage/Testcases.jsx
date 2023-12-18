@@ -1,9 +1,36 @@
 /* eslint-disable react/prop-types */
 import { Stack, Typography, Button } from "@mui/material"
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
 import Testcase from "@/components/AddExercisePage/Testcase"
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getExerciseTestcases } from "@/utils/api";
+import { useEffect } from "react";
 
-const Testcases = ({ testcaseData = [] }) => {
+const Testcases = () => {
+  const { exerciseId } = useParams();
+  const { data, isLoading } = useQuery({
+    queryKey: ['testcaseData', exerciseId],
+    queryFn: () => getExerciseTestcases(exerciseId)
+  })
+
+  const methods = useForm({
+    defaultValues: {
+      testcases: []
+    }
+  });
+
+  const { watch, reset, control } = methods
+  const { fields: testcaseData, append, remove } = useFieldArray({
+    control,
+    name: "testcases"
+  });
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      reset({ testcases: data })
+    }
+  }, [data, isLoading, reset])
 
   return (
     <Stack spacing={"20px"} sx={{
@@ -30,8 +57,9 @@ const Testcases = ({ testcaseData = [] }) => {
 
       {/* <Testcase /> */}
 
-      {testcaseData.map((testcase, index) => <Testcase key={index} index={index} testcaseData={testcaseData} testcase={testcase} />)}
-
+      <FormProvider {...methods} >
+        {testcaseData.map((item, index) => <Testcase key={item.id} index={index} control={control} />)}
+      </FormProvider>
     </Stack>
   )
 }

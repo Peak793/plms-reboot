@@ -20,3 +20,8 @@ export const dayColor = {
   "Sunday": "var(--sunday)",
 }
 
+export const ROLE_PREFIX = {
+  supervisor: 'supervisor',
+  student: 'stu',
+}
+

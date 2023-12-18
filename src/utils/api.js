@@ -73,7 +73,7 @@ export const getExerciseFormData = async (exerciseId) => {
 };
 
 export const updateExercise = async (updatedExercise) => {
-  const { data } = await axios.patch(
+  const { data } = await axios.post(
     `${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/updateExercise`,
     updatedExercise,
     { withCredentials: true }
@@ -98,7 +98,7 @@ export const getChapterList = async (stu_id) => {
 }
 
 export const setChapterPermission = async (formData) => {
-  const { data } = await axios.patch(
+  const { data } = await axios.post(
     `${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/setChapterPermission`,
     formData,
     { withCredentials: true }
@@ -107,7 +107,7 @@ export const setChapterPermission = async (formData) => {
 }
 
 export const setAllowGroupLogin = async (body) => {
-  const { data } = await axios.patch(
+  const { data } = await axios.post(
     `${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/setAllowGroupLogin`,
     body,
     { withCredentials: true }
@@ -116,7 +116,7 @@ export const setAllowGroupLogin = async (body) => {
 }
 
 export const setAllowGroupUploadPicture = async (body) => {
-  const { data } = await axios.patch(
+  const { data } = await axios.post(
     `${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/setAllowGroupUploadPicture`,
     body,
     { withCredentials: true }
@@ -140,6 +140,47 @@ export const getStudentAssignedExercise = async (stu_id, chapter_id, item_id) =>
 export const getStudentCardInfo = async (stu_id) => {
   const { data } = await axios.get(
     `${import.meta.env.VITE_BASE_URL}/index.php/student_rest/getStudentCardInfo?stu_id=${stu_id}`,
+    { withCredentials: true }
+  );
+  return data;
+}
+
+export const logoutAllStudentInGroup = async (group_id) => {
+  const { data } = await axios.post(
+    `${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/logoutAllStudentInGroup`, { group_id: group_id },
+    { withCredentials: true }
+  );
+  return data;
+}
+
+export const getProfileFormData = async () => {
+  const { data } = await axios.get(
+    `${import.meta.env.VITE_BASE_URL}/index.php/common_rest/getProfileFormData`,
+    { withCredentials: true }
+  );
+  return data;
+}
+
+export const getAllDepartment = async () => {
+  const { data } = await axios.get(
+    `${import.meta.env.VITE_BASE_URL}/index.php/common_rest/getAllDepartment`,
+    { withCredentials: true }
+  );
+  return data;
+}
+
+export const updateProfile = async (formData) => {
+  const { data } = await axios.post(
+    `${import.meta.env.VITE_BASE_URL}/index.php/common_rest/updateProfile`,
+    formData,
+    { withCredentials: true }
+  );
+  return data;
+}
+
+export const getExerciseTestcases = async (exercise_id) => {
+  const { data } = await axios.get(
+    `${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/getExerciseTestcases?exercise_id=${exercise_id}`,
     { withCredentials: true }
   );
   return data;

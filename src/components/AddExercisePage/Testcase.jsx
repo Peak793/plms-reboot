@@ -1,17 +1,10 @@
 /* eslint-disable react/prop-types */
 import { Stack, Typography, TextField, FormControlLabel, Switch, Button, Grid } from "@mui/material"
+import { Controller } from "react-hook-form";
 import TerminalBlock from "@/components/_shared/TerminalBlock";
 import InputTerminalBlock from "@/components/_shared/InputTerminalBlock";
 
-const Testcase = ({ testcaseData, testcase, index }) => {
-
-  const handleInputChange = (value, index) => {
-    testcaseData.setValue(prev => {
-      const newTestcase = [...prev]; // Create a new array
-      newTestcase[index].testcase_content = value; // Update the value
-      return newTestcase; // Return the new array
-    });
-  }
+const Testcase = ({ index, control }) => {
 
   return (
     <Stack>
@@ -26,18 +19,50 @@ const Testcase = ({ testcaseData, testcase, index }) => {
       >
         <Stack direction={"row"} spacing={"10px"} alignItems={"center"} >
           <Typography>Testcase {index + 1} :</Typography>
-          <TextField size="small" type="text" value={testcase.testcase_note || ""} label="Testcase name" />
-          <FormControlLabel
-            value="show-to-student"
-            control={<Switch color="success" checked={testcase.show_to_student === "yes" ? true : false} onChange={() => { }} />}
-            label="Show to student :"
-            labelPlacement="start"
+          <Controller
+            name={`testcases.${index}.testcase_note`}
+            control={control}
+            render={({ field }) => (
+              <TextField size="small" type="text" value={field.value} onChange={field.onChange} label="Testcase name" />
+            )}
           />
-          <FormControlLabel
-            value="use-for-marking"
-            control={<Switch color="success" checked={testcase.active === "yes" ? true : false} onChange={() => { }} />}
-            label="Use for marking :"
-            labelPlacement="start"
+
+          <Controller
+            name={`testcases.${index}.show_to_student`}
+            control={control}
+            render={({ field }) => (
+              <FormControlLabel
+                value="show-to-student"
+                control={
+                  <Switch
+                    color="success"
+                    checked={field.value === "yes"}
+                    onChange={e => field.onChange(e.target.checked ? "yes" : "no")}
+                  />
+                }
+                label="Show to student :"
+                labelPlacement="start"
+              />
+            )}
+          />
+
+          <Controller
+            name={`testcases.${index}.active`}
+            control={control}
+            render={({ field }) => (
+              <FormControlLabel
+                value="use-for-marking"
+                control={
+                  <Switch
+                    color="success"
+                    checked={field.value === "yes"}
+                    onChange={e => field.onChange(e.target.checked ? "yes" : "no")}
+                  />
+                }
+                label="Use for marking :"
+                labelPlacement="start"
+              />
+            )}
           />
         </Stack>
         <Button variant='contained' size='midium' sx={{
@@ -50,10 +75,22 @@ const Testcase = ({ testcaseData, testcase, index }) => {
       </Stack>
       <Grid container spacing={"5px"} >
         <Grid item xs={12} md={6} >
-          <InputTerminalBlock value={testcase.testcase_content} onChange={(e) => handleInputChange(e.target.value, index)} />
+          <Controller
+            name={`testcases.${index}.testcase_content`}
+            control={control}
+            render={({ field }) => (
+              <InputTerminalBlock value={field.value} onChange={field.onChange} />
+            )}
+          />
         </Grid>
         <Grid item className="hide-cursor" xs={12} md={6}>
-          <TerminalBlock text={testcase.testcase_output} />
+          <Controller
+            name={`testcases.${index}.testcase_output`}
+            control={control}
+            render={({ field }) => (
+              <TerminalBlock text={field.value} />
+            )}
+          />
         </Grid>
       </Grid>
     </Stack >
