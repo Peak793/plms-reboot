@@ -1,6 +1,6 @@
 import { Box, Stack, Container } from '@mui/material'
 import { useEffect } from 'react'
-import Book from '@/assets/images/bookicon.png'
+import Book from '@/assets/images/bookicon.svg'
 import classes from '@/assets/css/Instruction.module.css'
 import { useSetAtom } from "jotai";
 import { sidebarSelectedAtom } from "../store/store";

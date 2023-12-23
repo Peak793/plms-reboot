@@ -1,5 +1,5 @@
 import { Box, Button, Stack, TextField } from "@mui/material"
-import blueFolder from "@/assets/images/bluefoldericon.png"
+import blueFolder from "@/assets/images/bluefoldericon.svg"
 
 // components
 import MyBreadCrumbs from '@/components/_shared/MyBreadCrumbs'

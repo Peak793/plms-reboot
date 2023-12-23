@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import logo from "@/assets/images/logo.png";
-import close from "@/assets/images/close.png";
+import logo from "@/assets/images/logo.svg";
+import close from "@/assets/images/close.svg";
 import classes from "@/assets/css/Sidebar.module.css";
 import { getClassNames } from "@/utils";
 import { NavLink } from "react-router-dom";
@@ -20,7 +20,7 @@ const Sidebar = () => {
   return (
     <nav className={getClassNames(classes, 'sidebar', isExpanded ? 'expanded' : 'collapsed')}>
       <Stack direction={'row'} className={getClassNames(classes, 'logo-container', isExpanded ? 'expanded' : 'collapsed')}>
-        <Link component={NavLink} color={'inherit'} underline="none" to="/#" >
+        <Link component={NavLink} color={'inherit'} underline="none" onClick>
           <img
             src={logo}
             alt="logo"
@@ -46,9 +46,11 @@ const Sidebar = () => {
                   underline="none"
                   component={NavLink}
                   to={child.href}
+                  
                   className={getClassNames(classes, "sidebar-item", selected === child.id && "active")}
                 >
-                  <img src={child.icon} alt={`${child.label}-icon`} />
+                  
+                  <img src={(selected === child.id ? child.iconfill : child.icon )} alt={`${child.label}-icon`} />
                   <span>
                     {child.label}
                     <div className={getClassNames(classes, "floating-text")}>

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Box, Stack, Container } from '@mui/material'
-import Newspaper from '@/assets/images/newspapericon.png'
+import Newspaper from '@/assets/images/newspapericon.svg'
 import classes from '@/assets/css/Instruction.module.css'
 import { useSetAtom } from "jotai";
 import { sidebarSelectedAtom } from "@/store/store";

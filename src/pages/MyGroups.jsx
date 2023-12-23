@@ -1,5 +1,5 @@
 import { Container, Stack, Grid, Skeleton } from "@mui/material";
-import slideShow from '@/assets/images/slideshowicon.png';
+import slideShow from '@/assets/images/slideshowicon.svg';
 import { useSetAtom } from "jotai";
 import { sidebarSelectedAtom } from "@/store/store";
 import { useQuery } from "@tanstack/react-query";

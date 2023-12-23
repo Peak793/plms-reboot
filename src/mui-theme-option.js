@@ -1,7 +1,7 @@
 export const themeOptions = {
   typography: {
     fontFamily: [
-      'Kanit',
+      'BeVietnamPro',
     ].join(',')
   },
   palette: {

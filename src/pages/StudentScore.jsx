@@ -1,6 +1,6 @@
 import { Box, Container, Stack } from "@mui/material"
 import ExerciseChapterList from "@/components/_shared/ExerciseChapterList"
-import blueFolderIcon from '@/assets/images/bluefoldericon.png'
+import blueFolderIcon from '@/assets/images/bluefoldericon.svg'
 import avatarPlaceholder from '@/assets/images/avatarplaceholder.png'
 import { getChapterList } from "@/utils/api"
 import { useQuery } from "@tanstack/react-query"

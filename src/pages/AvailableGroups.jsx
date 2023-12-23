@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Box, Container, Skeleton, Stack } from "@mui/material"
-import peopleIcon from "@/assets/images/peopleicon.png"
+import peopleIcon from "@/assets/images/peopleicon.svg";
 import { useState, useEffect } from "react"
 import { useSetAtom } from "jotai";
 import { sidebarSelectedAtom } from "@/store/store";

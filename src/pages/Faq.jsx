@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Box, Stack, Container } from '@mui/material'
-import DialogBubble from '@/assets/images/dialogbubble.png'
+import DialogBubble from '@/assets/images/dialogbubble.svg'
 import { useSetAtom } from "jotai";
 import { sidebarSelectedAtom } from "../store/store";
 

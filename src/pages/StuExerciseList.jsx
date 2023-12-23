@@ -3,7 +3,7 @@ import { Container, Stack } from "@mui/material"
 import Header from "@/components/_shared/Header"
 import ExerciseChapterList from "@/components/_shared/ExerciseChapterList"
 import MyBreadCrumbs from "@/components/_shared/MyBreadCrumbs"
-import codingIcon from '@/assets/images/codingicon.png'
+import codingIcon from '@/assets/images/codingicon.svg'
 import { getChapterList } from "@/utils/api"
 import { useQuery } from "@tanstack/react-query"
 import { userAtom, sidebarSelectedAtom } from "@/store/store"

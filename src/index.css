@@ -27,6 +27,21 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Anton';
+  src: url("./assets/fonts/Anton-Regular.ttf") format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'BeVietnamPro';
+  src: url("./assets/fonts/BeVietnamPro-Regular.ttf") format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+ 
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -41,7 +56,7 @@ a {
 }
 
 body {
-  font-family: 'Kanit';
+  font-family: 'BeVietnamPro';
   color: white;
   background-color: var(--ebony);
   scrollbar-gutter: stable both-edges;

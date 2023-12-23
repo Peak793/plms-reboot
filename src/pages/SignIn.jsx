@@ -1,7 +1,8 @@
 import { Box, InputAdornment, Stack, TextField, Button } from "@mui/material"
-import logo from '@/assets/images/logo2.png'
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+//import logo from '@/assets/images/logo2.png'
+import logologin from '@/assets/images/logologin.svg'
+import userIcon from '@/assets/images/usericon.svg'
+import lockpadIcon from '@/assets/images/lockpadicon.svg'
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { useAtom } from 'jotai';
@@ -42,71 +43,85 @@ const SignIn = () => {
       setUser(null);
     }
   }
-
+// hi
   return (
-    <Box sx={{ display: "grid", placeItems: "center", height: "100vh" }}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Stack width={460} padding="30px" spacing={"40px"} sx={{ bgcolor: "var(--mirage)", borderRadius: "8px" }} >
-          <Box className="flex-center" >
-            <img src={logo} alt="logo.png" />
-          </Box>
-          <Stack width={"100%"} spacing={"30px"} >
-            <Controller
-              name="username"
-              control={control}
-              rules={{ required: 'Username is required.' }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  size="small"
-                  label={"User Name"}
-                  type="text"
-                  error={!!errors.username}
-                  helperText={errors.username ? errors.username.message : ""}
-                  sx={{ height: "48px" }} // Add fixed height to prevent shifting
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start" sx={{ color: "white" }} >
-                        <PersonOutlineOutlinedIcon />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-              )}
-            />
-            <Controller
-              name="password"
-              control={control}
-              rules={{ required: 'Password is required.' }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="passwordField"
-                  variant="outlined"
-                  color="primary"
-                  size="small"
-                  label={"Password"}
-                  type="password"
-                  error={!!errors.password}
-                  helperText={errors.password ? errors.password.message : ""}
-                  sx={{ height: "48px" }} // Add fixed height to prevent shifting
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start" sx={{ color: "white" }} >
-                        <LockOutlinedIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              )}
-            />
+    <Stack direction="row">
+
+      <Box sx={{ display: "flex", padding: "0px 120px", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", gap: "50px", 
+      alignSelf: "stretch", height: "100vh", borderRadius: "0px 50px 50px 0px", bgcolor: "var(--biscay)" }}>
+        <Box>
+          <img src={logologin} alt="logologin.png" />
+        </Box>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "10px", color: "var(--cerulean)", fontSize: "60px", fontFamily: "Anton" }}>
+          COMPUTER<br/>PROGRAMMING LAB<br/>PYTHON
+        </Box>
+      </Box>
+      
+      <Box sx={{ display: "grid", placeItems: "center",width:"56%", height: "100vh" }}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Stack width={460} padding="30px" spacing={"40px"} >
+            <Box sx = {{ className: "flex-start" }} >
+              <h2>Wellcome Back !</h2>
+            </Box>
+            <Stack width={"100%"} spacing={"30px"} >
+              <Controller
+                name="username"
+                control={control}
+                rules={{ required: 'Username is required.' }}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    size="small"
+                    label={"Username"}
+                    type="text"
+                    error={!!errors.username}
+                    helperText={errors.username ? errors.username.message : ""}
+                    sx={{ height: "48px" }} // Add fixed height to prevent shifting
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start" sx={{ color: "white" }} >
+                          <img src={userIcon} width="25" height="25" />
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+                )}
+              />
+              <Controller
+                name="password"
+                control={control}
+                rules={{ required: 'Password is required.' }}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    className="passwordField"
+                    variant="outlined"
+                    //color="primary"
+                    size="small"
+                    label={"Password"}
+                    type="password"
+                    error={!!errors.password}
+                    helperText={errors.password ? errors.password.message : ""}
+                    sx={{ height: "48px" }} // Add fixed height to prevent shifting
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start" sx={{ color: "white" }} >
+                          <img src={lockpadIcon} width="25" height="25" />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                )}
+              />
+            </Stack>
+            <Box className="flex-center">
+              <Button type="submit" variant="contained" color="primary">Sign In</Button>
+            </Box>
           </Stack>
-          <Box className="flex-center" >
-            <Button type="submit" variant="contained" color="primary">Sign In</Button>
-          </Box>
-        </Stack>
-      </form>
-    </Box>
+        </form>
+      </Box>
+
+    </Stack>
   )
 }
 

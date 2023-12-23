@@ -1,6 +1,6 @@
-import { Box, Button, Skeleton, Stack } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
-import blueFolder from "@/assets/images/bluefoldericon.png";
+import blueFolder from "@/assets/images/bluefoldericon.svg";
 import { useState, useEffect } from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { getStudentListInGroupWithLabScore } from "@/utils/api";
