@@ -4,8 +4,7 @@ import { Controller } from "react-hook-form";
 import TerminalBlock from "@/components/_shared/TerminalBlock";
 import InputTerminalBlock from "@/components/_shared/InputTerminalBlock";
 
-const Testcase = ({ index, control }) => {
-
+const Testcase = ({ index, control, editable }) => {
   return (
     <Stack>
       <Stack direction={"row"} spacing={"10px"} alignItems={"center"} justifyContent={"space-between"}
@@ -23,7 +22,7 @@ const Testcase = ({ index, control }) => {
             name={`testcases.${index}.testcase_note`}
             control={control}
             render={({ field }) => (
-              <TextField size="small" type="text" value={field.value} onChange={field.onChange} label="Testcase name" />
+              <TextField size="small" type="text" disabled={!editable} value={field.value} onChange={field.onChange} label="Testcase name" />
             )}
           />
 
@@ -35,6 +34,7 @@ const Testcase = ({ index, control }) => {
                 value="show-to-student"
                 control={
                   <Switch
+                    disabled={!editable}
                     color="success"
                     checked={field.value === "yes"}
                     onChange={e => field.onChange(e.target.checked ? "yes" : "no")}
@@ -54,6 +54,7 @@ const Testcase = ({ index, control }) => {
                 value="use-for-marking"
                 control={
                   <Switch
+                    disabled={!editable}
                     color="success"
                     checked={field.value === "yes"}
                     onChange={e => field.onChange(e.target.checked ? "yes" : "no")}
@@ -65,13 +66,14 @@ const Testcase = ({ index, control }) => {
             )}
           />
         </Stack>
-        <Button variant='contained' size='midium' sx={{
-          paddingX: "25px",
-          borderRadius: "8px",
-          bgcolor: "var(--cerulean )",
-          textTransform: "none",
-          flexShrink: "0",
-        }} >Run</Button>
+        {editable &&
+          <Button variant='contained' size='midium' sx={{
+            paddingX: "25px",
+            borderRadius: "8px",
+            bgcolor: "var(--cerulean )",
+            textTransform: "none",
+            flexShrink: "0",
+          }} >Run</Button>}
       </Stack>
       <Grid container spacing={"5px"} >
         <Grid item xs={12} md={6} >
@@ -79,7 +81,7 @@ const Testcase = ({ index, control }) => {
             name={`testcases.${index}.testcase_content`}
             control={control}
             render={({ field }) => (
-              <InputTerminalBlock value={field.value} onChange={field.onChange} />
+              <InputTerminalBlock disabled={!editable} value={field.value} onChange={field.onChange} />
             )}
           />
         </Grid>

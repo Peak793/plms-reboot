@@ -136,7 +136,7 @@ const ExerciseInfoForm = ({ onAddExercisePage = false, lv, formData = defaultVal
     if (onAddExercisePage) {
       return (
         <Stack direction="row" spacing={1}>
-          <Button disabled={!isValid} type='submit' variant="outlined" size="medium" onClick={() => { }}>
+          <Button disabled={!isValid} type='submit' variant="outlined" size="medium">
             Submit
           </Button>
           <Button variant="contained" color="error" size="medium" onClick={() => navigate(ABS_INS_URL.DYNAMIC.CHAPTER(groupId, chapterId))}>
@@ -147,7 +147,7 @@ const ExerciseInfoForm = ({ onAddExercisePage = false, lv, formData = defaultVal
     } else if (editable) {
       return (
         <Stack direction="row" spacing={1}>
-          <Button disabled={!isValid || !isDirty} type='submit' variant="outlined" size="medium">
+          <Button disabled={!isValid || !isDirty} type='submit' variant="contained" size="medium">
             Save
           </Button>
           <Button variant="contained" color="error" size="medium" onClick={() => {
@@ -227,13 +227,13 @@ const ExerciseInfoForm = ({ onAddExercisePage = false, lv, formData = defaultVal
           <Grid item xs={12} md={6}>
             <Typography paddingBottom={2}>Suggested Keyword Constraints :</Typography>
             <Stack spacing={"5px"}>
-              {category_keys.map((category, index) => <KwCategory editable={editable} key={index} title={getCategoryTitle(category)} getValues={getValues} editable={editable} name={`keyword_constraints.suggested_constraints.${category}`} control={control} watch={watch} category={category} side={"suggested"} />)}
+              {category_keys.map((category, index) => <KwCategory editable={editable} key={index} title={getCategoryTitle(category)} getValues={getValues} name={`keyword_constraints.suggested_constraints.${category}`} control={control} watch={watch} category={category} side={"suggested"} />)}
             </Stack>
           </Grid>
           <Grid item xs={12} md={6}>
             <Typography paddingBottom={2}>User defined Keyword Constraints :</Typography>
             <Stack spacing={"5px"}>
-              {category_keys.map((category, index) => <KwCategory editable={editable} key={index} title={getCategoryTitle(category)} getValues={getValues} editable={editable} name={`keyword_constraints.user_defined_constraints.${category}`} control={control} watch={watch} category={category} side={"user_defined"} />)}
+              {category_keys.map((category, index) => <KwCategory editable={editable} key={index} title={getCategoryTitle(category)} getValues={getValues} name={`keyword_constraints.user_defined_constraints.${category}`} control={control} watch={watch} category={category} side={"user_defined"} />)}
             </Stack>
           </Grid>
         </Grid>

@@ -2,12 +2,14 @@
 import { useState } from 'react';
 import {
   Grid, Select, Stack, Typography, FormControl, MenuItem, InputLabel, Box,
-  TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Checkbox, Button, TablePagination, Link as MuiLink
+  TableContainer, Table, TableRow, TableCell, TableBody, Paper, Checkbox, Button, TablePagination, Link as MuiLink
 } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { ABS_INS_URL } from '@/utils/constants/routeConst';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { updateGroupAssignedChapterItem } from '@/utils/api';
 
 // Sub-components
 const TableContent = ({ lv, exerciseList, page, rowsPerPage, selected, setSelected }) => {
@@ -69,22 +71,66 @@ const TableContent = ({ lv, exerciseList, page, rowsPerPage, selected, setSelect
   );
 }
 
-const Actions = ({ groupId, chapterId, lv }) => {
+const Actions = ({ groupId, chapterId, lv, selectedListFromAPI, selected, setSelected }) => {
+
+  const queryClient = useQueryClient();
+
+  const { mutate: updateSelectedLabs } = useMutation({
+    mutationFn: updateGroupAssignedChapterItem,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['labChapterInfo', groupId, chapterId])
+    }
+  });
+
+  const arraysAreEqual = (arr1, arr2) => {
+    if (arr1.length !== arr2.length) {
+      return false;
+    }
+
+    return arr1.every((value, index) => value === arr2[index]);
+  }
+
+  const handleUpdate = () => {
+    updateSelectedLabs({
+      group_id: groupId,
+      chapter_id: chapterId,
+      item_id: lv,
+      exercise_id_list: selected
+    });
+  }
+
+  const handleReset = () => {
+    setSelected(selectedListFromAPI)
+  }
 
   return (
     <Stack direction={"row"} alignItems={"center"} spacing={"10px"} justifyContent={"flex-end"}>
-      <Button variant='contained' size='medium' sx={{
-        paddingX: "25px",
-        borderRadius: "8px",
-        bgcolor: "var(--cerulean )",
-        textTransform: "none",
-        flexShrink: "0",
-      }}>Update</Button>
-      <Link to={ABS_INS_URL.DYNAMIC.ADD_EXERCISE(groupId, chapterId, lv)} >
-        <Button variant='outlined' size='medium' sx={{
-          textTransform: "none"
-        }} startIcon={<AddCircleIcon size="small" color="primary" />}>Add Lab</Button>
-      </Link>
+      <Button variant='contained' size='medium'
+        onClick={handleUpdate}
+        disabled={arraysAreEqual(selectedListFromAPI, selected)}
+        sx={{
+          paddingX: "25px",
+          borderRadius: "8px",
+          bgcolor: "var(--cerulean )",
+          textTransform: "none",
+          flexShrink: "0",
+        }}
+      >Update</Button>
+      {arraysAreEqual(selectedListFromAPI, selected) ?
+        (<Link to={ABS_INS_URL.DYNAMIC.ADD_EXERCISE(groupId, chapterId, lv)} >
+          <Button variant='outlined' size='medium' sx={{
+            textTransform: "none"
+          }} startIcon={<AddCircleIcon size="small" color="primary" />}>Add Lab</Button>
+        </Link>)
+        :
+        ((
+          <Button variant='contained' color='error' size='medium'
+            onClick={handleReset}
+            sx={{
+              textTransform: "none"
+            }}>Reset</Button>
+        ))
+      }
     </Stack>
   )
 };
@@ -176,7 +222,7 @@ const LabLevel = ({ lv, index, selectedList }) => {
         />
 
         {/* Actions */}
-        <Actions groupId={groupId} groupNo={groupNo} chapterId={chapterId} lv={index + 1} />
+        <Actions groupId={groupId} groupNo={groupNo} chapterId={chapterId} lv={index + 1} selectedListFromAPI={selectedList} selected={selected} setSelected={setSelected} />
 
       </Stack>
     </Grid>

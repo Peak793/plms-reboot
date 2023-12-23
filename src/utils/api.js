@@ -185,3 +185,12 @@ export const getExerciseTestcases = async (exercise_id) => {
   );
   return data;
 }
+
+export const updateGroupAssignedChapterItem = async (formData) => {
+  const { data } = await axios.post(
+    `${import.meta.env.VITE_BASE_URL}/index.php/supervisor_rest/updateGroupAssignedChapterItem`,
+    formData,
+    { withCredentials: true }
+  );
+  return data;
+}

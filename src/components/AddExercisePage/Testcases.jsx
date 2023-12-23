@@ -5,26 +5,26 @@ import Testcase from "@/components/AddExercisePage/Testcase"
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getExerciseTestcases } from "@/utils/api";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const Testcases = () => {
+const buttonProps = {
+  size: 'medium',
+  sx: { paddingX: "25px", borderRadius: "8px", textTransform: "none" },
+  variant: 'contained',
+};
+
+const Testcases = ({ hasSourceCode = false }) => {
   const { exerciseId } = useParams();
   const { data, isLoading } = useQuery({
     queryKey: ['testcaseData', exerciseId],
     queryFn: () => getExerciseTestcases(exerciseId)
   })
+  const [isEditable, setIsEditable] = useState(false);
 
-  const methods = useForm({
-    defaultValues: {
-      testcases: []
-    }
-  });
+  const methods = useForm({ defaultValues: { testcases: [] } });
 
-  const { watch, reset, control } = methods
-  const { fields: testcaseData, append, remove } = useFieldArray({
-    control,
-    name: "testcases"
-  });
+  const { reset, control, handleSubmit, formState: { isDirty } } = methods
+  const { fields: testcaseData, append, remove } = useFieldArray({ control, name: "testcases" });
 
   useEffect(() => {
     if (!isLoading && data) {
@@ -32,35 +32,54 @@ const Testcases = () => {
     }
   }, [data, isLoading, reset])
 
+  const handleCancel = () => {
+    reset({ testcases: data || [] })
+    setIsEditable(false)
+  }
+
+  const handleSave = (data) => {
+    console.log(data)
+    setIsEditable(false)
+  }
+
   return (
-    <Stack spacing={"20px"} sx={{
-      padding: "20px",
-      border: "1px solid #202739",
-      borderRadius: "8px",
-    }} >
-      <Stack direction={"row"} justifyContent={"space-between"} >
-        <Typography variant='h6' >Test case</Typography>
-        <Stack direction={"row"} spacing={"10px"} >
-          <Button variant='contained' size='medium' sx={{
-            paddingX: "25px",
-            borderRadius: "8px",
-            bgcolor: "var(--cerulean )",
-            textTransform: "none",
-          }} >Run all testcases</Button>
-          <Button variant='contained' size='medium' color="success" sx={{
-            paddingX: "25px",
-            borderRadius: "8px",
-            textTransform: "none",
-          }} >Submit</Button>
-        </Stack>
-      </Stack>
-
-      {/* <Testcase /> */}
-
-      <FormProvider {...methods} >
-        {testcaseData.map((item, index) => <Testcase key={item.id} index={index} control={control} />)}
-      </FormProvider>
-    </Stack>
+    <>
+      {
+        <FormProvider {...methods} >
+          <form onSubmit={handleSubmit(handleSave)}>
+            <Stack onSubmit={handleSubmit(handleSave)} spacing={"20px"} sx={{
+              padding: "20px",
+              border: "1px solid #202739",
+              borderRadius: "8px",
+            }} >
+              {/* <Testcase /> */}
+              <Stack direction={"row"} justifyContent={"space-between"} >
+                <Typography variant='h6' >Test case</Typography>
+                <Stack direction={"row"} spacing={"10px"} >
+                  {hasSourceCode ?
+                    <>
+                      {isEditable ?
+                        <>
+                          <Button {...buttonProps} disabled={!isDirty} type="submit">Save</Button>
+                          <Button {...buttonProps} color="error" type="button" onClick={handleCancel}>Cancel</Button>
+                        </>
+                        :
+                        <Button {...buttonProps} type="button" onClick={() => { setIsEditable(true) }}>Edit</Button>
+                      }
+                    </>
+                    :
+                    (
+                      <Button {...buttonProps} disabled={true} type="button" onClick={() => { setIsEditable(true) }}>Edit</Button>
+                    )
+                  }
+                </Stack>
+              </Stack>
+              {testcaseData.map((item, index) => <Testcase key={item.id} index={index} control={control} editable={isEditable} />)}
+            </Stack >
+          </form>
+        </FormProvider>
+      }
+    </>
   )
 }
 

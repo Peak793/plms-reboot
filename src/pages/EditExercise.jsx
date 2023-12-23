@@ -74,7 +74,7 @@ const EditExercise = () => {
 
           <Header logoSrc={folderIcon} title={`Chapter ${chapterId} : ${bc?.chapter_name}`} />
           <ExerciseInfoForm lv={level} editable={true} formData={formData} />
-          <Testcases testcaseData={testcaseData} />
+          <Testcases testcaseData={testcaseData} hasSourceCode={!!formData.sourcecode_content} />
         </Stack>
       </Container>
     </Box >

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Container, Stack } from '@mui/material';
 import Header from '@/components/_shared/Header';
-import Testcases from '@/components/AddExercisePage/Testcases';
+/* import Testcases from '@/components/AddExercisePage/Testcases'; */
 import folderIcon from '@/assets/images/foldericon.png';
 import MyBreadCrumbs from '@/components/_shared/MyBreadCrumbs';
 import ExerciseInfoForm from '@/components/_shared/ExerciseInfoForm';
@@ -37,7 +37,7 @@ const AddExercise = () => {
 
         <Header logoSrc={folderIcon} title={`Chapter ${chapterId} : ${bc?.chapter_name}`} />
         <ExerciseInfoForm onAddExercisePage={true} lv={level} editable />
-        <Testcases />
+        {/* <Testcases editable /> */}
       </Stack>
     </Container>
   );
